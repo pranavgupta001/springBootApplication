@@ -14,9 +14,13 @@ public class LoadServiceImpl implements LoadService {
 	LoadDao loadDao;
 	
 	@Override
-	public List<Load> searchTrucks(Load load) {
+	public List<Load> PostAload(Load load) {
 		// TODO Auto-generated method stub
-		return null;
+		load.setStatus("pending");
+		
+		loadDao.save(load);
+		
+		return loadDao.findAll();
 	}
 
 	@Override
@@ -26,7 +30,7 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public Load updateSearchTruck(Load load) {
+	public Load updatePostAload(Load load) {
 		// TODO Auto-generated method stub
 		return null;
 	}

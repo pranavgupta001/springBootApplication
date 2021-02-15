@@ -1,5 +1,4 @@
 package com.TruckBooking.TruckBooking.controller;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,27 +12,26 @@ import com.TruckBooking.TruckBooking.entities.Load;
 import com.TruckBooking.TruckBooking.service.LoadServiceImpl;
 
 @RestController
-public class Controller {
+public class LoadController {
 
 	@Autowired
 	public LoadServiceImpl LoadService;
-	@PostMapping("/searchTruck")
-	public List<Load> searchTrucks(Load load) {
-		return this.LoadService.searchTrucks(load);
+	@PostMapping("/PostAload")
+	public List<Load> PostAload(Load load) {
+		return this.LoadService.PostAload(load);
 	}
 	@GetMapping("/findLoad")
 	public List<Load> findLoad(){
 		return this.LoadService.findLoad();
 	}
-	@PutMapping("/updateSearchTruck")
-	public Load updateSearchTruck(Load load) {
-		return this.LoadService.updateSearchTruck(load);
+	@PutMapping("/updateRegisterShipment")
+	public Load updatePostAload(Load load) {
+		return this.LoadService.updatePostAload(load);
 		
 	}
 	@DeleteMapping("/deleteTruckRequirement")
 	public void deleteTruckRequirement(Load load) {
 		this.LoadService.deleteTruckRequirement(load);
 	}
-	
 	
 }

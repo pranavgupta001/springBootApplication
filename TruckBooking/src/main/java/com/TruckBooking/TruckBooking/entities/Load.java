@@ -14,11 +14,24 @@ public class Load {
 	private String productType;
 	private String truckType;
 	private int noOfTrucks;
-	private int weight; //this should be an optional
+	private String weight; 
 	private String comment; //this should be an optional
 	private String status;
+	public Load(String loadingPoint, String unloadingPoint, String productType, String truckType, String noOfTrucks,
+			String weight, String comment) {
+		super();
+		this.loadingPoint = loadingPoint;
+		this.unloadingPoint = unloadingPoint;
+		this.productType = productType;
+		this.truckType = truckType;
+		this.noOfTrucks = Integer.parseInt("noOfTrucks");
+		this.weight = weight;
+		this.comment = comment;
+	}
+	
+
 	public Load(String loadingPoint, String unloadingPoint, String productType, String truckType, int noOfTrucks,
-			int weight, String comment) {
+			String weight) {
 		super();
 		this.loadingPoint = loadingPoint;
 		this.unloadingPoint = unloadingPoint;
@@ -26,8 +39,9 @@ public class Load {
 		this.truckType = truckType;
 		this.noOfTrucks = noOfTrucks;
 		this.weight = weight;
-		this.comment = comment;
 	}
+
+
 	public long getId() {
 		return id;
 	}
@@ -64,10 +78,10 @@ public class Load {
 	public void setNoOfTrucks(int noOfTrucks) {
 		this.noOfTrucks = noOfTrucks;
 	}
-	public int getWeight() {
+	public String getWeight() {
 		return weight;
 	}
-	public void setWeight(int weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 	public String getComment() {
