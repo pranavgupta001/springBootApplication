@@ -8,6 +8,7 @@ public class TruckBookingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TruckBookingApplication.class, args);
+		System.out.println("trash");
 	}
 
 
