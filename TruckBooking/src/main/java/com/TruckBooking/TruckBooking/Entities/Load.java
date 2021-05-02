@@ -1,9 +1,6 @@
-package com.TruckBooking.TruckBooking.entities;
-
-import java.util.UUID;
+package com.TruckBooking.TruckBooking.Entities;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,11 +11,10 @@ import lombok.Data;
 @Data
 public class Load {
 	@Id
-	@GeneratedValue
-	private UUID id;
-	private UUID ownerId;
+	private String id;
+	private String ownerId;
 	private String loadingPoint;
-	
+	private String shipperId;
 	private String unloadingPoint;
 	private String productType;
 	private String truckType;
@@ -26,6 +22,7 @@ public class Load {
 	private String weight; 
 	private String comment; //this should be an optional
 	private String status;
+	private String date;
 	
 
 	

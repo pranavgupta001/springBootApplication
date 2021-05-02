@@ -1,4 +1,4 @@
-package com.TruckBooking.TruckBooking.model;
+package com.TruckBooking.TruckBooking.Model;
 
 import lombok.Data;
 
