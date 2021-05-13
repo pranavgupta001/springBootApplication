@@ -12,7 +12,6 @@ import com.TruckBooking.TruckBooking.Entities.Load;
 
 @Repository
 public interface LoadDao extends JpaRepository<Load , String> {
-	//public List<Load> findByStatus(String status);
 	@Query("select l from Load l where l.shipperId = :shipperId")
 	List<Load> findByShipper(String shipperId);
 
@@ -21,5 +20,7 @@ public interface LoadDao extends JpaRepository<Load , String> {
 	
 	@Query("select l from Load l where l.truckType = :truckType")
 	List<Load> findByTruckType(String truckType);
-	//public List<Load> findAllByOwnerId(UUID ownerId);
+
+	@Query("select l from Load l where l.date = :date")
+	List<Load> findByDate(String date);
 }

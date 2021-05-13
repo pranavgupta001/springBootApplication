@@ -1,13 +1,10 @@
 package com.TruckBooking.TruckBooking.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
@@ -19,7 +16,8 @@ public class LoadServiceImpl implements LoadService {
 	@Autowired
 	LoadDao loadDao;
 	
-	public LoadResponse load(LoadRequest loadRequest) {
+	@Override
+	public LoadResponse addLoad(LoadRequest loadRequest) {
 		// TODO Auto-generated method stub
 		LoadResponse loadResponse = new LoadResponse();
 		Load load = new Load();
@@ -70,44 +68,48 @@ public class LoadServiceImpl implements LoadService {
 		return loadResponse;
 	}
 	
-	public List<Load> getLoads(String ownerId, String loadingPoint, String shipperId, String truckType) {
+	@Override
+	public List<Load> getLoads(String loadingPoint, String shipperId, String truckType, String date) {
 		// TODO Auto-generated method stub
-		List<Load> list = new ArrayList<Load>();
-		try {
-			if(ownerId!=null) {
-				list.add(loadDao.findById(ownerId).get());
-				return list; 
-			}
+		if(loadingPoint!=null) {
+			return loadDao.findByLoadingPoint(loadingPoint); 
+		}
 			
-			if(loadingPoint!=null) {
-				return loadDao.findByLoadingPoint(loadingPoint); 
-			}
+		if(shipperId!=null) {
+			return loadDao.findByShipper(shipperId);
+		}
 			
-			if(shipperId!=null) {
-				return loadDao.findByShipper(shipperId);
-			}
-			
-			if(truckType!=null) {
-				return loadDao.findByTruckType(truckType);
-			}
+		if(truckType!=null) {
+			return loadDao.findByTruckType(truckType);
 		}
 		
-		catch(NoSuchElementException e) {
-			return list;
+		if(date!=null) {
+			return loadDao.findByDate(date);
 		}
-		
+			
 		return loadDao.findAll();
+	}
+	
+	@Override
+	public Load getLoad(String loadId) {
+		// TODO Auto-generated method stub
+		Optional<Load> L = loadDao.findById(loadId);
+		if(L.isEmpty()) {
+			return null;
+		}
+		return L.get();
 	}
 
 	@Override
-	public LoadResponse updatePostAload(String loadId, LoadRequest loadRequest) {
+	public LoadResponse updateLoad(String loadId, LoadRequest loadRequest) {
 		LoadResponse loadResponse = new LoadResponse();
 		Load load = new Load();
 		
-		try {
-			load = loadDao.findById(loadId).get();
+		Optional<Load> L = loadDao.findById(loadId);
+		if(L.isPresent()) {
+			load = L.get();
 		}
-		catch(NoSuchElementException e) {
+		else {
 			loadResponse.setStatus(CommonConstants.AccountNotFoundError);
 			return loadResponse;
 		}
@@ -136,6 +138,9 @@ public class LoadServiceImpl implements LoadService {
 		if(loadRequest.getStatus()!=null) {
 			load.setStatus(loadRequest.getStatus());
 		}
+		if(loadRequest.getDate()!=null) {
+			load.setDate(loadRequest.getDate());
+		}
 		
 		loadDao.save(load);
 		loadResponse.setStatus(CommonConstants.updateSuccess);
@@ -143,14 +148,16 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public void deleteTruckRequirement(String id) {
-		try {
-			loadDao.delete(loadDao.findById(id).get());
+	public LoadResponse deleteLoad(String id) {
+		LoadResponse loadResponse = new LoadResponse();
+		Optional<Load> L = loadDao.findById(id);
+		if(L.isEmpty()) {
+			loadResponse.setStatus(CommonConstants.AccountNotFoundError);
+			return loadResponse;
 		}
-		catch(NoSuchElementException e) {
-			
-		}
+		loadDao.delete(L.get());
+		loadResponse.setStatus(CommonConstants.deleteSuccess);
+		return loadResponse;
 	}
-	
 
 }

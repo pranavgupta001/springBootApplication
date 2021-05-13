@@ -25,26 +25,32 @@ public class LoadController {
 	
 	@PostMapping("/load")
 	public LoadResponse load(@RequestBody LoadRequest loadrequest) {
-		return loadService.load(loadrequest);
+		return loadService.addLoad(loadrequest);
 	}
 	
 	@GetMapping("/load")
-	public List<Load> findLoads(@RequestParam(name="ownerId",required=false) String ownerId, 
-			@RequestParam(name="loadingPoint",required=false) String loadingPoint,
+	public List<Load> findLoads(@RequestParam(name="loadingPoint",required=false) String loadingPoint,
 			@RequestParam(name="shipperId",required=false) String shipperId,
-			@RequestParam(name="truckType",required=false) String truckType){
-		return loadService.getLoads(ownerId, loadingPoint, shipperId, truckType);	
+			@RequestParam(name="truckType",required=false) String truckType,
+			@RequestParam(name="date",required=false) String date){
+		
+		return loadService.getLoads(loadingPoint, shipperId, truckType, date);
 	}
-
+	
+	@GetMapping("/load/{loadId}")
+	public Load findLoad(@PathVariable String loadId){ 
+		return loadService.getLoad(loadId);
+	}
 	
 	@PutMapping("/load/{loadId}")
-	public LoadResponse updatePostAload(@PathVariable String loadId,@RequestBody LoadRequest loadrequest) {
-		return loadService.updatePostAload(loadId, loadrequest);
+	public LoadResponse updateLoad(@PathVariable String loadId,@RequestBody LoadRequest loadrequest) {
+		return loadService.updateLoad(loadId, loadrequest);
 		
 	}
-	@DeleteMapping("/load/{id}")
-	public void deleteTruckRequirement(@PathVariable String id ) {
-		loadService.deleteTruckRequirement(id);
+	
+	@DeleteMapping("/load/{loadId}")
+	public LoadResponse deleteLoad(@PathVariable String loadId) {
+		return loadService.deleteLoad(loadId);
 	}
 	
 }
