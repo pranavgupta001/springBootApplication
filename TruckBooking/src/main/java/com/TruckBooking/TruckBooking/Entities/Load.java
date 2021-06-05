@@ -11,11 +11,15 @@ import lombok.Data;
 @Data
 public class Load {
 	@Id
-	private String id;
-	private String ownerId;
+	private String loadId;
+	
 	private String loadingPoint;
-	private String shipperId;
+	private String loadingPointCity;
+	private String loadingPointState;
+	private String id;
 	private String unloadingPoint;
+	private String unloadingPointCity;
+	private String unloadingPointState;
 	private String productType;
 	private String truckType;
 	private String noOfTrucks;

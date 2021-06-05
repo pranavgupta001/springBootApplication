@@ -1,7 +1,7 @@
 package com.TruckBooking.TruckBooking.Dao;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,15 +12,23 @@ import com.TruckBooking.TruckBooking.Entities.Load;
 
 @Repository
 public interface LoadDao extends JpaRepository<Load , String> {
-	@Query("select l from Load l where l.shipperId = :shipperId")
-	List<Load> findByShipper(String shipperId);
-
-	@Query("select l from Load l where l.loadingPoint = :loadingPoint")
-	List<Load> findByLoadingPoint(String loadingPoint);
+	@Query("select l from Load l where l.id = :Id")
+	List<Load> findByid(String Id);
 	
-	@Query("select l from Load l where l.truckType = :truckType")
+	Optional<Load> findByLoadId(String loadId);
+	
+	@Query("select l from Load l where l.loadingPointCity = :loadingPointCity AND l.unloadingPointCity = :unloadingPointCity")
+	List<Load> findByLoadAndUnloadPoint(String loadingPointCity, String unloadingPointCity);
+	
 	List<Load> findByTruckType(String truckType);
 
-	@Query("select l from Load l where l.date = :date")
 	List<Load> findByDate(String date);
+	
+	List<Load> findByLoadingPointCity(String loadingPointCity);
+	
+	List<Load> findByLoadingPointState(String loadingPointState);
+	
+	List<Load> findByUnloadingPointCity(String unloadingPointCity);
+	
+	List<Load> findByUnloadingPointState(String loadingPointState);
 }

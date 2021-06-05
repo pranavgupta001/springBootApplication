@@ -9,7 +9,9 @@ import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Model.LoadRequest;
-import com.TruckBooking.TruckBooking.Model.LoadResponse;
+import com.TruckBooking.TruckBooking.Response.CreateLoadResponse;
+import com.TruckBooking.TruckBooking.Response.DeleteLoadResponse;
+import com.TruckBooking.TruckBooking.Response.UpdateLoadResponse;
 
 @Service
 public class LoadServiceImpl implements LoadService {
@@ -17,66 +19,199 @@ public class LoadServiceImpl implements LoadService {
 	LoadDao loadDao;
 	
 	@Override
-	public LoadResponse addLoad(LoadRequest loadRequest) {
+	public CreateLoadResponse addLoad(LoadRequest addLoad) {
 		// TODO Auto-generated method stub
-		LoadResponse loadResponse = new LoadResponse();
+		CreateLoadResponse createloadResponse = new CreateLoadResponse();
 		Load load = new Load();
 		
-		if(loadRequest.getLoadingPoint()==null) {
-			loadResponse.setStatus(CommonConstants.loadingError);
-			return loadResponse;
+		if(addLoad.getLoadingPoint()==null) {
+			createloadResponse.setStatus(CommonConstants.loadingError);
+			return createloadResponse;
 		}
-		if(loadRequest.getUnloadingPoint()==null) {
-			loadResponse.setStatus(CommonConstants.unloadingError);
-			return loadResponse;
+		if(addLoad.getLoadingPointCity()==null) {
+			createloadResponse.setStatus(CommonConstants.loadingCityError);
+			return createloadResponse;
 		}
-		if(loadRequest.getNoOfTrucks()==null) {
-			loadResponse.setStatus(CommonConstants.noOfTrucksError);
-			return loadResponse;
-		}
-		if(loadRequest.getTruckType()==null) {
-			loadResponse.setStatus(CommonConstants.truckTypeError);
-			return loadResponse;
-		}
-		if(loadRequest.getProductType()==null) {
-			loadResponse.setStatus(CommonConstants.productTypeError);
-			return loadResponse;
-		}
-		if(loadRequest.getWeight()==null) {
-			loadResponse.setStatus(CommonConstants.weightError);
-			return loadResponse;
-		}
-		if(loadRequest.getDate()==null) {
-			loadResponse.setStatus(CommonConstants.dateError);
-			return loadResponse;
+		if(addLoad.getLoadingPointState()==null) {
+			createloadResponse.setStatus(CommonConstants.loadingStateError);
+			return createloadResponse;
 		}
 		
-		load.setId("load:"+UUID.randomUUID());
-		load.setUnloadingPoint(loadRequest.getUnloadingPoint());
-		load.setLoadingPoint(loadRequest.getLoadingPoint());
-		load.setNoOfTrucks(loadRequest.getNoOfTrucks());
-		load.setShipperId(loadRequest.getShipperId());
-		load.setTruckType(loadRequest.getTruckType());
-		load.setProductType(loadRequest.getProductType());
-		load.setWeight(loadRequest.getWeight());
+		if(addLoad.getUnloadingPointCity()==null) {
+			createloadResponse.setStatus(CommonConstants.unloadingCityError);
+			return createloadResponse;
+		}
+		if(addLoad.getUnloadingPointState()==null) {
+			createloadResponse.setStatus(CommonConstants.unloadingStateError);
+			return createloadResponse;
+		}
+		if(addLoad.getUnloadingPoint()==null) {
+			createloadResponse.setStatus(CommonConstants.unloadingError);
+			return createloadResponse;
+		}
+		
+		if(addLoad.getNoOfTrucks()==null) {
+			createloadResponse.setStatus(CommonConstants.noOfTrucksError);
+			return createloadResponse;
+		}
+		if(addLoad.getTruckType()==null) {
+			createloadResponse.setStatus(CommonConstants.truckTypeError);
+			return createloadResponse;
+		}
+		if(addLoad.getProductType()==null) {
+			createloadResponse.setStatus(CommonConstants.productTypeError);
+			return createloadResponse;
+		}
+		if(addLoad.getWeight()==null) {
+			createloadResponse.setStatus(CommonConstants.weightError);
+			return createloadResponse;
+		}
+		if(addLoad.getId()==null) {
+			createloadResponse.setStatus(CommonConstants.idError);
+			return createloadResponse;
+		}
+		if(addLoad.getDate()==null) {
+			createloadResponse.setStatus(CommonConstants.dateError);
+			return createloadResponse;
+		}
+		
+		
+		
+		
+		if(addLoad.getLoadingPoint() != null) {
+			if(addLoad.getLoadingPoint().trim().length() < 1) {
+				createloadResponse.setStatus("Empty loading point");
+				return createloadResponse;
+			}
+			load.setLoadingPoint(addLoad.getLoadingPoint().trim());
+		}
+		if(addLoad.getLoadingPointCity() != null) {
+			if(addLoad.getLoadingPointCity().trim().length() < 1) {
+				createloadResponse.setStatus("Empty loading city");
+				return createloadResponse;
+			}
+			load.setLoadingPointCity(addLoad.getLoadingPointCity().trim());
+		}
+		if(addLoad.getLoadingPointState() != null) {
+			if(addLoad.getLoadingPointState().trim().length() < 1) {
+				createloadResponse.setStatus("Empty loading state");
+				return createloadResponse;
+			}
+			load.setLoadingPointState(addLoad.getLoadingPointState().trim());
+		}
+		
+		if(addLoad.getUnloadingPoint()!= null) {
+			if(addLoad.getUnloadingPoint().trim().length() < 1) {
+				createloadResponse.setStatus("Empty unloading point");
+				return createloadResponse;
+			}
+			load.setUnloadingPoint(addLoad.getUnloadingPoint().trim());
+		}
+		if(addLoad.getUnloadingPointCity() != null) {
+			if(addLoad.getUnloadingPointCity().trim().length() < 1) {
+				createloadResponse.setStatus("Empty unloading city");
+				return createloadResponse;
+			}
+			load.setUnloadingPointCity(addLoad.getUnloadingPointCity().trim());
+		}
+		if(addLoad.getUnloadingPointState() != null) {
+			if(addLoad.getUnloadingPointState().trim().length() < 1) {
+				createloadResponse.setStatus("Empty unloading state");
+				return createloadResponse;
+			}
+			load.setUnloadingPointState(addLoad.getUnloadingPointState().trim());
+		}
+		
+		if(addLoad.getNoOfTrucks() != null) {
+			if(addLoad.getNoOfTrucks().trim().length() < 1) {
+				createloadResponse.setStatus("Empty truck number point");
+				return createloadResponse;
+			}
+			load.setNoOfTrucks(addLoad.getNoOfTrucks().trim());
+		}
+		
+		if(addLoad.getTruckType() != null) {
+			if(addLoad.getTruckType().trim().length() < 1) {
+				createloadResponse.setStatus("Empty truck type");
+				return createloadResponse;
+			}
+			load.setTruckType(addLoad.getTruckType().trim());
+		}
+		
+		if(addLoad.getProductType() != null) {
+			if(addLoad.getProductType().trim().length() < 1) {
+				createloadResponse.setStatus("Empty product type");
+				return createloadResponse;
+			}
+			load.setProductType(addLoad.getProductType().trim());
+		}
+		
+		if(addLoad.getWeight() != null) {
+			if(addLoad.getWeight().trim().length() < 1) {
+				createloadResponse.setStatus("Empty product type");
+				return createloadResponse;
+			}
+			load.setWeight(addLoad.getWeight().trim());
+		}
+		
+		if(addLoad.getDate() != null) {
+			if(addLoad.getDate().trim().length() < 1) {
+				createloadResponse.setStatus("Empty date");
+				return createloadResponse;
+			}
+			load.setDate(addLoad.getDate().trim());
+		}
+		
+		if(addLoad.getId() != null) {
+			if(addLoad.getId().trim().length() < 1) {
+				createloadResponse.setStatus("Empty Id");
+				return createloadResponse;
+			}
+			load.setId(addLoad.getId().trim());
+		}
+		
+		if(addLoad.getComment() != null) {
+			if(addLoad.getComment().trim().length() < 1) {
+				createloadResponse.setStatus("Empty comment");
+				return createloadResponse;
+			}
+			load.setComment(addLoad.getComment().trim());
+		}
+		
+		load.setLoadId("load:"+UUID.randomUUID());
 		load.setStatus(CommonConstants.pending);
-		load.setComment(loadRequest.getComment());
-		load.setDate(loadRequest.getDate());
 		loadDao.save(load);
 		
-		loadResponse.setStatus(CommonConstants.pending);
-		return loadResponse;
+		createloadResponse.setStatus(CommonConstants.pending);
+		createloadResponse.setLoadId(load.getLoadId());
+		createloadResponse.setLoadingPoint(load.getLoadingPoint());
+		createloadResponse.setLoadingPointCity(load.getLoadingPointCity());
+		createloadResponse.setLoadingPointState(load.getLoadingPointState());
+		createloadResponse.setUnloadingPoint(load.getUnloadingPoint());
+		createloadResponse.setUnloadingPointCity(load.getUnloadingPointCity());
+		createloadResponse.setUnloadingPointState(load.getUnloadingPointState());
+		createloadResponse.setNoOfTrucks(load.getNoOfTrucks());
+		createloadResponse.setProductType(load.getProductType());
+		createloadResponse.setTruckType(load.getTruckType());
+		createloadResponse.setWeight(load.getWeight());
+		createloadResponse.setDate(load.getDate());
+		createloadResponse.setComment(load.getComment());
+		createloadResponse.setId(load.getId());
+		return createloadResponse;
 	}
 	
 	@Override
-	public List<Load> getLoads(String loadingPoint, String shipperId, String truckType, String date) {
+	public List<Load> getLoads(String loadingPointCity, String unloadingPointCity, String Id, String truckType, String date) {
 		// TODO Auto-generated method stub
-		if(loadingPoint!=null) {
-			return loadDao.findByLoadingPoint(loadingPoint); 
+		if(loadingPointCity != null) {
+			if(unloadingPointCity != null) {
+				return loadDao.findByLoadAndUnloadPoint(loadingPointCity, unloadingPointCity);
+			}
+			return loadDao.findByLoadingPointCity(loadingPointCity); 
 		}
 			
-		if(shipperId!=null) {
-			return loadDao.findByShipper(shipperId);
+		if(Id!=null) {
+			return loadDao.findByid(Id);
 		}
 			
 		if(truckType!=null) {
@@ -93,7 +228,7 @@ public class LoadServiceImpl implements LoadService {
 	@Override
 	public Load getLoad(String loadId) {
 		// TODO Auto-generated method stub
-		Optional<Load> L = loadDao.findById(loadId);
+		Optional<Load> L = loadDao.findByLoadId(loadId);
 		if(L.isEmpty()) {
 			return null;
 		}
@@ -101,63 +236,143 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public LoadResponse updateLoad(String loadId, LoadRequest loadRequest) {
-		LoadResponse loadResponse = new LoadResponse();
+	public UpdateLoadResponse updateLoad(String loadId, LoadRequest updateLoad) {
+		UpdateLoadResponse updateloadResponse = new UpdateLoadResponse();
 		Load load = new Load();
 		
-		Optional<Load> L = loadDao.findById(loadId);
+		Optional<Load> L = loadDao.findByLoadId(loadId);
 		if(L.isPresent()) {
 			load = L.get();
+			
+			if(updateLoad.getLoadingPoint() != null) {
+				if(updateLoad.getLoadingPoint().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty loading point");
+					return updateloadResponse;
+				}
+				load.setLoadingPoint(updateLoad.getLoadingPoint().trim());
+			}
+			if(updateLoad.getLoadingPointCity() != null) {
+				if(updateLoad.getLoadingPointCity().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty loading city");
+					return updateloadResponse;
+				}
+				load.setLoadingPointCity(updateLoad.getLoadingPointCity().trim());
+			}
+			if(updateLoad.getLoadingPointState() != null) {
+				if(updateLoad.getLoadingPointState().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty loading state");
+					return updateloadResponse;
+				}
+				load.setLoadingPointState(updateLoad.getLoadingPointState().trim());
+			}
+			
+			if(updateLoad.getUnloadingPoint()!= null) {
+				if(updateLoad.getUnloadingPoint().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty unloading point");
+					return updateloadResponse;
+				}
+				load.setUnloadingPoint(updateLoad.getUnloadingPoint().trim());
+			}
+			if(updateLoad.getUnloadingPointCity() != null) {
+				if(updateLoad.getUnloadingPointCity().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty unloading city");
+					return updateloadResponse;
+				}
+				load.setUnloadingPointCity(updateLoad.getUnloadingPointCity().trim());
+			}
+			if(updateLoad.getUnloadingPointState() != null) {
+				if(updateLoad.getUnloadingPointState().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty unloading state");
+					return updateloadResponse;
+				}
+				load.setUnloadingPointState(updateLoad.getUnloadingPointState().trim());
+			}
+			
+			if(updateLoad.getNoOfTrucks() != null) {
+				if(updateLoad.getNoOfTrucks().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty truck number point");
+					return updateloadResponse;
+				}
+				load.setNoOfTrucks(updateLoad.getNoOfTrucks().trim());
+			}
+			
+			if(updateLoad.getTruckType() != null) {
+				if(updateLoad.getTruckType().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty truck type");
+					return updateloadResponse;
+				}
+				load.setTruckType(updateLoad.getTruckType().trim());
+			}
+			
+			if(updateLoad.getProductType() != null) {
+				if(updateLoad.getProductType().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty product type");
+					return updateloadResponse;
+				}
+				load.setProductType(updateLoad.getProductType().trim());
+			}
+			
+			if(updateLoad.getWeight() != null) {
+				if(updateLoad.getWeight().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty product type");
+					return updateloadResponse;
+				}
+				load.setWeight(updateLoad.getWeight().trim());
+			}
+			
+			if(updateLoad.getDate() != null) {
+				if(updateLoad.getDate().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty date");
+					return updateloadResponse;
+				}
+				load.setDate(updateLoad.getDate().trim());
+			}
+			
+			if(updateLoad.getId() != null) {
+				if(updateLoad.getId().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty shipper Id");
+					return updateloadResponse;
+				}
+				load.setId(updateLoad.getId().trim());
+			}
+			
+			if(updateLoad.getComment() != null) {
+				if(updateLoad.getComment().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty comment");
+					return updateloadResponse;
+				}
+				load.setComment(updateLoad.getComment().trim());
+			}
+			
+			if(updateLoad.getStatus() != null) {
+				if(updateLoad.getStatus().trim().length() < 1) {
+					updateloadResponse.setStatus("Empty comment");
+					return updateloadResponse;
+				}
+				load.setStatus(updateLoad.getStatus().trim());
+			}
+			
+			loadDao.save(load);
+			updateloadResponse.setStatus(CommonConstants.updateSuccess);
+			return updateloadResponse;
 		}
 		else {
-			loadResponse.setStatus(CommonConstants.AccountNotFoundError);
-			return loadResponse;
+			updateloadResponse.setStatus(CommonConstants.AccountNotFoundError);
+			return updateloadResponse;
 		}
-		
-		if(loadRequest.getLoadingPoint()!=null) {
-			load.setLoadingPoint(loadRequest.getLoadingPoint());
-		}
-		if(loadRequest.getUnloadingPoint()!=null) {
-			load.setUnloadingPoint(loadRequest.getUnloadingPoint());
-		}
-		if(loadRequest.getProductType()!=null) {
-			load.setProductType(loadRequest.getProductType());
-		}
-		if(loadRequest.getTruckType()!=null) {
-			load.setTruckType(loadRequest.getTruckType());
-		}
-		if(loadRequest.getNoOfTrucks()!=null) {
-			load.setNoOfTrucks(loadRequest.getNoOfTrucks());
-		}
-		if(loadRequest.getWeight()!=null) {
-			load.setWeight(loadRequest.getWeight());
-		}
-		if(loadRequest.getComment()!=null) {
-			load.setComment(loadRequest.getComment());
-		}
-		if(loadRequest.getStatus()!=null) {
-			load.setStatus(loadRequest.getStatus());
-		}
-		if(loadRequest.getDate()!=null) {
-			load.setDate(loadRequest.getDate());
-		}
-		
-		loadDao.save(load);
-		loadResponse.setStatus(CommonConstants.updateSuccess);
-		return loadResponse;
 	}
 
 	@Override
-	public LoadResponse deleteLoad(String id) {
-		LoadResponse loadResponse = new LoadResponse();
-		Optional<Load> L = loadDao.findById(id);
+	public DeleteLoadResponse deleteLoad(String loadId) {
+		DeleteLoadResponse deleteloadResponse = new DeleteLoadResponse();
+		Optional<Load> L = loadDao.findByLoadId(loadId);
 		if(L.isEmpty()) {
-			loadResponse.setStatus(CommonConstants.AccountNotFoundError);
-			return loadResponse;
+			deleteloadResponse.setStatus(CommonConstants.AccountNotFoundError);
+			return deleteloadResponse;
 		}
 		loadDao.delete(L.get());
-		loadResponse.setStatus(CommonConstants.deleteSuccess);
-		return loadResponse;
+		deleteloadResponse.setStatus(CommonConstants.deleteSuccess);
+		return deleteloadResponse;
 	}
 
 }

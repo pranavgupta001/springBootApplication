@@ -14,7 +14,7 @@
 	<artifactId>TruckBooking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>TruckBooking</name>
-	<description>Demo project for Spring Boot</description>
+	<description>APIs for Loads</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -47,6 +47,11 @@
   			<groupId>org.postgresql</groupId>
   			<artifactId>postgresql</artifactId>
   			<!--<version> (managed by Spring Boot)42.2.5 </version> -->
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-boot-starter</artifactId>
+		    <version>3.0.0</version>
 		</dependency>
 
 	</dependencies>
