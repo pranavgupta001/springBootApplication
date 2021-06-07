@@ -14,7 +14,7 @@
 	<artifactId>TruckBooking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>TruckBooking</name>
-	<description>Demo project for Spring Boot</description>
+	<description>APIs for Loads</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -41,13 +41,22 @@
 		<dependency>
         	<groupId>org.projectlombok</groupId>
         	<artifactId>lombok</artifactId>
-        	<version>1.18.10</version>
         	<scope>provided</scope>
     	</dependency>
     	<dependency>
   			<groupId>org.postgresql</groupId>
   			<artifactId>postgresql</artifactId>
   			<!--<version> (managed by Spring Boot)42.2.5 </version> -->
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>2.9.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>2.9.2</version>
 		</dependency>
 
 	</dependencies>
@@ -61,6 +70,15 @@
 
 		</plugins>
 	</build>
-
-
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>2.9.2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
 </project>
