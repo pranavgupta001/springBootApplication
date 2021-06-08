@@ -169,14 +169,7 @@ public class LoadServiceImpl implements LoadService {
 			}
 			load.setId(addLoad.getId().trim());
 		}
-		
-		if(addLoad.getComment() != null) {
-			if(addLoad.getComment().trim().length() < 1) {
-				createloadResponse.setStatus("Empty comment");
-				return createloadResponse;
-			}
-			load.setComment(addLoad.getComment().trim());
-		}
+		//
 		
 		load.setLoadId("load:"+UUID.randomUUID());
 		load.setStatus(CommonConstants.pending);
@@ -335,14 +328,7 @@ public class LoadServiceImpl implements LoadService {
 				}
 				load.setId(updateLoad.getId().trim());
 			}
-			
-			if(updateLoad.getComment() != null) {
-				if(updateLoad.getComment().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty comment");
-					return updateloadResponse;
-				}
-				load.setComment(updateLoad.getComment().trim());
-			}
+			//
 			
 			if(updateLoad.getStatus() != null) {
 				if(updateLoad.getStatus().trim().length() < 1) {
