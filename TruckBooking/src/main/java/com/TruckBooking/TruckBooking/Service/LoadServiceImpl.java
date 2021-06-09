@@ -1,5 +1,6 @@
 package com.TruckBooking.TruckBooking.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -198,24 +199,35 @@ public class LoadServiceImpl implements LoadService {
 		// TODO Auto-generated method stub
 		if(loadingPointCity != null) {
 			if(unloadingPointCity != null) {
-				return loadDao.findByLoadAndUnloadPoint(loadingPointCity, unloadingPointCity);
+				List<Load> load = loadDao.findByLoadAndUnloadPoint(loadingPointCity, unloadingPointCity);   
+				Collections.reverse(load);
+				return load;
 			}
-			return loadDao.findByLoadingPointCity(loadingPointCity); 
+			List<Load> load = loadDao.findByLoadingPointCity(loadingPointCity);   
+			Collections.reverse(load);
+			return load;
 		}
 			
 		if(Id!=null) {
-			return loadDao.findByid(Id);
+			List<Load> load = loadDao.findByid(Id);            
+			Collections.reverse(load);
+			return load;
 		}
-			
+			 
 		if(truckType!=null) {
-			return loadDao.findByTruckType(truckType);
+			List<Load> load = loadDao.findByTruckType(truckType);               
+			Collections.reverse(load);
+			return load;
 		}
 		
 		if(date!=null) {
-			return loadDao.findByDate(date);
+			List<Load> load = loadDao.findByDate(date);                  
+			Collections.reverse(load);
+			return load;
 		}
-			
-		return loadDao.findAll();
+		List<Load> load = loadDao.findAll();                       
+		Collections.reverse(load);
+		return load;
 	}
 	
 	@Override
