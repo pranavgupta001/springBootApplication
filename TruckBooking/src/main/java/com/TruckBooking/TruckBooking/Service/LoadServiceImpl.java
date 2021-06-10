@@ -170,6 +170,9 @@ public class LoadServiceImpl implements LoadService {
 			}
 			load.setId(addLoad.getId().trim());
 		}
+		
+		// adding comment
+	    load.setComment(addLoad.getComment());
 		//
 		
 		load.setLoadId("load:"+UUID.randomUUID());
@@ -348,6 +351,11 @@ public class LoadServiceImpl implements LoadService {
 					return updateloadResponse;
 				}
 				load.setStatus(updateLoad.getStatus().trim());
+			}
+			// updating comment
+			if(updateLoad.getComment()!=null)
+			{
+				load.setComment(updateLoad.getComment());
 			}
 			
 			loadDao.save(load);
