@@ -1,6 +1,8 @@
 package com.TruckBooking.TruckBooking.Entities;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,7 +18,7 @@ public class Load {
 	private String loadingPoint;
 	private String loadingPointCity;
 	private String loadingPointState;
-	private String id;
+	private String postLoadId;
 	private String unloadingPoint;
 	private String unloadingPointCity;
 	private String unloadingPointState;
@@ -26,7 +28,15 @@ public class Load {
 	private String weight; 
 	private String comment; //this should be an optional
 	private String status;
-	private String date;
+	private String loadDate;
+	private Long rate;  //optional
+	
+	@Enumerated(EnumType.STRING)
+	private UnitValue unitValue;    //optional
+
+	public enum UnitValue{
+		PER_TON, PER_TRUCK
+	}
 	
 
 	

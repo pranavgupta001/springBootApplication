@@ -1,5 +1,7 @@
 package com.TruckBooking.TruckBooking.Dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,23 +14,25 @@ import com.TruckBooking.TruckBooking.Entities.Load;
 
 @Repository
 public interface LoadDao extends JpaRepository<Load , String> {
-	@Query("select l from Load l where l.id = :Id")
-	List<Load> findByid(String Id);
+
+	@Query("select l from Load l")
+	List<Load> findByAll(Pageable pageable);
+		
+	List<Load> findByPostLoadId(String postLoadId, Pageable pageable);
 	
 	Optional<Load> findByLoadId(String loadId);
 	
-	@Query("select l from Load l where l.loadingPointCity = :loadingPointCity AND l.unloadingPointCity = :unloadingPointCity")
-	List<Load> findByLoadAndUnloadPoint(String loadingPointCity, String unloadingPointCity);
+	List<Load> findByLoadingPointCityAndUnloadingPointCity(String loadingPointCity, String unloadingPointCity, Pageable pageable);
 	
-	List<Load> findByTruckType(String truckType);
+	List<Load> findByTruckType(String truckType, Pageable pageable);
 
-	List<Load> findByDate(String date);
+	List<Load> findByLoadDate(String loadDate, Pageable pageable);
 	
-	List<Load> findByLoadingPointCity(String loadingPointCity);
+	List<Load> findByLoadingPointCity(String loadingPointCity, Pageable pageable);
 	
-	List<Load> findByLoadingPointState(String loadingPointState);
+	List<Load> findByLoadingPointState(String loadingPointState, Pageable pageable);
 	
-	List<Load> findByUnloadingPointCity(String unloadingPointCity);
+	List<Load> findByUnloadingPointCity(String unloadingPointCity, Pageable pageable);
 	
-	List<Load> findByUnloadingPointState(String loadingPointState);
+	List<Load> findByUnloadingPointState(String loadingPointState, Pageable pageable);
 }

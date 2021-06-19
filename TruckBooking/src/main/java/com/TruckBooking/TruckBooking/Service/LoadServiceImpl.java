@@ -1,14 +1,19 @@
 package com.TruckBooking.TruckBooking.Service;
 
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
+import com.TruckBooking.TruckBooking.Entities.Load.UnitValue;
 import com.TruckBooking.TruckBooking.Model.LoadRequest;
 import com.TruckBooking.TruckBooking.Response.CreateLoadResponse;
 import com.TruckBooking.TruckBooking.Response.DeleteLoadResponse;
@@ -67,11 +72,11 @@ public class LoadServiceImpl implements LoadService {
 			createloadResponse.setStatus(CommonConstants.weightError);
 			return createloadResponse;
 		}
-		if(addLoad.getId()==null) {
+		if(addLoad.getPostLoadId()==null) {
 			createloadResponse.setStatus(CommonConstants.idError);
 			return createloadResponse;
 		}
-		if(addLoad.getDate()==null) {
+		if(addLoad.getLoadDate()==null) {
 			createloadResponse.setStatus(CommonConstants.dateError);
 			return createloadResponse;
 		}
@@ -155,20 +160,36 @@ public class LoadServiceImpl implements LoadService {
 			load.setWeight(addLoad.getWeight().trim());
 		}
 		
-		if(addLoad.getDate() != null) {
-			if(addLoad.getDate().trim().length() < 1) {
+		if(addLoad.getLoadDate() != null) {
+			if(addLoad.getLoadDate().trim().length() < 1) {
 				createloadResponse.setStatus("Empty date");
 				return createloadResponse;
 			}
-			load.setDate(addLoad.getDate().trim());
+			load.setLoadDate(addLoad.getLoadDate().trim());
 		}
 		
-		if(addLoad.getId() != null) {
-			if(addLoad.getId().trim().length() < 1) {
+		if(addLoad.getPostLoadId() != null) {
+			if(addLoad.getPostLoadId().trim().length() < 1) {
 				createloadResponse.setStatus("Empty Id");
 				return createloadResponse;
 			}
-			load.setId(addLoad.getId().trim());
+			load.setPostLoadId(addLoad.getPostLoadId().trim());
+		}
+		if(addLoad.getRate() != null)
+		{
+			load.setRate(addLoad.getRate());
+		}
+		if(addLoad.getUnitValue() != null)
+		{
+			if("PER_TON".equals(String.valueOf(addLoad.getUnitValue())))
+			{
+				//PER_TON, PER_TRUCK
+				load.setUnitValue(UnitValue.PER_TON);
+			}
+			else if("PER_TRUCK".equals(String.valueOf(addLoad.getUnitValue())))
+			{
+				load.setUnitValue(UnitValue.PER_TRUCK);
+			}
 		}
 		
 		// adding comment
@@ -191,48 +212,87 @@ public class LoadServiceImpl implements LoadService {
 		createloadResponse.setProductType(load.getProductType());
 		createloadResponse.setTruckType(load.getTruckType());
 		createloadResponse.setWeight(load.getWeight());
-		createloadResponse.setDate(load.getDate());
+		createloadResponse.setLoadDate(load.getLoadDate());
 		createloadResponse.setComment(load.getComment());
-		createloadResponse.setId(load.getId());
+		createloadResponse.setPostLoadId(load.getPostLoadId());
+		createloadResponse.setRate(load.getRate());
+		
+		if(load.getUnitValue()!=null)
+		{
+			if("PER_TON".equals(String.valueOf(load.getUnitValue())))
+			{
+				//PER_TON, PER_TRUCK
+				createloadResponse.setUnitValue(com.TruckBooking.TruckBooking.Response.CreateLoadResponse.UnitValue.PER_TON);
+			}
+			else if("PER_TRUCK".equals(String.valueOf(load.getUnitValue())))
+			{
+				createloadResponse.setUnitValue(com.TruckBooking.TruckBooking.Response.CreateLoadResponse.UnitValue.PER_TRUCK);
+			}
+		}
+		
 		return createloadResponse;
 	}
 	
 	@Override
-	public List<Load> getLoads(String loadingPointCity, String unloadingPointCity, String Id, String truckType, String date) {
+	public List<Load> getLoads(Integer pageNo, String loadingPointCity, String unloadingPointCity,
+			String postLoadId, String truckType, String loadDate, boolean suggestedLoads) {
+		
 		// TODO Auto-generated method stub
+		if (pageNo == null)
+			pageNo = 0;
+		
+		Pageable currentPage = PageRequest.of(pageNo, CommonConstants.pagesize);
+		
+		if(suggestedLoads==true)
+		{
+			System.err.println("suggested load working");
+			List<Load> load = loadDao.findByAll(currentPage);
+			Collections.reverse(load);
+			return load;
+		}
+		//Pageable p = PageRequest.of(pageNo,2);
 		if(loadingPointCity != null) {
 			if(unloadingPointCity != null) {
-				List<Load> load = loadDao.findByLoadAndUnloadPoint(loadingPointCity, unloadingPointCity);   
+				List<Load> load = loadDao.findByLoadingPointCityAndUnloadingPointCity(loadingPointCity, unloadingPointCity, currentPage);
 				Collections.reverse(load);
 				return load;
 			}
-			List<Load> load = loadDao.findByLoadingPointCity(loadingPointCity);   
+			List<Load> load = loadDao.findByLoadingPointCity(loadingPointCity, currentPage);   
+			Collections.reverse(load);
+			return load;
+		}
+		
+		if(unloadingPointCity != null)
+		{
+			List<Load> load = loadDao.findByUnloadingPointCity(unloadingPointCity, currentPage);
 			Collections.reverse(load);
 			return load;
 		}
 			
-		if(Id!=null) {
-			List<Load> load = loadDao.findByid(Id);            
+		if(postLoadId!=null) {
+			List<Load> load = loadDao.findByPostLoadId(postLoadId, currentPage);            
 			Collections.reverse(load);
 			return load;
 		}
 			 
 		if(truckType!=null) {
-			List<Load> load = loadDao.findByTruckType(truckType);               
+			List<Load> load = loadDao.findByTruckType(truckType, currentPage);               
 			Collections.reverse(load);
 			return load;
 		}
 		
-		if(date!=null) {
-			List<Load> load = loadDao.findByDate(date);                  
+		if(loadDate!=null) {
+			List<Load> load = loadDao.findByLoadDate(loadDate, currentPage);                  
 			Collections.reverse(load);
 			return load;
 		}
-		List<Load> load = loadDao.findAll();                       
+		
+		List<Load> load = loadDao.findByAll(currentPage);
 		Collections.reverse(load);
 		return load;
 	}
 	
+
 	@Override
 	public Load getLoad(String loadId) {
 		// TODO Auto-generated method stub
@@ -328,20 +388,20 @@ public class LoadServiceImpl implements LoadService {
 				load.setWeight(updateLoad.getWeight().trim());
 			}
 			
-			if(updateLoad.getDate() != null) {
-				if(updateLoad.getDate().trim().length() < 1) {
+			if(updateLoad.getLoadDate() != null) {
+				if(updateLoad.getLoadDate().trim().length() < 1) {
 					updateloadResponse.setStatus("Empty date");
 					return updateloadResponse;
 				}
-				load.setDate(updateLoad.getDate().trim());
+				load.setLoadDate(updateLoad.getLoadDate().trim());
 			}
 			
-			if(updateLoad.getId() != null) {
-				if(updateLoad.getId().trim().length() < 1) {
+			if(updateLoad.getPostLoadId() != null) {
+				if(updateLoad.getPostLoadId().trim().length() < 1) {
 					updateloadResponse.setStatus("Empty shipper Id");
 					return updateloadResponse;
 				}
-				load.setId(updateLoad.getId().trim());
+				load.setPostLoadId(updateLoad.getPostLoadId().trim());
 			}
 			//
 			
@@ -357,9 +417,53 @@ public class LoadServiceImpl implements LoadService {
 			{
 				load.setComment(updateLoad.getComment());
 			}
+			if(updateLoad.getRate()!=null)
+			{
+				load.setRate(updateLoad.getRate());
+			}
+			if(updateLoad.getUnitValue() != null)
+			{
+				if("PER_TON".equals(String.valueOf(updateLoad.getUnitValue())))
+				{
+					//PER_TON, PER_TRUCK
+					load.setUnitValue(UnitValue.PER_TON);
+				}
+				else if("PER_TRUCK".equals(String.valueOf(updateLoad.getUnitValue())))
+				{
+					load.setUnitValue(UnitValue.PER_TRUCK);
+				}
+			}
 			
 			loadDao.save(load);
 			updateloadResponse.setStatus(CommonConstants.updateSuccess);
+			updateloadResponse.setLoadId(load.getLoadId());
+			updateloadResponse.setLoadingPoint(load.getLoadingPoint());
+			updateloadResponse.setLoadingPointCity(load.getLoadingPointCity());
+			updateloadResponse.setLoadingPointState(load.getLoadingPointState());
+			updateloadResponse.setUnloadingPoint(load.getUnloadingPoint());
+			updateloadResponse.setUnloadingPointCity(load.getUnloadingPointCity());
+			updateloadResponse.setUnloadingPointState(load.getUnloadingPointState());
+			updateloadResponse.setNoOfTrucks(load.getNoOfTrucks());
+			updateloadResponse.setProductType(load.getProductType());
+			updateloadResponse.setTruckType(load.getTruckType());
+			updateloadResponse.setWeight(load.getWeight());
+			updateloadResponse.setLoadDate(load.getLoadDate());
+			updateloadResponse.setComment(load.getComment());
+			updateloadResponse.setPostLoadId(load.getPostLoadId());
+			updateloadResponse.setRate(load.getRate());
+			if(load.getUnitValue()!=null)
+			{
+				if("PER_TON".equals(String.valueOf(load.getUnitValue())))
+				{
+					//PER_TON, PER_TRUCK
+					updateloadResponse.setUnitValue(com.TruckBooking.TruckBooking.Response.UpdateLoadResponse.UnitValue.PER_TON);
+				}
+				else if("PER_TRUCK".equals(String.valueOf(load.getUnitValue())))
+				{
+					updateloadResponse.setUnitValue(com.TruckBooking.TruckBooking.Response.UpdateLoadResponse.UnitValue.PER_TRUCK);
+				}
+			}
+			
 			return updateloadResponse;
 		}
 		else {

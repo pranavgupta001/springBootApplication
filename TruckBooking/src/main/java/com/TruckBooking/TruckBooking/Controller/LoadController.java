@@ -33,13 +33,15 @@ public class LoadController {
 	}
 	
 	@GetMapping("/load")
-	public List<Load> findLoads(@RequestParam(name="loadingPointCity",required=false) String loadingPointCity,
+	public List<Load> findLoads(@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(name="loadingPointCity",required=false) String loadingPointCity,
 			@RequestParam(name="unloadingPointCity",required=false) String unloadingPointCity,
-			@RequestParam(name="Id",required=false) String Id,
+			@RequestParam(name="postLoadId",required=false) String postLoadId,
 			@RequestParam(name="truckType",required=false) String truckType,
-			@RequestParam(name="date",required=false) String date){
+			@RequestParam(name="loadDate",required=false) String loadDate,
+			@RequestParam(name="suggestedLoads",required=false) boolean suggestedLoads){
 		
-		return loadService.getLoads(loadingPointCity, unloadingPointCity, Id, truckType, date);
+		return loadService.getLoads(pageNo, loadingPointCity, unloadingPointCity, postLoadId, truckType, loadDate, suggestedLoads);
 	}
 	
 	@GetMapping("/load/{loadId}")
