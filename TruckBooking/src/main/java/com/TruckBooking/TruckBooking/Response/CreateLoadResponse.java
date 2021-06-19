@@ -1,15 +1,20 @@
 package com.TruckBooking.TruckBooking.Response;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+
 import lombok.Data;
 
 @Data
 public class CreateLoadResponse {
-	private String status;
+	
 	private String loadId;
+	private String status;
 	private String loadingPoint;
 	private String loadingPointCity;
 	private String loadingPointState;
-	private String id;
+	private String postLoadId;
 	private String unloadingPoint;
 	private String unloadingPointCity;
 	private String unloadingPointState;
@@ -18,5 +23,16 @@ public class CreateLoadResponse {
 	private String noOfTrucks;
 	private String weight; 
 	private String comment; //this should be an optional
-	private String date;
+	private String loadDate;
+
+	
+	private Long rate;
+	
+	@Enumerated(EnumType.STRING)
+	private UnitValue unitValue;
+
+	public enum UnitValue{
+		PER_TON, PER_TRUCK
+	}
+
 }
