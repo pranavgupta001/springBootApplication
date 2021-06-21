@@ -86,21 +86,21 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(addLoad.getLoadingPoint() != null) {
 			if(addLoad.getLoadingPoint().trim().length() < 1) {
-				createloadResponse.setStatus("Empty loading point");
+				createloadResponse.setStatus(CommonConstants.emptyloadingpoint);
 				return createloadResponse;
 			}
 			load.setLoadingPoint(addLoad.getLoadingPoint().trim());
 		}
 		if(addLoad.getLoadingPointCity() != null) {
 			if(addLoad.getLoadingPointCity().trim().length() < 1) {
-				createloadResponse.setStatus("Empty loading city");
+				createloadResponse.setStatus(CommonConstants.emptyloadingcity);
 				return createloadResponse;
 			}
 			load.setLoadingPointCity(addLoad.getLoadingPointCity().trim());
 		}
 		if(addLoad.getLoadingPointState() != null) {
 			if(addLoad.getLoadingPointState().trim().length() < 1) {
-				createloadResponse.setStatus("Empty loading state");
+				createloadResponse.setStatus(CommonConstants.emptyloadingstate);
 				return createloadResponse;
 			}
 			load.setLoadingPointState(addLoad.getLoadingPointState().trim());
@@ -108,21 +108,21 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(addLoad.getUnloadingPoint()!= null) {
 			if(addLoad.getUnloadingPoint().trim().length() < 1) {
-				createloadResponse.setStatus("Empty unloading point");
+				createloadResponse.setStatus(CommonConstants.emptyunloadingpoint);
 				return createloadResponse;
 			}
 			load.setUnloadingPoint(addLoad.getUnloadingPoint().trim());
 		}
 		if(addLoad.getUnloadingPointCity() != null) {
 			if(addLoad.getUnloadingPointCity().trim().length() < 1) {
-				createloadResponse.setStatus("Empty unloading city");
+				createloadResponse.setStatus(CommonConstants.emptyunloadingcity);
 				return createloadResponse;
 			}
 			load.setUnloadingPointCity(addLoad.getUnloadingPointCity().trim());
 		}
 		if(addLoad.getUnloadingPointState() != null) {
 			if(addLoad.getUnloadingPointState().trim().length() < 1) {
-				createloadResponse.setStatus("Empty unloading state");
+				createloadResponse.setStatus(CommonConstants.emptyunloadingstate);
 				return createloadResponse;
 			}
 			load.setUnloadingPointState(addLoad.getUnloadingPointState().trim());
@@ -130,7 +130,7 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(addLoad.getNoOfTrucks() != null) {
 			if(addLoad.getNoOfTrucks().trim().length() < 1) {
-				createloadResponse.setStatus("Empty truck number point");
+				createloadResponse.setStatus(CommonConstants.emptytruckno);
 				return createloadResponse;
 			}
 			load.setNoOfTrucks(addLoad.getNoOfTrucks().trim());
@@ -138,7 +138,7 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(addLoad.getTruckType() != null) {
 			if(addLoad.getTruckType().trim().length() < 1) {
-				createloadResponse.setStatus("Empty truck type");
+				createloadResponse.setStatus(CommonConstants.emptytrucktype);
 				return createloadResponse;
 			}
 			load.setTruckType(addLoad.getTruckType().trim());
@@ -146,7 +146,7 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(addLoad.getProductType() != null) {
 			if(addLoad.getProductType().trim().length() < 1) {
-				createloadResponse.setStatus("Empty product type");
+				createloadResponse.setStatus(CommonConstants.emptyproducttype);
 				return createloadResponse;
 			}
 			load.setProductType(addLoad.getProductType().trim());
@@ -154,7 +154,7 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(addLoad.getWeight() != null) {
 			if(addLoad.getWeight().trim().length() < 1) {
-				createloadResponse.setStatus("Empty product type");
+				createloadResponse.setStatus(CommonConstants.emptyweight);
 				return createloadResponse;
 			}
 			load.setWeight(addLoad.getWeight().trim());
@@ -162,7 +162,7 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(addLoad.getLoadDate() != null) {
 			if(addLoad.getLoadDate().trim().length() < 1) {
-				createloadResponse.setStatus("Empty date");
+				createloadResponse.setStatus(CommonConstants.emptydate);
 				return createloadResponse;
 			}
 			load.setLoadDate(addLoad.getLoadDate().trim());
@@ -170,20 +170,21 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(addLoad.getPostLoadId() != null) {
 			if(addLoad.getPostLoadId().trim().length() < 1) {
-				createloadResponse.setStatus("Empty Id");
+				createloadResponse.setStatus(CommonConstants.emptypostloadid);
 				return createloadResponse;
 			}
 			load.setPostLoadId(addLoad.getPostLoadId().trim());
 		}
+		
 		if(addLoad.getRate() != null)
 		{
 			load.setRate(addLoad.getRate());
 		}
+		
 		if(addLoad.getUnitValue() != null)
 		{
 			if("PER_TON".equals(String.valueOf(addLoad.getUnitValue())))
 			{
-				//PER_TON, PER_TRUCK
 				load.setUnitValue(UnitValue.PER_TON);
 			}
 			else if("PER_TRUCK".equals(String.valueOf(addLoad.getUnitValue())))
@@ -192,10 +193,7 @@ public class LoadServiceImpl implements LoadService {
 			}
 		}
 		
-		// adding comment
 	    load.setComment(addLoad.getComment());
-		//
-		
 		load.setLoadId("load:"+UUID.randomUUID());
 		load.setStatus(CommonConstants.pending);
 		loadDao.save(load);
@@ -217,11 +215,10 @@ public class LoadServiceImpl implements LoadService {
 		createloadResponse.setPostLoadId(load.getPostLoadId());
 		createloadResponse.setRate(load.getRate());
 		
-		if(load.getUnitValue()!=null)
+		if(load.getUnitValue() != null)
 		{
 			if("PER_TON".equals(String.valueOf(load.getUnitValue())))
 			{
-				//PER_TON, PER_TRUCK
 				createloadResponse.setUnitValue(com.TruckBooking.TruckBooking.Response.CreateLoadResponse.UnitValue.PER_TON);
 			}
 			else if("PER_TRUCK".equals(String.valueOf(load.getUnitValue())))
@@ -237,20 +234,18 @@ public class LoadServiceImpl implements LoadService {
 	public List<Load> getLoads(Integer pageNo, String loadingPointCity, String unloadingPointCity,
 			String postLoadId, String truckType, String loadDate, boolean suggestedLoads) {
 		
-		// TODO Auto-generated method stub
 		if (pageNo == null)
 			pageNo = 0;
 		
 		Pageable currentPage = PageRequest.of(pageNo, CommonConstants.pagesize);
 		
-		if(suggestedLoads==true)
+		if(suggestedLoads)
 		{
-			System.err.println("suggested load working");
 			List<Load> load = loadDao.findByAll(currentPage);
 			Collections.reverse(load);
 			return load;
 		}
-		//Pageable p = PageRequest.of(pageNo,2);
+		
 		if(loadingPointCity != null) {
 			if(unloadingPointCity != null) {
 				List<Load> load = loadDao.findByLoadingPointCityAndUnloadingPointCity(loadingPointCity, unloadingPointCity, currentPage);
@@ -269,19 +264,19 @@ public class LoadServiceImpl implements LoadService {
 			return load;
 		}
 			
-		if(postLoadId!=null) {
+		if(postLoadId != null) {
 			List<Load> load = loadDao.findByPostLoadId(postLoadId, currentPage);            
 			Collections.reverse(load);
 			return load;
 		}
 			 
-		if(truckType!=null) {
+		if(truckType != null) {
 			List<Load> load = loadDao.findByTruckType(truckType, currentPage);               
 			Collections.reverse(load);
 			return load;
 		}
 		
-		if(loadDate!=null) {
+		if(loadDate != null) {
 			List<Load> load = loadDao.findByLoadDate(loadDate, currentPage);                  
 			Collections.reverse(load);
 			return load;
@@ -314,21 +309,21 @@ public class LoadServiceImpl implements LoadService {
 			
 			if(updateLoad.getLoadingPoint() != null) {
 				if(updateLoad.getLoadingPoint().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty loading point");
+					updateloadResponse.setStatus(CommonConstants.emptyloadingpoint);
 					return updateloadResponse;
 				}
 				load.setLoadingPoint(updateLoad.getLoadingPoint().trim());
 			}
 			if(updateLoad.getLoadingPointCity() != null) {
 				if(updateLoad.getLoadingPointCity().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty loading city");
+					updateloadResponse.setStatus(CommonConstants.emptyloadingcity);
 					return updateloadResponse;
 				}
 				load.setLoadingPointCity(updateLoad.getLoadingPointCity().trim());
 			}
 			if(updateLoad.getLoadingPointState() != null) {
 				if(updateLoad.getLoadingPointState().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty loading state");
+					updateloadResponse.setStatus(CommonConstants.emptyloadingstate);
 					return updateloadResponse;
 				}
 				load.setLoadingPointState(updateLoad.getLoadingPointState().trim());
@@ -336,21 +331,21 @@ public class LoadServiceImpl implements LoadService {
 			
 			if(updateLoad.getUnloadingPoint()!= null) {
 				if(updateLoad.getUnloadingPoint().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty unloading point");
+					updateloadResponse.setStatus(CommonConstants.emptyunloadingpoint);
 					return updateloadResponse;
 				}
 				load.setUnloadingPoint(updateLoad.getUnloadingPoint().trim());
 			}
 			if(updateLoad.getUnloadingPointCity() != null) {
 				if(updateLoad.getUnloadingPointCity().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty unloading city");
+					updateloadResponse.setStatus(CommonConstants.emptyunloadingcity);
 					return updateloadResponse;
 				}
 				load.setUnloadingPointCity(updateLoad.getUnloadingPointCity().trim());
 			}
 			if(updateLoad.getUnloadingPointState() != null) {
 				if(updateLoad.getUnloadingPointState().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty unloading state");
+					updateloadResponse.setStatus(CommonConstants.emptyunloadingstate);
 					return updateloadResponse;
 				}
 				load.setUnloadingPointState(updateLoad.getUnloadingPointState().trim());
@@ -358,7 +353,7 @@ public class LoadServiceImpl implements LoadService {
 			
 			if(updateLoad.getNoOfTrucks() != null) {
 				if(updateLoad.getNoOfTrucks().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty truck number point");
+					updateloadResponse.setStatus(CommonConstants.emptytruckno);
 					return updateloadResponse;
 				}
 				load.setNoOfTrucks(updateLoad.getNoOfTrucks().trim());
@@ -366,7 +361,7 @@ public class LoadServiceImpl implements LoadService {
 			
 			if(updateLoad.getTruckType() != null) {
 				if(updateLoad.getTruckType().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty truck type");
+					updateloadResponse.setStatus(CommonConstants.emptytrucktype);
 					return updateloadResponse;
 				}
 				load.setTruckType(updateLoad.getTruckType().trim());
@@ -374,7 +369,7 @@ public class LoadServiceImpl implements LoadService {
 			
 			if(updateLoad.getProductType() != null) {
 				if(updateLoad.getProductType().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty product type");
+					updateloadResponse.setStatus(CommonConstants.emptyproducttype);
 					return updateloadResponse;
 				}
 				load.setProductType(updateLoad.getProductType().trim());
@@ -382,7 +377,7 @@ public class LoadServiceImpl implements LoadService {
 			
 			if(updateLoad.getWeight() != null) {
 				if(updateLoad.getWeight().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty product type");
+					updateloadResponse.setStatus(CommonConstants.emptyweight);
 					return updateloadResponse;
 				}
 				load.setWeight(updateLoad.getWeight().trim());
@@ -390,7 +385,7 @@ public class LoadServiceImpl implements LoadService {
 			
 			if(updateLoad.getLoadDate() != null) {
 				if(updateLoad.getLoadDate().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty date");
+					updateloadResponse.setStatus(CommonConstants.emptydate);
 					return updateloadResponse;
 				}
 				load.setLoadDate(updateLoad.getLoadDate().trim());
@@ -398,34 +393,34 @@ public class LoadServiceImpl implements LoadService {
 			
 			if(updateLoad.getPostLoadId() != null) {
 				if(updateLoad.getPostLoadId().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty shipper Id");
+					updateloadResponse.setStatus(CommonConstants.emptypostloadid);
 					return updateloadResponse;
 				}
 				load.setPostLoadId(updateLoad.getPostLoadId().trim());
 			}
-			//
 			
 			if(updateLoad.getStatus() != null) {
 				if(updateLoad.getStatus().trim().length() < 1) {
-					updateloadResponse.setStatus("Empty comment");
+					updateloadResponse.setStatus("Empty status");
 					return updateloadResponse;
 				}
 				load.setStatus(updateLoad.getStatus().trim());
 			}
-			// updating comment
-			if(updateLoad.getComment()!=null)
+			
+			if(updateLoad.getComment() != null)
 			{
 				load.setComment(updateLoad.getComment());
 			}
-			if(updateLoad.getRate()!=null)
+			
+			if(updateLoad.getRate() != null)
 			{
 				load.setRate(updateLoad.getRate());
 			}
+			
 			if(updateLoad.getUnitValue() != null)
 			{
 				if("PER_TON".equals(String.valueOf(updateLoad.getUnitValue())))
 				{
-					//PER_TON, PER_TRUCK
 					load.setUnitValue(UnitValue.PER_TON);
 				}
 				else if("PER_TRUCK".equals(String.valueOf(updateLoad.getUnitValue())))
@@ -435,7 +430,6 @@ public class LoadServiceImpl implements LoadService {
 			}
 			
 			loadDao.save(load);
-			updateloadResponse.setStatus(CommonConstants.updateSuccess);
 			updateloadResponse.setLoadId(load.getLoadId());
 			updateloadResponse.setLoadingPoint(load.getLoadingPoint());
 			updateloadResponse.setLoadingPointCity(load.getLoadingPointCity());
@@ -447,15 +441,16 @@ public class LoadServiceImpl implements LoadService {
 			updateloadResponse.setProductType(load.getProductType());
 			updateloadResponse.setTruckType(load.getTruckType());
 			updateloadResponse.setWeight(load.getWeight());
+			updateloadResponse.setStatus(load.getStatus());
 			updateloadResponse.setLoadDate(load.getLoadDate());
 			updateloadResponse.setComment(load.getComment());
 			updateloadResponse.setPostLoadId(load.getPostLoadId());
 			updateloadResponse.setRate(load.getRate());
-			if(load.getUnitValue()!=null)
+			
+			if(load.getUnitValue() != null)
 			{
 				if("PER_TON".equals(String.valueOf(load.getUnitValue())))
 				{
-					//PER_TON, PER_TRUCK
 					updateloadResponse.setUnitValue(com.TruckBooking.TruckBooking.Response.UpdateLoadResponse.UnitValue.PER_TON);
 				}
 				else if("PER_TRUCK".equals(String.valueOf(load.getUnitValue())))

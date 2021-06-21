@@ -2,14 +2,10 @@ package com.TruckBooking.TruckBooking.Model;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
-public @Data class LoadRequest {
+@Data
+public class LoadRequest {
 
 	private String loadingPoint;
 	private String loadingPointCity;

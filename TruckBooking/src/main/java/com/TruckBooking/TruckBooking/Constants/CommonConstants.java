@@ -11,19 +11,6 @@ public class CommonConstants {
 	public static String loadingStateError = "Enter loading state";
 	public static String unloadingStateError = "Enter unloading state";
 	
-	public static String emptyloadingpoint = "Empty loading point";
-	public static String emptyloadingcity = "Empty loading city";
-	public static String emptyloadingstate = "Empty loading state";
-	public static String emptyunloadingpoint = "Empty unloading point";
-	public static String emptyunloadingcity = "Empty unloading city";
-	public static String emptyunloadingstate = "Empty unloading state";
-	public static String emptytruckno = "Empty truck number point";
-    public static String emptytrucktype = "Empty truck type";
-	public static String emptyproducttype = "Empty product type";
-	public static String emptydate = "Empty date";
-	public static String emptyshiperid = "Empty shipper Id";
-	public static String emptycomment = "Empty comment";
-	
 	public static String noOfTrucksError = "Enter number of trucks";
 	public static String truckTypeError = "Enter type of truck";
 	public static String productTypeError = "Enter type of product";
@@ -35,6 +22,19 @@ public class CommonConstants {
 	public static String deleteSuccess = "Deleted Succcessfully";
 	public static String emptyStringError = "Fields cannot be empty or cannot contain only whitespaces";
 	
+	public static String emptyloadingpoint = "Empty loading point";
+	public static String emptyloadingcity = "Empty loading city";
+	public static String emptyloadingstate = "Empty loading state";
+	public static String emptyunloadingpoint = "Empty unloading point";
+	public static String emptyunloadingcity = "Empty unloading city";
+	public static String emptyunloadingstate = "Empty unloading state";
+	public static String emptytruckno = "Empty number of trucks";
+    public static String emptytrucktype = "Empty truck type";
+	public static String emptyproducttype = "Empty product type";
+	public static String emptydate = "Empty date";
+	public static String emptyweight = "Empty weight";
+	public static String emptypostloadid = "Empty postLoadId";
+	public static String emptycomment = "Empty comment";
 	
 	// for testing
 	public static String URI = "/load";
