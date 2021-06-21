@@ -43,14 +43,9 @@ paths:
       produces:
         - '*/*'
       parameters:
-        - name: Id
+        - name: loadDate
           in: query
-          description: Id
-          required: false
-          type: string
-        - name: date
-          in: query
-          description: date
+          description: loadDate
           required: false
           type: string
         - name: loadingPointCity
@@ -58,6 +53,22 @@ paths:
           description: loadingPointCity
           required: false
           type: string
+        - name: pageNo
+          in: query
+          description: pageNo
+          required: false
+          type: integer
+          format: int32
+        - name: postLoadId
+          in: query
+          description: postLoadId
+          required: false
+          type: string
+        - name: suggestedLoads
+          in: query
+          description: suggestedLoads
+          required: false
+          type: boolean
         - name: truckType
           in: query
           description: truckType
@@ -204,9 +215,7 @@ definitions:
     properties:
       comment:
         type: string
-      date:
-        type: string
-      id:
+      loadDate:
         type: string
       loadId:
         type: string
@@ -218,12 +227,22 @@ definitions:
         type: string
       noOfTrucks:
         type: string
+      postLoadId:
+        type: string
       productType:
         type: string
+      rate:
+        type: integer
+        format: int64
       status:
         type: string
       truckType:
         type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
       unloadingPoint:
         type: string
       unloadingPointCity:
@@ -244,9 +263,7 @@ definitions:
     properties:
       comment:
         type: string
-      date:
-        type: string
-      id:
+      loadDate:
         type: string
       loadId:
         type: string
@@ -258,12 +275,22 @@ definitions:
         type: string
       noOfTrucks:
         type: string
+      postLoadId:
+        type: string
       productType:
         type: string
+      rate:
+        type: integer
+        format: int64
       status:
         type: string
       truckType:
         type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
       unloadingPoint:
         type: string
       unloadingPointCity:
@@ -278,9 +305,7 @@ definitions:
     properties:
       comment:
         type: string
-      date:
-        type: string
-      id:
+      loadDate:
         type: string
       loadingPoint:
         type: string
@@ -290,12 +315,22 @@ definitions:
         type: string
       noOfTrucks:
         type: string
+      postLoadId:
+        type: string
       productType:
         type: string
+      rate:
+        type: integer
+        format: int64
       status:
         type: string
       truckType:
         type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
       unloadingPoint:
         type: string
       unloadingPointCity:
@@ -308,6 +343,42 @@ definitions:
   UpdateLoadResponse:
     type: object
     properties:
+      comment:
+        type: string
+      loadDate:
+        type: string
+      loadId:
+        type: string
+      loadingPoint:
+        type: string
+      loadingPointCity:
+        type: string
+      loadingPointState:
+        type: string
+      noOfTrucks:
+        type: string
+      postLoadId:
+        type: string
+      productType:
+        type: string
+      rate:
+        type: integer
+        format: int64
       status:
+        type: string
+      truckType:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      unloadingPoint:
+        type: string
+      unloadingPointCity:
+        type: string
+      unloadingPointState:
+        type: string
+      weight:
         type: string
     title: UpdateLoadResponse
