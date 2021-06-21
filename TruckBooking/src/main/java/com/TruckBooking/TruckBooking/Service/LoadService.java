@@ -9,7 +9,8 @@ import com.TruckBooking.TruckBooking.Response.UpdateLoadResponse;
 
 public interface LoadService {
 	public CreateLoadResponse addLoad(LoadRequest loadrequest);
-	public List<Load> getLoads(String loadingPointCity, String unloadingPointCity, String shipperId, String truckType, String date);
+	public List<Load> getLoads(Integer pageNo, String loadingPointCity, String unloadingPointCity, String shipperId, 
+			String truckType, String date, boolean suggestedLoads);
 	public UpdateLoadResponse updateLoad(String loadId, LoadRequest loadrequest); 
 	public Load getLoad(String loadId);
 	public DeleteLoadResponse deleteLoad(String loadId);
