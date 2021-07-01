@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
-import com.TruckBooking.TruckBooking.Response.UpdateLoadResponse;
 import com.TruckBooking.TruckBooking.Service.LoadServiceImpl;
 
 @RestController
@@ -64,18 +63,19 @@ public class LoadController {
 	}
 	
 	@PutMapping("/load/{loadId}")
-	public UpdateLoadResponse updateLoad(
+	public ResponseEntity<Load> updateLoad(
 			@PathVariable String loadId,
 			@RequestBody Load loadrequest
 			)
 			throws EntityNotFoundException{
-//		throw new LoadRequestException("Oops cannot find the load");
-		return loadService.updateLoad(loadId, loadrequest);
-		
+		return new ResponseEntity<>(
+				loadService.updateLoad(loadId, loadrequest),
+				HttpStatus.OK
+				);
 	}
 	
 	@DeleteMapping("/load/{loadId}")
-	public ResponseEntity<String> deleteLoad(@PathVariable String loadId) 
+	public ResponseEntity<Object> deleteLoad(@PathVariable String loadId) 
 			throws EntityNotFoundException{
 		loadService.deleteLoad(loadId);
 		return new ResponseEntity<>("Successfully Deleted",HttpStatus.OK);

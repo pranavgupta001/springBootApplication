@@ -15,10 +15,6 @@ import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
-import com.TruckBooking.TruckBooking.Model.LoadRequest;
-import com.TruckBooking.TruckBooking.Response.CreateLoadResponse;
-import com.TruckBooking.TruckBooking.Response.DeleteLoadResponse;
-import com.TruckBooking.TruckBooking.Response.UpdateLoadResponse;
 
 @Service
 public class LoadServiceImpl implements LoadService {
@@ -115,8 +111,7 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public UpdateLoadResponse updateLoad(String loadId, Load updateLoad) {
-		UpdateLoadResponse updateloadResponse = new UpdateLoadResponse();
+	public Load updateLoad(String loadId, Load updateLoad) {
 		Optional<Load> Id=loadDao.findByLoadId(loadId);
 
 		if(Id.isEmpty())
@@ -124,117 +119,71 @@ public class LoadServiceImpl implements LoadService {
 
 		Load load=Id.get();
 
-		if(updateLoad.getLoadingPoint() != null) {
-			temp=updateLoad.getLoadingPoint().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptyloadingpoint);
-				return updateloadResponse;
-			}
-			load.setLoadingPoint(temp);
-		}
-		if(updateLoad.getLoadingPointCity() != null) {
-			temp=updateLoad.getLoadingPointCity().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptyloadingcity);
-				return updateloadResponse;
-			}
-			load.setLoadingPointCity(temp);
-		}
-		if(updateLoad.getLoadingPointState() != null) {
-			temp=updateLoad.getLoadingPointState().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptyloadingstate);
-				return updateloadResponse;
-			}
-			load.setLoadingPointState(temp);
+		temp=updateLoad.getLoadingPoint();
+		if(temp !=null && !temp.isBlank()) {
+			load.setLoadingPoint(temp.trim());
 		}
 
-		if(updateLoad.getUnloadingPoint()!= null) {
-			temp=updateLoad.getUnloadingPoint().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptyunloadingpoint);
-				return updateloadResponse;
-			}
-			load.setUnloadingPoint(temp);
-		}
-		if(updateLoad.getUnloadingPointCity() != null) {
-			temp=updateLoad.getUnloadingPointCity().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptyunloadingcity);
-				return updateloadResponse;
-			}
-			load.setUnloadingPointCity(temp);
-		}
-		if(updateLoad.getUnloadingPointState() != null) {
-			temp=updateLoad.getUnloadingPointState().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptyunloadingstate);
-				return updateloadResponse;
-			}
-			load.setUnloadingPointState(temp);
+		temp=updateLoad.getLoadingPointCity();
+		if(temp !=null && !temp.isBlank()) {
+			load.setLoadingPointCity(temp.trim());
 		}
 
-		if(updateLoad.getNoOfTrucks() != null) {
-			temp=updateLoad.getNoOfTrucks().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptytruckno);
-				return updateloadResponse;
-			}
-			load.setNoOfTrucks(temp);
+		temp=updateLoad.getLoadingPointState();
+		if(temp != null && !temp.isBlank()) {
+			load.setLoadingPointState(temp.trim());
 		}
 
-		if(updateLoad.getTruckType() != null) {
-			temp=updateLoad.getTruckType().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptytrucktype);
-				return updateloadResponse;
-			}
-			load.setTruckType(temp);
+		temp=updateLoad.getUnloadingPoint();
+		if(temp != null && !temp.isBlank()) {
+			load.setUnloadingPoint(temp.trim());
 		}
 
-		if(updateLoad.getProductType() != null) {
-			temp=updateLoad.getProductType().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptyproducttype);
-				return updateloadResponse;
-			}
-			load.setProductType(temp);
+		temp=updateLoad.getUnloadingPointCity();
+		if(temp != null && !temp.isBlank()) {
+			load.setUnloadingPointCity(temp.trim());
 		}
-
-		if(updateLoad.getWeight() != null) {
-			temp=updateLoad.getWeight().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptyweight);
-				return updateloadResponse;
-			}
-			load.setWeight(temp);
+		
+		temp=updateLoad.getUnloadingPointState();
+		if(temp != null && !temp.isBlank()) {
+			load.setUnloadingPointState(temp.trim());
 		}
-
-		if(updateLoad.getLoadDate() != null) {
-			temp=updateLoad.getLoadDate().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptydate);
-				return updateloadResponse;
-			}
-			load.setLoadDate(temp);
+		
+		temp=updateLoad.getNoOfTrucks();
+		if(temp != null && !temp.isBlank()) {
+			load.setNoOfTrucks(temp.trim());
 		}
-
-		if(updateLoad.getPostLoadId() != null) {
-			temp=updateLoad.getPostLoadId().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus(CommonConstants.emptypostloadid);
-				return updateloadResponse;
-			}
+		
+		temp=updateLoad.getTruckType();
+		if(temp != null && !temp.isBlank()) {
+			
+			load.setTruckType(temp.trim());
+		}
+		
+		temp=updateLoad.getProductType();
+		if(temp != null && !temp.isBlank()) {
+			
+			load.setProductType(temp.trim());
+		}
+		
+		temp=updateLoad.getWeight();
+		if(temp != null && !temp.isBlank()) {
+			load.setWeight(temp.trim());
+		}
+		
+		temp=updateLoad.getLoadDate();
+		if(temp != null && !temp.isBlank()) {
+			load.setLoadDate(temp.trim());
+		}
+		
+		temp=updateLoad.getPostLoadId();
+		if(temp != null && !temp.isBlank()) {
 			load.setPostLoadId(temp);
 		}
-
-		if(updateLoad.getStatus() != null) {
-			temp=updateLoad.getStatus().trim();
-			if(temp.length() < 1) {
-				updateloadResponse.setStatus("Empty status");
-				return updateloadResponse;
-			}
-			load.setStatus(temp);
+		
+		temp=updateLoad.getStatus();
+		if(temp != null && !temp.isBlank()) {
+			load.setStatus(temp.trim());
 		}
 
 		if(updateLoad.getComment() != null)
@@ -263,50 +212,15 @@ public class LoadServiceImpl implements LoadService {
 
 		loadDao.save(load);
 
-		updateloadResponse.setLoadId(load.getLoadId());
-		updateloadResponse.setLoadingPoint(load.getLoadingPoint());
-		updateloadResponse.setLoadingPointCity(load.getLoadingPointCity());
-		updateloadResponse.setLoadingPointState(load.getLoadingPointState());
-		updateloadResponse.setUnloadingPoint(load.getUnloadingPoint());
-		updateloadResponse.setUnloadingPointCity(load.getUnloadingPointCity());
-		updateloadResponse.setUnloadingPointState(load.getUnloadingPointState());
-		updateloadResponse.setNoOfTrucks(load.getNoOfTrucks());
-		updateloadResponse.setProductType(load.getProductType());
-		updateloadResponse.setTruckType(load.getTruckType());
-		updateloadResponse.setWeight(load.getWeight());
-		updateloadResponse.setStatus(load.getStatus());
-		updateloadResponse.setLoadDate(load.getLoadDate());
-		updateloadResponse.setComment(load.getComment());
-		updateloadResponse.setPostLoadId(load.getPostLoadId());
-		updateloadResponse.setRate(load.getRate());
-
-		if(load.getUnitValue() != null)
-		{
-			String unitValue=String.valueOf(load.getUnitValue());
-			if("PER_TON".equals(unitValue))
-			{
-				updateloadResponse.setUnitValue(UpdateLoadResponse.UnitValue.PER_TON);
-			}
-			else if("PER_TRUCK".equals(unitValue))
-			{
-				updateloadResponse.setUnitValue(UpdateLoadResponse.UnitValue.PER_TRUCK);
-			}
-		}
-
-		return updateloadResponse;
+		return load;
 	}
 
 	@Override
-	public DeleteLoadResponse deleteLoad(String loadId) {
-		DeleteLoadResponse deleteloadResponse = new DeleteLoadResponse();
+	public void deleteLoad(String loadId) {
 		Optional<Load> L = loadDao.findByLoadId(loadId);
-		if(L.isEmpty()) {
-			deleteloadResponse.setStatus(CommonConstants.AccountNotFoundError);
-			return deleteloadResponse;
-		}
+		if(L.isEmpty())
+			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
 		loadDao.delete(L.get());
-		deleteloadResponse.setStatus(CommonConstants.deleteSuccess);
-		return deleteloadResponse;
 	}
 
 }
