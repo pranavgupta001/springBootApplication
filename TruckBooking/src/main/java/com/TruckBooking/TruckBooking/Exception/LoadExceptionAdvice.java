@@ -2,6 +2,7 @@ package com.TruckBooking.TruckBooking.Exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,6 +22,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import ch.qos.logback.classic.Logger;
+
 
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -28,7 +31,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	
-
+	Logger logger =(Logger) LoggerFactory.getLogger(LoadExceptionAdvice.class);
+	
     /**
      * Handle MissingServletRequestParameterException. Triggered when a 'required' request parameter is missing.
      *
@@ -45,6 +49,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
             HttpStatus status,
             WebRequest request)
     {
+    	logger.trace("handleMissingServletRequestParameter is accessed");
         String error = ex.getParameterName() + " parameter is missing";
         return buildResponseEntity(new LoadErrorResponse(HttpStatus.BAD_REQUEST, error, ex));
     }
@@ -65,6 +70,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request) {
+    	logger.trace("handleHttpMediaTypeNotSupported is accessed");
         StringBuilder builder = new StringBuilder();
         builder.append(ex.getContentType());
         builder.append(" media type is not supported. Supported media types are ");
@@ -87,6 +93,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request) {
+    	logger.trace("handleMethodArgumentNotValid is accessed");
         LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
         loadErrorResponse.setMessage("Validation error");
         loadErrorResponse.addValidationErrors(ex.getBindingResult().getFieldErrors());
@@ -103,6 +110,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
     @ExceptionHandler(javax.validation.ConstraintViolationException.class)
     protected ResponseEntity<Object> handleConstraintViolation(
             javax.validation.ConstraintViolationException ex) {
+    	logger.trace("handleConstraintViolation accessed");
         LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
         loadErrorResponse.setMessage("Validation error");
         loadErrorResponse.addValidationErrors(ex.getConstraintViolations());
@@ -118,6 +126,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFound(
             EntityNotFoundException ex) {
+    	logger.trace("handleEntityNotFound accessed");
         LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.NOT_FOUND);
         loadErrorResponse.setMessage(ex.getMessage());
         return buildResponseEntity(loadErrorResponse);
@@ -134,7 +143,8 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
      */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ServletWebRequest servletWebRequest = (ServletWebRequest) request;
+        logger.trace("handleHttpMessageNotReadable is accessed");
+    	ServletWebRequest servletWebRequest = (ServletWebRequest) request;
         log.info("{} to {}", servletWebRequest.getHttpMethod(), servletWebRequest.getRequest().getServletPath());
         String error = "Malformed JSON request";
         return buildResponseEntity(new LoadErrorResponse(HttpStatus.BAD_REQUEST, error, ex));
@@ -151,7 +161,8 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
      */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String error = "Error writing JSON output";
+    	logger.trace("handleHttpMessageNotWritable is accessed");
+    	String error = "Error writing JSON output";
         return buildResponseEntity(new LoadErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
     }
 
@@ -167,6 +178,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(
             NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    	logger.trace("handleNoHandlerFoundException is accessed");
         LoadErrorResponse  apiError = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
         apiError.setMessage(String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL()));
         apiError.setDebugMessage(ex.getMessage());
@@ -178,7 +190,8 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
      */
     @ExceptionHandler(javax.persistence.EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFound(javax.persistence.EntityNotFoundException ex) {
-        return buildResponseEntity(new LoadErrorResponse(HttpStatus.NOT_FOUND, ex));
+        logger.trace("handleEntityNotFound is accessed");
+    	return buildResponseEntity(new LoadErrorResponse(HttpStatus.NOT_FOUND, ex));
     }
 
     /**
@@ -190,6 +203,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
     @ExceptionHandler(DataIntegrityViolationException.class)
     protected ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex,
                                                                   WebRequest request) {
+    	logger.trace("handleDataIntegrityViolation is accessed");
         if (ex.getCause() instanceof ConstraintViolationException) {
             return buildResponseEntity(new LoadErrorResponse(HttpStatus.CONFLICT, "Database error", ex.getCause()));
         }
@@ -205,6 +219,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
                                                                       WebRequest request) {
+    	logger.trace("handleMethodArgumentTypeMismatch is accessed");
         LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
         loadErrorResponse.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'", ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
         loadErrorResponse.setDebugMessage(ex.getMessage());

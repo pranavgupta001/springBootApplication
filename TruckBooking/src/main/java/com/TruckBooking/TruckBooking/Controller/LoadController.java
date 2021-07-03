@@ -3,6 +3,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +19,24 @@ import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
 import com.TruckBooking.TruckBooking.Service.LoadServiceImpl;
 
+import ch.qos.logback.classic.Logger;
+
 @RestController
 public class LoadController {
-
+	
+	Logger logger =(Logger) LoggerFactory.getLogger(LoadController.class);
 	@Autowired
 	public LoadServiceImpl loadService;
 	
 	@GetMapping("/home")
 	public String getmessage() {
+		logger.trace("Home is accessed");
 		return "Welcome to loadApi...!!!";
 	}
 	
 	@PostMapping("/load")
 	public ResponseEntity<Load> load(@Valid @RequestBody Load loadrequest){
+		logger.trace("load is accessed");
 		return new ResponseEntity<>(loadService.addLoad(loadrequest),HttpStatus.CREATED);
 	}
 	
@@ -43,6 +49,8 @@ public class LoadController {
 			@RequestParam(name="loadDate",required=false) String loadDate,
 			@RequestParam(name="suggestedLoads",required=false) boolean suggestedLoads)
 					throws EntityNotFoundException{
+		
+		logger.trace("findLoads is accessed");
 		
 		return new ResponseEntity<>(
 				loadService.getLoads(
@@ -59,6 +67,7 @@ public class LoadController {
 	@GetMapping("/load/{loadId}")
 	public ResponseEntity<Object> findLoad(@PathVariable String loadId)
 			throws EntityNotFoundException{
+		logger.trace("findLoad is accessed");
 		return new ResponseEntity<>(loadService.getLoad(loadId),HttpStatus.FOUND);
 	}
 	
@@ -68,6 +77,7 @@ public class LoadController {
 			@RequestBody Load loadrequest
 			)
 			throws EntityNotFoundException{
+		logger.trace("updateLoad is accessed");
 		return new ResponseEntity<>(
 				loadService.updateLoad(loadId, loadrequest),
 				HttpStatus.OK
@@ -77,6 +87,7 @@ public class LoadController {
 	@DeleteMapping("/load/{loadId}")
 	public ResponseEntity<Object> deleteLoad(@PathVariable String loadId) 
 			throws EntityNotFoundException{
+		logger.trace("deleteLoad is accessed");
 		loadService.deleteLoad(loadId);
 		return new ResponseEntity<>("Successfully Deleted",HttpStatus.OK);
 	}

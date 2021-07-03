@@ -8,7 +8,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
@@ -16,15 +20,19 @@ import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
 
+import ch.qos.logback.classic.Logger;
+
 @Service
 public class LoadServiceImpl implements LoadService {
+
+	Logger logger =(Logger) LoggerFactory.getLogger(LoadServiceImpl.class);
 	@Autowired
 	LoadDao loadDao;
 
 	String temp="";
 	@Override
-	public Load addLoad(Load load) {	
-
+	public Load addLoad(Load load) throws DataIntegrityViolationException{	
+		logger.trace("addLoad(ServiceImpl) is accessed");
 		String unitValue=String.valueOf(load.getUnitValue());
 
 		if("PER_TON".equals(unitValue))
@@ -38,14 +46,19 @@ public class LoadServiceImpl implements LoadService {
 
 		load.setLoadId("load:"+UUID.randomUUID());
 		load.setStatus(CommonConstants.pending);
-
 		loadDao.save(load);
 		return  load;
 	}
 
 	@Override
-	public List<Load> getLoads(Integer pageNo, String loadingPointCity, String unloadingPointCity,
-			String postLoadId, String truckType, String loadDate, boolean suggestedLoads) {
+	public List<Load> getLoads(
+			Integer pageNo, String loadingPointCity,
+			String unloadingPointCity,String postLoadId,
+			String truckType, String loadDate,
+			boolean suggestedLoads) 
+					throws DataIntegrityViolationException{
+
+		logger.trace("getLoads(ServiceImpl) is accessed");
 
 		if (pageNo == null)
 			pageNo = 0;
@@ -102,7 +115,9 @@ public class LoadServiceImpl implements LoadService {
 
 
 	@Override
-	public Load getLoad(String loadId) {
+	public Load getLoad(String loadId) 
+			throws DataIntegrityViolationException{
+		logger.trace("getLoad(ServiceImpl) is acessed");
 		Optional<Load> load=loadDao.findByLoadId(loadId);
 		if(load.isEmpty())
 			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
@@ -111,78 +126,80 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public Load updateLoad(String loadId, Load updateLoad) {
-		Optional<Load> Id=loadDao.findByLoadId(loadId);
+	public Load updateLoad(String loadId, Load updateLoad) 
+			throws DataIntegrityViolationException{
+		logger.trace("updateLoad(ServiceImpl) is acessed");
 
+		Optional<Load> Id=loadDao.findByLoadId(loadId);
 		if(Id.isEmpty())
 			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
 
 		Load load=Id.get();
 
-		temp=updateLoad.getLoadingPoint();
-		if(temp !=null && !temp.isBlank()) {
+		temp=load.getLoadingPoint();
+		if(StringUtils.isNotBlank(temp)) {
 			load.setLoadingPoint(temp.trim());
 		}
 
 		temp=updateLoad.getLoadingPointCity();
-		if(temp !=null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setLoadingPointCity(temp.trim());
 		}
 
 		temp=updateLoad.getLoadingPointState();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setLoadingPointState(temp.trim());
 		}
 
 		temp=updateLoad.getUnloadingPoint();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setUnloadingPoint(temp.trim());
 		}
 
 		temp=updateLoad.getUnloadingPointCity();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setUnloadingPointCity(temp.trim());
 		}
-		
+
 		temp=updateLoad.getUnloadingPointState();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setUnloadingPointState(temp.trim());
 		}
-		
+
 		temp=updateLoad.getNoOfTrucks();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setNoOfTrucks(temp.trim());
 		}
-		
+
 		temp=updateLoad.getTruckType();
-		if(temp != null && !temp.isBlank()) {
-			
+		if(StringUtils.isNotBlank(temp)) {
+
 			load.setTruckType(temp.trim());
 		}
-		
+
 		temp=updateLoad.getProductType();
-		if(temp != null && !temp.isBlank()) {
-			
+		if(StringUtils.isNotBlank(temp)) {
+
 			load.setProductType(temp.trim());
 		}
-		
+
 		temp=updateLoad.getWeight();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setWeight(temp.trim());
 		}
-		
+
 		temp=updateLoad.getLoadDate();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setLoadDate(temp.trim());
 		}
-		
+
 		temp=updateLoad.getPostLoadId();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setPostLoadId(temp);
 		}
-		
+
 		temp=updateLoad.getStatus();
-		if(temp != null && !temp.isBlank()) {
+		if(StringUtils.isNotBlank(temp)) {
 			load.setStatus(temp.trim());
 		}
 
@@ -216,7 +233,10 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public void deleteLoad(String loadId) {
+	public void deleteLoad(String loadId) 
+			throws DataIntegrityViolationException{
+		logger.trace("deleteLoad(ServiceImpl) is acessed");
+
 		Optional<Load> L = loadDao.findByLoadId(loadId);
 		if(L.isEmpty())
 			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
