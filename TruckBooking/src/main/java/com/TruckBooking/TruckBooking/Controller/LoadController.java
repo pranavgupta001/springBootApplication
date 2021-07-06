@@ -24,7 +24,7 @@ public class LoadController {
 	
 	@GetMapping("/home")
 	public String getmessage() {
-		return "Welcome to loadApi git actions...!!!";
+		return "Welcome to loadApi git actions second check...!!!";
 	}
 	
 	@PostMapping("/load")
