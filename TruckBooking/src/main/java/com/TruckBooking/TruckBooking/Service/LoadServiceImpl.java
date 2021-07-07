@@ -10,29 +10,31 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
 
-import ch.qos.logback.classic.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class LoadServiceImpl implements LoadService {
 
-	Logger logger =(Logger) LoggerFactory.getLogger(LoadServiceImpl.class);
+
 	@Autowired
 	LoadDao loadDao;
 
 	String temp="";
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public Load addLoad(Load load) throws DataIntegrityViolationException{	
-		logger.trace("addLoad(ServiceImpl) is accessed");
+	public Load addLoad(Load load) {	
+		log.info("addLoad service is started");
+
 		String unitValue=String.valueOf(load.getUnitValue());
 
 		if("PER_TON".equals(unitValue))
@@ -47,18 +49,19 @@ public class LoadServiceImpl implements LoadService {
 		load.setLoadId("load:"+UUID.randomUUID());
 		load.setStatus(CommonConstants.pending);
 		loadDao.save(load);
+
+		log.info("load is saved to the database and addLoad service response is returned");
 		return  load;
 	}
 
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
 	public List<Load> getLoads(
 			Integer pageNo, String loadingPointCity,
 			String unloadingPointCity,String postLoadId,
 			String truckType, String loadDate,
-			boolean suggestedLoads) 
-					throws DataIntegrityViolationException{
-
-		logger.trace("getLoads(ServiceImpl) is accessed");
+			boolean suggestedLoads) {
+		log.info("getLoads service with params started");
 
 		if (pageNo == null)
 			pageNo = 0;
@@ -110,25 +113,27 @@ public class LoadServiceImpl implements LoadService {
 
 		List<Load> load = loadDao.findByAll(currentPage);
 		Collections.reverse(load);
+
+		log.info("getLoads service response is returned");
+
 		return load;
 	}
 
-
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
-	public Load getLoad(String loadId) 
-			throws DataIntegrityViolationException{
-		logger.trace("getLoad(ServiceImpl) is acessed");
+	public Load getLoad(String loadId) {
+		log.info("getLoad service is started");
 		Optional<Load> load=loadDao.findByLoadId(loadId);
 		if(load.isEmpty())
 			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
-
+		log.info("getLoad service response is returned");
 		return load.get();
 	}
 
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
-	public Load updateLoad(String loadId, Load updateLoad) 
-			throws DataIntegrityViolationException{
-		logger.trace("updateLoad(ServiceImpl) is acessed");
+	public Load updateLoad(String loadId, Load updateLoad) {
+		log.info("updateLoad service is started");
 
 		Optional<Load> Id=loadDao.findByLoadId(loadId);
 		if(Id.isEmpty())
@@ -228,19 +233,19 @@ public class LoadServiceImpl implements LoadService {
 		}
 
 		loadDao.save(load);
-
+		log.info("load is updated in the database and updateLoad service response is returned");
 		return load;
 	}
 
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
-	public void deleteLoad(String loadId) 
-			throws DataIntegrityViolationException{
-		logger.trace("deleteLoad(ServiceImpl) is acessed");
-
+	public void deleteLoad(String loadId) {
+		log.info("deleteLoad service is started");
 		Optional<Load> L = loadDao.findByLoadId(loadId);
 		if(L.isEmpty())
 			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
 		loadDao.delete(L.get());
+		log.info("load is deleted successfully");
 	}
 
 }
