@@ -233,6 +233,7 @@ public class LoadServiceImpl implements LoadService {
 		}
 
 		loadDao.save(load);
+
 		log.info("load is updated in the database and updateLoad service response is returned");
 		return load;
 	}

@@ -176,10 +176,10 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	protected ResponseEntity<Object> handleNoHandlerFoundException(
 			NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.info("handleNoHandlerFoundException is started");
-		LoadErrorResponse  apiError = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
-		apiError.setMessage(String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL()));
-		apiError.setDebugMessage(ex.getMessage());
-		return buildResponseEntity(apiError);
+		LoadErrorResponse  loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
+		loadErrorResponse.setMessage(String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL()));
+		loadErrorResponse.setDebugMessage(ex.getMessage());
+		return buildResponseEntity(loadErrorResponse);
 	}
 
 	/**
