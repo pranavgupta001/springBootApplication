@@ -130,7 +130,7 @@ public class LoadServiceImpl implements LoadService {
 		return load.get();
 	}
 
-	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public Load updateLoad(String loadId, Load updateLoad) {
 		log.info("updateLoad service is started");
@@ -238,7 +238,7 @@ public class LoadServiceImpl implements LoadService {
 		return load;
 	}
 
-	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void deleteLoad(String loadId) {
 		log.info("deleteLoad service is started");
