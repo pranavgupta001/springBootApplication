@@ -59,13 +59,13 @@ public class LoadController {
 						truckType,
 						loadDate,
 						suggestedLoads),
-				HttpStatus.FOUND);
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/load/{loadId}")
 	public ResponseEntity<Object> findLoad(@PathVariable String loadId){
 		log.info("Get Controller Started");
-		return new ResponseEntity<>(loadService.getLoad(loadId), HttpStatus.FOUND);
+		return new ResponseEntity<>(loadService.getLoad(loadId), HttpStatus.OK);
 	}
 
 	@PutMapping("/load/{loadId}")

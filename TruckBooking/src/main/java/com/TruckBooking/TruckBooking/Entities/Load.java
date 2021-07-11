@@ -41,14 +41,14 @@ public class Load {
 	@NotBlank(message="Load Date Cannot Be Empty")
 	private String loadDate;
 	private Long rate;  //optional
-	
+
 	@Enumerated(EnumType.STRING)
 	private UnitValue unitValue;    //optional
 
 	public enum UnitValue{
 		PER_TON, PER_TRUCK
 	}
-	
+
 }
 
 
