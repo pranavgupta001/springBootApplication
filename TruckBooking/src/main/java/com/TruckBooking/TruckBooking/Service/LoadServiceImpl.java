@@ -18,6 +18,9 @@ import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
+import com.TruckBooking.TruckBooking.Model.LoadRequest;
+import com.TruckBooking.TruckBooking.Response.CreateLoadResponse;
+import com.TruckBooking.TruckBooking.Response.UpdateLoadResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,28 +33,95 @@ public class LoadServiceImpl implements LoadService {
 	LoadDao loadDao;
 
 	String temp="";
+
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public Load addLoad(Load load) {	
+	public CreateLoadResponse addLoad(LoadRequest loadrequest) {	
 		log.info("addLoad service is started");
 
-		String unitValue=String.valueOf(load.getUnitValue());
+		Load load =new Load();
+		CreateLoadResponse response =new CreateLoadResponse();
 
-		if("PER_TON".equals(unitValue))
+		temp="load:"+UUID.randomUUID();
+		load.setLoadId(temp);
+		response.setLoadId(temp);
+
+		temp=loadrequest.getLoadingPoint().trim();
+		load.setLoadingPoint(temp);
+		response.setLoadingPoint(temp);
+
+		temp=loadrequest.getLoadingPointCity().trim();
+		load.setLoadingPointCity(temp);
+		response.setLoadingPointCity(temp);
+
+		temp=loadrequest.getLoadingPointState().trim();
+		load.setLoadingPointState(temp);
+		response.setLoadingPointState(temp);
+
+		temp=loadrequest.getUnloadingPoint().trim();
+		load.setUnloadingPoint(temp);
+		response.setUnloadingPoint(temp);
+
+		temp=loadrequest.getUnloadingPointCity().trim();
+		load.setUnloadingPointCity(temp);
+		response.setUnloadingPointCity(temp);
+
+		temp=loadrequest.getUnloadingPointState().trim();
+		load.setUnloadingPointState(temp);
+		response.setUnloadingPointState(temp);
+
+		temp=loadrequest.getPostLoadId().trim();
+		load.setPostLoadId(temp);
+		response.setPostLoadId(temp);
+
+		temp=loadrequest.getProductType().trim();
+		load.setProductType(temp);
+		response.setProductType(temp);
+
+		temp=loadrequest.getTruckType().trim();
+		load.setTruckType(temp);
+		response.setTruckType(temp);
+
+		temp=loadrequest.getNoOfTrucks().trim();
+		load.setNoOfTrucks(temp);
+		response.setNoOfTrucks(temp);
+
+		temp=loadrequest.getWeight().trim();
+		load.setWeight(temp);
+		response.setWeight(temp);
+
+		temp=loadrequest.getLoadDate().trim();
+		load.setLoadDate(temp);
+		response.setLoadDate(temp);
+
+		load.setStatus(CommonConstants.pending);
+		response.setStatus(CommonConstants.pending);
+
+		temp=loadrequest.getComment();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setComment(temp.trim());
+			response.setComment(temp.trim());
+		}
+
+		load.setRate(loadrequest.getRate());
+		response.setRate(loadrequest.getRate());
+
+		temp=String.valueOf(loadrequest.getUnitValue());
+		if("PER_TON".equals(temp))
 		{
 			load.setUnitValue(Load.UnitValue.PER_TON);
+			response.setUnitValue(CreateLoadResponse.UnitValue.PER_TON);
 		}
-		else if("PER_TRUCK".equals(unitValue))
+		else if("PER_TRUCK".equals(temp))
 		{
 			load.setUnitValue(Load.UnitValue.PER_TRUCK);
+			response.setUnitValue(CreateLoadResponse.UnitValue.PER_TRUCK);
 		}
 
-		load.setLoadId("load:"+UUID.randomUUID());
-		load.setStatus(CommonConstants.pending);
 		loadDao.save(load);
-
-		log.info("load is saved to the database and addLoad service response is returned");
-		return  load;
+		log.info("load is saved to the database");
+		log.info("addLoad service response is returned");
+		return  response;
 	}
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
@@ -114,6 +184,8 @@ public class LoadServiceImpl implements LoadService {
 		List<Load> load = loadDao.findByAll(currentPage);
 		Collections.reverse(load);
 
+
+
 		log.info("getLoads service response is returned");
 
 		return load;
@@ -132,7 +204,7 @@ public class LoadServiceImpl implements LoadService {
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public Load updateLoad(String loadId, Load updateLoad) {
+	public UpdateLoadResponse updateLoad(String loadId, LoadRequest updateLoad) {
 		log.info("updateLoad service is started");
 
 		Optional<Load> Id=loadDao.findByLoadId(loadId);
@@ -141,7 +213,7 @@ public class LoadServiceImpl implements LoadService {
 
 		Load load=Id.get();
 
-		temp=load.getLoadingPoint();
+		temp=updateLoad.getLoadingPoint();
 		if(StringUtils.isNotBlank(temp)) {
 			load.setLoadingPoint(temp.trim());
 		}
@@ -178,13 +250,11 @@ public class LoadServiceImpl implements LoadService {
 
 		temp=updateLoad.getTruckType();
 		if(StringUtils.isNotBlank(temp)) {
-
 			load.setTruckType(temp.trim());
 		}
 
 		temp=updateLoad.getProductType();
 		if(StringUtils.isNotBlank(temp)) {
-
 			load.setProductType(temp.trim());
 		}
 
@@ -232,10 +302,38 @@ public class LoadServiceImpl implements LoadService {
 			}
 		}
 
-		loadDao.save(load);
+		UpdateLoadResponse response =new UpdateLoadResponse();
+		response.setLoadId(loadId);
+		response.setLoadingPoint(load.getLoadingPoint());
+		response.setLoadingPointCity(load.getLoadingPointCity());
+		response.setLoadingPointState(load.getLoadingPointState());
+		response.setUnloadingPoint(load.getUnloadingPoint());
+		response.setUnloadingPointCity(load.getUnloadingPointCity());
+		response.setUnloadingPointState(load.getUnloadingPointState());
+		response.setPostLoadId(load.getPostLoadId());
+		response.setProductType(load.getProductType());
+		response.setTruckType(load.getTruckType());
+		response.setNoOfTrucks(load.getNoOfTrucks());
+		response.setWeight(load.getWeight());
+		response.setLoadDate(load.getLoadDate());
+		response.setComment(load.getComment());
+		response.setStatus(load.getStatus());
+		response.setRate(load.getRate());
 
-		log.info("load is updated in the database and updateLoad service response is returned");
-		return load;
+		temp=String.valueOf(load.getUnitValue());
+		if("PER_TON".equals(temp))
+		{
+			response.setUnitValue(UpdateLoadResponse.UnitValue.PER_TON);
+		}
+		else if("PER_TRUCK".equals(temp))
+		{
+			response.setUnitValue(UpdateLoadResponse.UnitValue.PER_TRUCK);
+		}
+
+		loadDao.save(load);
+		log.info("load is updated in the database");
+		log.info("updateLoad service response is returned");
+		return response;
 	}
 
 	@Transactional(rollbackFor = Exception.class)

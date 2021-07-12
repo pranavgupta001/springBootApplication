@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.TruckBooking.TruckBooking.Entities.Load;
+import com.TruckBooking.TruckBooking.Model.LoadRequest;
 import com.TruckBooking.TruckBooking.Service.LoadServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class LoadController {
 	}
 
 	@PostMapping("/load")
-	public ResponseEntity<Load> load(@Valid @RequestBody Load loadrequest) {
+	public ResponseEntity<Object> load(@Valid @RequestBody LoadRequest loadrequest) {
 		log.info("Post Controller Started");
 		return new ResponseEntity<>(loadService.addLoad(loadrequest), HttpStatus.CREATED);
 	}
@@ -69,9 +70,9 @@ public class LoadController {
 	}
 
 	@PutMapping("/load/{loadId}")
-	public ResponseEntity<Load> updateLoad(
+	public ResponseEntity<Object> updateLoad(
 			@PathVariable String loadId,
-			@RequestBody Load loadrequest
+			@RequestBody LoadRequest loadrequest
 			){
 
 		log.info("Put Controller Started");
