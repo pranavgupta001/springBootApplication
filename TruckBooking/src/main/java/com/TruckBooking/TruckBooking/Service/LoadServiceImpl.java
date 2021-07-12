@@ -32,13 +32,14 @@ public class LoadServiceImpl implements LoadService {
 	@Autowired
 	LoadDao loadDao;
 
-	String temp="";
+
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public CreateLoadResponse addLoad(LoadRequest loadrequest) {	
 		log.info("addLoad service is started");
 
+		String temp="";
 		Load load =new Load();
 		CreateLoadResponse response =new CreateLoadResponse();
 
@@ -211,6 +212,7 @@ public class LoadServiceImpl implements LoadService {
 		if(Id.isEmpty())
 			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
 
+		String temp="";
 		Load load=Id.get();
 
 		temp=updateLoad.getLoadingPoint();

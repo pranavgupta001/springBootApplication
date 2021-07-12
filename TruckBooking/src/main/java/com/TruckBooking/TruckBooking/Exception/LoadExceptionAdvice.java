@@ -46,7 +46,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 			HttpStatus status,
 			WebRequest request)
 	{
-		log.info("handleMissingServletRequestParameter is started");
+		log.error("handleMissingServletRequestParameter is started");
 		String error = ex.getParameterName() + " parameter is missing";
 		return buildResponseEntity(new LoadErrorResponse(HttpStatus.BAD_REQUEST, error, ex));
 	}
@@ -67,7 +67,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 			HttpHeaders headers,
 			HttpStatus status,
 			WebRequest request) {
-		log.info("handleHttpMediaTypeNotSupported is started");
+		log.error("handleHttpMediaTypeNotSupported is started");
 		StringBuilder builder = new StringBuilder();
 		builder.append(ex.getContentType());
 		builder.append(" media type is not supported. Supported media types are ");
@@ -90,7 +90,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 			HttpHeaders headers,
 			HttpStatus status,
 			WebRequest request) {
-		log.info("handleMethodArgumentNotValid is started");
+		log.error("handleMethodArgumentNotValid is started");
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
 		loadErrorResponse.setMessage("Validation error");
 		loadErrorResponse.addValidationErrors(ex.getBindingResult().getFieldErrors());
@@ -107,7 +107,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
 	protected ResponseEntity<Object> handleConstraintViolation(
 			javax.validation.ConstraintViolationException ex) {
-		log.info("handleConstraintViolation is started");
+		log.error("handleConstraintViolation is started");
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
 		loadErrorResponse.setMessage("Validation error");
 		loadErrorResponse.addValidationErrors(ex.getConstraintViolations());
@@ -123,7 +123,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(
 			EntityNotFoundException ex) {
-		log.info("handleEntityNotFound is started");
+		log.error("handleEntityNotFound is started");
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.NOT_FOUND);
 		loadErrorResponse.setMessage(ex.getMessage());
 		return buildResponseEntity(loadErrorResponse);
@@ -140,7 +140,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	 */
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-		log.info("handleHttpMessageNotReadable is started");
+		log.error("handleHttpMessageNotReadable is started");
 		ServletWebRequest servletWebRequest = (ServletWebRequest) request;
 		log.info("{} to {}", servletWebRequest.getHttpMethod(), servletWebRequest.getRequest().getServletPath());
 		String error = "Malformed JSON request";
@@ -158,7 +158,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	 */
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-		log.info("handleHttpMessageNotWritable is started");
+		log.error("handleHttpMessageNotWritable is started");
 		String error = "Error writing JSON output";
 		return buildResponseEntity(new LoadErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
 	}
@@ -175,7 +175,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	@Override
 	protected ResponseEntity<Object> handleNoHandlerFoundException(
 			NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-		log.info("handleNoHandlerFoundException is started");
+		log.error("handleNoHandlerFoundException is started");
 		LoadErrorResponse  loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
 		loadErrorResponse.setMessage(String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL()));
 		loadErrorResponse.setDebugMessage(ex.getMessage());
@@ -187,7 +187,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	 */
 	@ExceptionHandler(javax.persistence.EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(javax.persistence.EntityNotFoundException ex) {
-		log.info("handleEntityNotFound is started");
+		log.error("handleEntityNotFound is started");
 		return buildResponseEntity(new LoadErrorResponse(HttpStatus.NOT_FOUND, ex));
 	}
 
@@ -200,7 +200,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	protected ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex,
 			WebRequest request) {
-		log.info("handleDataIntegrityViolation is started");
+		log.error("handleDataIntegrityViolation is started");
 		if (ex.getCause() instanceof ConstraintViolationException) {
 			return buildResponseEntity(new LoadErrorResponse(HttpStatus.CONFLICT, "Database error", ex.getCause()));
 		}
@@ -216,7 +216,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
 			WebRequest request) {
-		log.info("handleMethodArgumentTypeMismatch is started");
+		log.error("handleMethodArgumentTypeMismatch is started");
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
 		loadErrorResponse.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'", ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
 		loadErrorResponse.setDebugMessage(ex.getMessage());
@@ -226,7 +226,7 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(Exception.class)  
 	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request)  
 	{  
-		log.info("handleAllExceptions is started");
+		log.error("handleAllExceptions is started");
 		return buildResponseEntity(new LoadErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR , ex));
 	}  
 
