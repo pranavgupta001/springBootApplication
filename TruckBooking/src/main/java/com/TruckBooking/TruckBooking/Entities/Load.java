@@ -32,7 +32,7 @@ public class Load {
 	private String productType;
 	@NotBlank(message="Truck Type Cannot Be Empty")
 	private String truckType;
-	@NotBlank(message="Loading Point Cannot Be Empty")
+	@NotBlank(message="No. of trucks Cannot Be Empty")
 	private String noOfTrucks;
 	@NotBlank(message="Weight Cannot Be Empty")
 	private String weight; 

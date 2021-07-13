@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
+import com.TruckBooking.TruckBooking.Exception.BuisnessException;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
 import com.TruckBooking.TruckBooking.Model.LoadRequest;
 import com.TruckBooking.TruckBooking.Response.CreateLoadResponse;
@@ -31,8 +32,6 @@ public class LoadServiceImpl implements LoadService {
 
 	@Autowired
 	LoadDao loadDao;
-
-
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
@@ -104,19 +103,26 @@ public class LoadServiceImpl implements LoadService {
 			response.setComment(temp.trim());
 		}
 
-		load.setRate(loadrequest.getRate());
-		response.setRate(loadrequest.getRate());
+		if(loadrequest.getRate() !=null) {
+			load.setRate(loadrequest.getRate());
+			response.setRate(loadrequest.getRate());
+			if(loadrequest.getUnitValue()==null)
+				throw new BuisnessException("UnitValue can't be null when the rate is provided");
 
-		temp=String.valueOf(loadrequest.getUnitValue());
-		if("PER_TON".equals(temp))
-		{
-			load.setUnitValue(Load.UnitValue.PER_TON);
-			response.setUnitValue(CreateLoadResponse.UnitValue.PER_TON);
+			temp=String.valueOf(loadrequest.getUnitValue());
+			if("PER_TON".equals(temp))
+			{
+				load.setUnitValue(Load.UnitValue.PER_TON);
+				response.setUnitValue(CreateLoadResponse.UnitValue.PER_TON);
+			}
+			else if("PER_TRUCK".equals(temp))
+			{
+				load.setUnitValue(Load.UnitValue.PER_TRUCK);
+				response.setUnitValue(CreateLoadResponse.UnitValue.PER_TRUCK);
+			}
 		}
-		else if("PER_TRUCK".equals(temp))
-		{
-			load.setUnitValue(Load.UnitValue.PER_TRUCK);
-			response.setUnitValue(CreateLoadResponse.UnitValue.PER_TRUCK);
+		else if(loadrequest.getUnitValue() !=null){
+			throw new BuisnessException("UnitValue can't be set when the rate is not provided");
 		}
 
 		loadDao.save(load);
@@ -195,7 +201,7 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
 	public Load getLoad(String loadId) {
-		log.info("getLoad service is started");
+		log.info("getLoad service by Id: "+loadId+" is started");
 		Optional<Load> load=loadDao.findByLoadId(loadId);
 		if(load.isEmpty())
 			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
@@ -275,11 +281,6 @@ public class LoadServiceImpl implements LoadService {
 			load.setPostLoadId(temp);
 		}
 
-		temp=updateLoad.getStatus();
-		if(StringUtils.isNotBlank(temp)) {
-			load.setStatus(temp.trim());
-		}
-
 		if(updateLoad.getComment() != null)
 		{
 			load.setComment(updateLoad.getComment());
@@ -288,21 +289,25 @@ public class LoadServiceImpl implements LoadService {
 		if(updateLoad.getRate() != null)
 		{
 			load.setRate(updateLoad.getRate());
-		}
+			if(updateLoad.getUnitValue() == null)
+				throw new BuisnessException("UnitValue can't be null when the rate is provided");
 
-		if(updateLoad.getUnitValue() != null)
-		{
-			String unitValue=String.valueOf(updateLoad.getUnitValue());
+			temp=String.valueOf(updateLoad.getUnitValue());
 
-			if("PER_TON".equals(unitValue))
+			if("PER_TON".equals(temp))
 			{
 				load.setUnitValue(Load.UnitValue.PER_TON);
 			}
-			else if("PER_TRUCK".equals(unitValue))
+			else if("PER_TRUCK".equals(temp))
 			{
 				load.setUnitValue(Load.UnitValue.PER_TRUCK);
 			}
 		}
+		else if(updateLoad.getUnitValue() !=null){
+			throw new BuisnessException("UnitValue can't be set when the rate is not provided");
+		}
+
+
 
 		UpdateLoadResponse response =new UpdateLoadResponse();
 		response.setLoadId(loadId);
