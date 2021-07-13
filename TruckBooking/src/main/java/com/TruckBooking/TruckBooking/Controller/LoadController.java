@@ -65,7 +65,7 @@ public class LoadController {
 
 	@GetMapping("/load/{loadId}")
 	public ResponseEntity<Object> findLoad(@PathVariable String loadId){
-		log.info("Get Controller Started");
+		log.info("Get by loadId Controller Started");
 		return new ResponseEntity<>(loadService.getLoad(loadId), HttpStatus.OK);
 	}
 

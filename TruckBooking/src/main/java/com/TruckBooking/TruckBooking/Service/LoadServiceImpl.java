@@ -201,7 +201,7 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
 	public Load getLoad(String loadId) {
-		log.info("getLoad service by Id: "+loadId+" is started");
+		log.info("getLoad service by Id is started");
 		Optional<Load> load=loadDao.findByLoadId(loadId);
 		if(load.isEmpty())
 			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
