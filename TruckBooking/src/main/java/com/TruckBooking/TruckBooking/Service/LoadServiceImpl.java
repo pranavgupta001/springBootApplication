@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
-import com.TruckBooking.TruckBooking.Exception.BuisnessException;
+import com.TruckBooking.TruckBooking.Exception.BusinessException;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
 import com.TruckBooking.TruckBooking.Model.LoadRequest;
 import com.TruckBooking.TruckBooking.Response.CreateLoadResponse;
@@ -107,7 +107,7 @@ public class LoadServiceImpl implements LoadService {
 			load.setRate(loadrequest.getRate());
 			response.setRate(loadrequest.getRate());
 			if(loadrequest.getUnitValue()==null)
-				throw new BuisnessException("UnitValue can't be null when the rate is provided");
+				throw new BusinessException("UnitValue can't be null when the rate is provided");
 
 			temp=String.valueOf(loadrequest.getUnitValue());
 			if("PER_TON".equals(temp))
@@ -122,7 +122,7 @@ public class LoadServiceImpl implements LoadService {
 			}
 		}
 		else if(loadrequest.getUnitValue() !=null){
-			throw new BuisnessException("UnitValue can't be set when the rate is not provided");
+			throw new BusinessException("UnitValue can't be set when the rate is not provided");
 		}
 
 		loadDao.save(load);
@@ -290,7 +290,7 @@ public class LoadServiceImpl implements LoadService {
 		{
 			load.setRate(updateLoad.getRate());
 			if(updateLoad.getUnitValue() == null)
-				throw new BuisnessException("UnitValue can't be null when the rate is provided");
+				throw new BusinessException("UnitValue can't be null when the rate is provided");
 
 			temp=String.valueOf(updateLoad.getUnitValue());
 
@@ -304,7 +304,7 @@ public class LoadServiceImpl implements LoadService {
 			}
 		}
 		else if(updateLoad.getUnitValue() !=null){
-			throw new BuisnessException("UnitValue can't be set when the rate is not provided");
+			throw new BusinessException("UnitValue can't be set when the rate is not provided");
 		}
 
 

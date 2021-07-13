@@ -223,8 +223,8 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 		return buildResponseEntity(loadErrorResponse);
 	}
 
-	@ExceptionHandler(BuisnessException.class)
-	protected ResponseEntity<Object> handleBusinessException(BuisnessException ex) {
+	@ExceptionHandler(BusinessException.class)
+	protected ResponseEntity<Object> handleBusinessException(BusinessException ex) {
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY);
 		loadErrorResponse.setMessage(ex.getMessage());
 		return buildResponseEntity(loadErrorResponse);
