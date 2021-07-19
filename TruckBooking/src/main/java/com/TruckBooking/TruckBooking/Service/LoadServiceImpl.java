@@ -146,36 +146,36 @@ public class LoadServiceImpl implements LoadService {
 
 		if (loadingPointCity != null) {
 			if (unloadingPointCity != null) {
-				List<Load> load = loadDao.findByLoadingPointCityAndUnloadingPointCity(loadingPointCity,
-						unloadingPointCity, currentPage);
+				List<Load> load = loadDao.findByLoadingPointCityAndUnloadingPointCityAndStatus(loadingPointCity,
+						unloadingPointCity, Load.Status.PENDING,currentPage);
 				// Collections.reverse(load);
 				return load;
 			}
-			List<Load> load = loadDao.findByLoadingPointCity(loadingPointCity, currentPage);
+			List<Load> load = loadDao.findByLoadingPointCityAndStatus(loadingPointCity,Load.Status.PENDING, currentPage);
 			// Collections.reverse(load);
 			return load;
 		}
 
 		if (unloadingPointCity != null) {
-			List<Load> load = loadDao.findByUnloadingPointCity(unloadingPointCity, currentPage);
+			List<Load> load = loadDao.findByUnloadingPointCityAndStatus(unloadingPointCity,Load.Status.PENDING, currentPage);
 			// Collections.reverse(load);
 			return load;
 		}
 
 		if (postLoadId != null) {
-			List<Load> load = loadDao.findByPostLoadId(postLoadId, currentPage);
+			List<Load> load = loadDao.findByPostLoadIdAndStatus(postLoadId, Load.Status.PENDING,currentPage);
 			// Collections.reverse(load);
 			return load;
 		}
 
 		if (truckType != null) {
-			List<Load> load = loadDao.findByTruckType(truckType, currentPage);
+			List<Load> load = loadDao.findByTruckTypeAndStatus(truckType, Load.Status.PENDING,currentPage);
 			// Collections.reverse(load);
 			return load;
 		}
 
 		if (loadDate != null) {
-			List<Load> load = loadDao.findByLoadDate(loadDate, currentPage);
+			List<Load> load = loadDao.findByLoadDateAndStatus(loadDate,Load.Status.PENDING, currentPage);
 			// Collections.reverse(load);
 			return load;
 		}
