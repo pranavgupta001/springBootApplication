@@ -1,6 +1,5 @@
 package com.TruckBooking.TruckBooking.Exception;
 
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -21,17 +20,16 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-
-
-
+import lombok.extern.slf4j.Slf4j;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Slf4j
 @ControllerAdvice
-public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
+public class LoadExceptionAdvice extends ResponseEntityExceptionHandler {
 
 	/**
-	 * Handle MissingServletRequestParameterException. Triggered when a 'required' request parameter is missing.
+	 * Handle MissingServletRequestParameterException. Triggered when a 'required'
+	 * request parameter is missing.
 	 *
 	 * @param ex      MissingServletRequestParameterException
 	 * @param headers HttpHeaders
@@ -40,20 +38,16 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	 * @return the ApiError object
 	 */
 	@Override
-	protected ResponseEntity<Object> handleMissingServletRequestParameter(
-			MissingServletRequestParameterException ex,
-			HttpHeaders headers,
-			HttpStatus status,
-			WebRequest request)
-	{
+	protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("handleMissingServletRequestParameter is started");
 		String error = ex.getParameterName() + " parameter is missing";
 		return buildResponseEntity(new LoadErrorResponse(HttpStatus.BAD_REQUEST, error, ex));
 	}
 
-
 	/**
-	 * Handle HttpMediaTypeNotSupportedException. This one triggers when JSON is invalid as well.
+	 * Handle HttpMediaTypeNotSupportedException. This one triggers when JSON is
+	 * invalid as well.
 	 *
 	 * @param ex      HttpMediaTypeNotSupportedException
 	 * @param headers HttpHeaders
@@ -62,34 +56,31 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	 * @return the ApiError object
 	 */
 	@Override
-	protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
-			HttpMediaTypeNotSupportedException ex,
-			HttpHeaders headers,
-			HttpStatus status,
-			WebRequest request) {
+	protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("handleHttpMediaTypeNotSupported is started");
 		StringBuilder builder = new StringBuilder();
 		builder.append(ex.getContentType());
 		builder.append(" media type is not supported. Supported media types are ");
 		ex.getSupportedMediaTypes().forEach(t -> builder.append(t).append(", "));
-		return buildResponseEntity(new LoadErrorResponse(HttpStatus.UNSUPPORTED_MEDIA_TYPE, builder.substring(0, builder.length() - 2), ex));
+		return buildResponseEntity(new LoadErrorResponse(HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+				builder.substring(0, builder.length() - 2), ex));
 	}
 
 	/**
-	 * Handle MethodArgumentNotValidException. Triggered when an object fails @Valid validation.
+	 * Handle MethodArgumentNotValidException. Triggered when an object fails @Valid
+	 * validation.
 	 *
-	 * @param ex      the MethodArgumentNotValidException that is thrown when @Valid validation fails
+	 * @param ex      the MethodArgumentNotValidException that is thrown when @Valid
+	 *                validation fails
 	 * @param headers HttpHeaders
 	 * @param status  HttpStatus
 	 * @param request WebRequest
 	 * @return the ApiError object
 	 */
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(
-			MethodArgumentNotValidException ex,
-			HttpHeaders headers,
-			HttpStatus status,
-			WebRequest request) {
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("handleMethodArgumentNotValid is started");
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
 		loadErrorResponse.setMessage("Validation error");
@@ -99,14 +90,14 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	}
 
 	/**
-	 * Handles javax.validation.ConstraintViolationException. Thrown when @Validated fails.
+	 * Handles javax.validation.ConstraintViolationException. Thrown when @Validated
+	 * fails.
 	 *
 	 * @param ex the ConstraintViolationException
 	 * @return the ApiError object
 	 */
 	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
-	protected ResponseEntity<Object> handleConstraintViolation(
-			javax.validation.ConstraintViolationException ex) {
+	protected ResponseEntity<Object> handleConstraintViolation(javax.validation.ConstraintViolationException ex) {
 		log.error("handleConstraintViolation is started");
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
 		loadErrorResponse.setMessage("Validation error");
@@ -115,14 +106,14 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	}
 
 	/**
-	 * Handles EntityNotFoundException. Created to encapsulate errors with more detail than javax.persistence.EntityNotFoundException.
+	 * Handles EntityNotFoundException. Created to encapsulate errors with more
+	 * detail than javax.persistence.EntityNotFoundException.
 	 *
 	 * @param ex the EntityNotFoundException
 	 * @return the ApiError object
 	 */
 	@ExceptionHandler(EntityNotFoundException.class)
-	protected ResponseEntity<Object> handleEntityNotFound(
-			EntityNotFoundException ex) {
+	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
 		log.error("handleEntityNotFound is started");
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.NOT_FOUND);
 		loadErrorResponse.setMessage(ex.getMessage());
@@ -130,7 +121,8 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	}
 
 	/**
-	 * Handle HttpMessageNotReadableException. Happens when request JSON is malformed.
+	 * Handle HttpMessageNotReadableException. Happens when request JSON is
+	 * malformed.
 	 *
 	 * @param ex      HttpMessageNotReadableException
 	 * @param headers HttpHeaders
@@ -139,7 +131,8 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	 * @return the ApiError object
 	 */
 	@Override
-	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("handleHttpMessageNotReadable is started");
 		ServletWebRequest servletWebRequest = (ServletWebRequest) request;
 		log.info("{} to {}", servletWebRequest.getHttpMethod(), servletWebRequest.getRequest().getServletPath());
@@ -157,7 +150,8 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	 * @return the ApiError object
 	 */
 	@Override
-	protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("handleHttpMessageNotWritable is started");
 		String error = "Error writing JSON output";
 		return buildResponseEntity(new LoadErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
@@ -173,11 +167,12 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	 * @return
 	 */
 	@Override
-	protected ResponseEntity<Object> handleNoHandlerFoundException(
-			NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
 		log.error("handleNoHandlerFoundException is started");
-		LoadErrorResponse  loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
-		loadErrorResponse.setMessage(String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL()));
+		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
+		loadErrorResponse.setMessage(
+				String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL()));
 		loadErrorResponse.setDebugMessage(ex.getMessage());
 		return buildResponseEntity(loadErrorResponse);
 	}
@@ -192,7 +187,8 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 	}
 
 	/**
-	 * Handle DataIntegrityViolationException, inspects the cause for different DB causes.
+	 * Handle DataIntegrityViolationException, inspects the cause for different DB
+	 * causes.
 	 *
 	 * @param ex the DataIntegrityViolationException
 	 * @return the ApiError object
@@ -218,7 +214,9 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 			WebRequest request) {
 		log.error("handleMethodArgumentTypeMismatch is started");
 		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
-		loadErrorResponse.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'", ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
+		loadErrorResponse
+				.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'",
+						ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
 		loadErrorResponse.setDebugMessage(ex.getMessage());
 		return buildResponseEntity(loadErrorResponse);
 	}
@@ -237,7 +235,6 @@ public class LoadExceptionAdvice extends ResponseEntityExceptionHandler{
 		log.error("handleAllExceptions is started");
 		return buildResponseEntity(new LoadErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR , ex));
 	}  
-
 
 	private ResponseEntity<Object> buildResponseEntity(LoadErrorResponse loadErrorResponse) {
 		return new ResponseEntity<>(loadErrorResponse, loadErrorResponse.getStatus());
