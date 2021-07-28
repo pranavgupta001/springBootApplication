@@ -5,7 +5,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 defaults:
   run:
@@ -13,7 +15,7 @@ defaults:
     
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ['self-hosted', 'Linux', 'X64']
 
     steps:
     - uses: actions/checkout@v2
@@ -30,9 +32,9 @@ jobs:
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
     - run: sudo docker container stop load-container || true
     - run: sudo docker container stop docker-postgres || true
-    - run: sudo docker container rm load-container 
+    - run: sudo docker container rm load-container || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
-    - run: sudo docker start docker-postgres || sudo docker run --name docker-postgres -e POSTGRES_ROOT_PASSWORD=postgres -e POSTGRES_DATABASE=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:latest
+    - run: sudo docker start docker-postgres || sudo docker run --name docker-postgres -e POSTGRES_ROOT_PASSWORD=postgres -e POSTGRES_DATABASE=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres
     - run: sudo docker run -p 8080:8080 --name load-container --link docker-postgres:postgres load | echo "success" 
  
