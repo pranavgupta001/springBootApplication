@@ -45,6 +45,9 @@ public class Load {
 
 	@NotBlank(message = "Load Date Cannot Be Empty")
 	private String loadDate;
+	
+	private String postLoadDate;
+	
 	private Long rate; // optional
 
 	@Enumerated(EnumType.STRING)
