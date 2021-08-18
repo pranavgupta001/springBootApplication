@@ -25,6 +25,7 @@ public class CreateLoadResponse {
 	private String noOfTrucks;
 	private String weight;
 	private String loadDate;
+	private String postLoadDate;
 	public Status status;
 	private String comment; // this should be an optional
 	private Long rate;
