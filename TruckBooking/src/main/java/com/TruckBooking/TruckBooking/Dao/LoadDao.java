@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.TruckBooking.TruckBooking.Entities.Load;
@@ -34,6 +35,7 @@ public interface LoadDao extends JpaRepository<Load, String> {
 	List<Load> findByUnloadingPointCityAndStatus(String unloadingPointCity,Status status, Pageable pageable);
 
 	List<Load> findByUnloadingPointStateAndStatus(String loadingPointState,Status status, Pageable pageable);
-
-	List<Load> findByStatus(Status status, Pageable pageable);
+	
+	@Query("select l from Load l WHERE status in :status")
+	List<Load> findByStatus(List<Status> status, Pageable pageable);
 }
