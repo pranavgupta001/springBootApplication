@@ -16,8 +16,8 @@ public interface LoadDao extends JpaRepository<Load, String> {
 
 //	@Query("select l from Load l")
 //	List<Load> findByAll(Pageable pageable);
-
-	List<Load> findByPostLoadIdAndStatus(String postLoadId, Status status, Pageable pageable);
+	@Query("select l from Load l WHERE l.postLoadId=:postLoadId AND status in :status")
+	List<Load> findByPostLoadIdAndStatus(String postLoadId, List<Status> status, Pageable pageable);
 
 	Optional<Load> findByLoadId(String loadId);
 
@@ -36,6 +36,5 @@ public interface LoadDao extends JpaRepository<Load, String> {
 
 	List<Load> findByUnloadingPointStateAndStatus(String loadingPointState,Status status, Pageable pageable);
 	
-	@Query("select l from Load l WHERE status in :status")
-	List<Load> findByStatus(List<Status> status, Pageable pageable);
+	List<Load> findByStatus(Status status, Pageable pageable);
 }
