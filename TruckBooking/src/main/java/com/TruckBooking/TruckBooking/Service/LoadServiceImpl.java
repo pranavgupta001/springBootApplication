@@ -4,6 +4,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -170,7 +171,7 @@ public class LoadServiceImpl implements LoadService {
 		}
 
 		if (postLoadId != null) {
-			List<Load> load = loadDao.findByPostLoadIdAndStatus(postLoadId, Load.Status.PENDING,currentPage);
+			List<Load> load = loadDao.findByPostLoadIdAndStatus(postLoadId, Arrays.asList(Load.Status.PENDING, Load.Status.EXPIRED),currentPage);
 			// Collections.reverse(load);
 			return load;
 		}
@@ -189,8 +190,7 @@ public class LoadServiceImpl implements LoadService {
 
 
 		log.info("getLoads service response is returned");
-
-		return loadDao.findByStatus(Load.Status.PENDING,currentPage);
+		return loadDao.findByStatus(Load.Status.PENDING, currentPage);
 	}
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
