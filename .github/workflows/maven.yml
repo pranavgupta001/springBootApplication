@@ -5,7 +5,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ master ]
 
 defaults:
   run:
@@ -13,7 +13,7 @@ defaults:
     
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ['self-hosted', 'Linux', 'X64', 'main' ]
 
     steps:
     - uses: actions/checkout@v2
@@ -29,8 +29,9 @@ jobs:
       
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
     - run: sudo docker container stop load-container || true
-    - run: sudo docker container rm load-container 
+    - run: sudo docker container rm load-container || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
     - run: sudo docker run -p 8080:8080 --name load-container -d load | echo "success" 
+
  
