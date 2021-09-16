@@ -37,10 +37,11 @@ public class Load {
 	private String productType;
 	@NotBlank(message = "Truck Type Cannot Be Empty")
 	private String truckType;
-	@NotBlank(message = "No. of trucks Cannot Be Empty")
-	private String noOfTrucks;
 	@NotBlank(message = "Weight Cannot Be Empty")
 	private String weight;
+	
+	private String noOfTrucks;
+	private String noOfTyres;
 	private String comment; // this should be an optional
 
 	@NotBlank(message = "Load Date Cannot Be Empty")
