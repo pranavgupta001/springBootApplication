@@ -23,6 +23,7 @@ public class UpdateLoadResponse {
 	private String productType;
 	private String truckType;
 	private String noOfTrucks;
+	private String noOfTyres;
 	private String weight;
 	private String loadDate;
 	private String postLoadDate;

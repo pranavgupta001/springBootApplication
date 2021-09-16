@@ -84,10 +84,20 @@ public class LoadServiceImpl implements LoadService {
 		load.setTruckType(temp);
 		response.setTruckType(temp);
 
-		temp = loadrequest.getNoOfTrucks().trim();
+		temp=null;
+		temp = loadrequest.getNoOfTrucks();
+		if(temp==null) {
+			temp="1";
+		}
 		load.setNoOfTrucks(temp);
 		response.setNoOfTrucks(temp);
-
+		
+		temp = loadrequest.getNoOfTyres();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setNoOfTyres(temp.trim());
+			response.setNoOfTyres(temp.trim());
+		}
+		
 		temp = loadrequest.getWeight().trim();
 		load.setWeight(temp);
 		response.setWeight(temp);
@@ -251,6 +261,11 @@ public class LoadServiceImpl implements LoadService {
 			load.setNoOfTrucks(temp.trim());
 		}
 
+		temp = updateLoad.getNoOfTyres();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setNoOfTyres(temp.trim());
+		}
+		
 		temp = updateLoad.getTruckType();
 		if (StringUtils.isNotBlank(temp)) {
 			load.setTruckType(temp.trim());
@@ -324,6 +339,7 @@ public class LoadServiceImpl implements LoadService {
 		response.setProductType(load.getProductType());
 		response.setTruckType(load.getTruckType());
 		response.setNoOfTrucks(load.getNoOfTrucks());
+		response.setNoOfTyres(load.getNoOfTyres());
 		response.setWeight(load.getWeight());
 		response.setLoadDate(load.getLoadDate());
 		response.setPostLoadDate(load.getPostLoadDate());
