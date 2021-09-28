@@ -387,14 +387,14 @@ public class BookingServiceImpl implements BookingService {
 	}
 	
 	
-	//@Value("${LOAD_URL}")
-	private String loadUrl = "http://15.207.224.92:8080/load";
+	@Value("${LOAD_URL}")
+	private String loadUrl;
 	
-	//@Value("${LOAD_IP}")
-	private String loadIp = "15.207.224.92";
+	@Value("${LOAD_IP}")
+	private String loadIp;
 	
-//	@Value("${LOAD_PORT}")
-	private String loadPort = "8080" ;
+	@Value("${LOAD_PORT}")
+	private String loadPort;
 	
 	@Async
 	@Retryable(maxAttempts = 24*60/15, value = { ConnectException.class, Exception.class, RuntimeException.class },
