@@ -32,6 +32,6 @@ jobs:
     - run: sudo docker container rm load-container || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
-    - run: sudo docker run -p 8080:8080 --name load-container -d load | echo "success" 
+    - run: sudo docker run --env-file /home/ubuntu/test.env -p 8080:8080 --name load-container -d load | echo "success" 
 
  
