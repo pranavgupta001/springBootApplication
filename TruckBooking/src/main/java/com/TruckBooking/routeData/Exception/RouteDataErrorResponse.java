@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
+
+import com.TruckBooking.TruckBooking.Exception.LowerCaseClassNameResolver;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
