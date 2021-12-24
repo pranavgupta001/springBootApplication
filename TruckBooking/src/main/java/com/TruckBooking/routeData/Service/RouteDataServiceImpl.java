@@ -116,7 +116,7 @@ public class RouteDataServiceImpl implements RouteDataService {
         log.info("getRouteData service by routeId is started");
         Optional<Route> route = routeDataDao.findById(routeDataId);
         if (route.isEmpty())
-            throw new EntityNotFoundException(Load.class, "id", routeDataId.toString());
+            throw new EntityNotFoundException(Route.class, "id", routeDataId.toString());
             log.info("getRouteData service response is returned");
         return route.get();
 
