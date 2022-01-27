@@ -59,6 +59,10 @@ public class RouteDataServiceImpl implements RouteDataService {
         route.setDuration(temp);
         response.setDuration(temp);
 
+        temp = routeDataRequest.getDeviceId().trim();
+        route.setDeviceId(temp);
+        response.setDeviceId(temp);
+
         if (routeDataRequest.getLatitude() > 0){
             route.setLatitude(routeDataRequest.getLatitude());
             response.setLatitude(routeDataRequest.getLatitude());
@@ -117,14 +121,14 @@ public class RouteDataServiceImpl implements RouteDataService {
         Optional<Route> route = routeDataDao.findById(routeDataId);
         if (route.isEmpty())
             throw new EntityNotFoundException(Route.class, "id", routeDataId.toString());
-            log.info("getRouteData service response is returned");
+        log.info("getRouteData service response is returned");
         return route.get();
 
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
-    public List<Route> getRelevantRoutesData(String imei, String truckId, String truckNo, String transporterId) {
+    public List<Route> getRelevantRoutesData(String imei, String truckId, String truckNo, String transporterId, String deviceId) {
         log.info("getRouteData service with params started");
         if (imei != null) {
             List<Route> routes = routeDataDao.findByImei(imei);
@@ -143,6 +147,11 @@ public class RouteDataServiceImpl implements RouteDataService {
 
         if (transporterId != null) {
             List<Route> routes = routeDataDao.findByTransporterId(transporterId);
+            return routes;
+        }
+
+        if (deviceId != null) {
+            List<Route> routes = routeDataDao.findByDeviceId(deviceId);
             return routes;
         }
 
