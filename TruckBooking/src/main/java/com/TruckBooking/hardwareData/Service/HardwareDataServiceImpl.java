@@ -97,6 +97,9 @@ public class HardwareDataServiceImpl implements HardwareDataService{
         if (hardwareList.isEmpty())
             throw new EntityNotFoundException(Hardware.class, "imei", imei);
 
+        if(updateHardwareDataRequest.getPhoneNo().trim().length() != 13)
+            throw new BusinessException(": The Phone No. must be of 13 digits.");
+
         String temp = "";
         Hardware hardware = hardwareList.get(0);
         UpdateHardwareDataResponse response = new UpdateHardwareDataResponse();
