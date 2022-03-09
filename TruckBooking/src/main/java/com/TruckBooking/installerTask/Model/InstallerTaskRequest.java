@@ -1,0 +1,28 @@
+package com.TruckBooking.installerTask.Model;
+
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+
+@Data
+public class InstallerTaskRequest {
+
+    @NotBlank(message = "Vehicle Number can not be left alone.")
+    private String vehicleNo;
+
+    private String vehicleOwnerName;
+
+    private String vehicleOwnerPhoneNo;
+
+    private String driverName;
+
+    private String driverPhoneNo;
+
+    private String installationDate;
+
+    private String installationCompleteDate;
+
+    private String installationLocation;
+
+    private String gpsInstallerId;
+}

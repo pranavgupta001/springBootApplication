@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 @Data
 public class CreateHardwareDataResponse {
-    private String HardwareDataId;
+    private String hardwareDataId;
     private String imei;
     private String simNumber;
     private String phoneNo;

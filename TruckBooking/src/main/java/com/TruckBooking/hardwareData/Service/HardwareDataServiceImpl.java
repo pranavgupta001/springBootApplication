@@ -1,9 +1,8 @@
 package com.TruckBooking.hardwareData.Service;
 
-import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Exception.BusinessException;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
-import com.TruckBooking.hardwareData.Dao.HardwareDataDoa;
+import com.TruckBooking.hardwareData.Dao.HardwareDataDao;
 import com.TruckBooking.hardwareData.Entities.Hardware;
 import com.TruckBooking.hardwareData.Model.HardwareDataRequest;
 import com.TruckBooking.hardwareData.Response.CreateHardwareDataResponse;
@@ -14,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -24,13 +21,13 @@ import java.util.UUID;
 public class HardwareDataServiceImpl implements HardwareDataService{
 
     @Autowired
-    HardwareDataDoa hardwareDataDoa;
+    HardwareDataDao hardwareDataDao;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public CreateHardwareDataResponse addHardwareData(HardwareDataRequest hardwareDataRequest) {
 
-        List<Hardware> hardwareList = hardwareDataDoa.findByImei(hardwareDataRequest.getImei().trim());
+        List<Hardware> hardwareList = hardwareDataDao.findByImei(hardwareDataRequest.getImei().trim());
         if (!hardwareList.isEmpty()) {
             throw new BusinessException(": This imei already exists.");
         }
@@ -61,7 +58,7 @@ public class HardwareDataServiceImpl implements HardwareDataService{
                 hardware.setPhoneNo(temp);
                 response.setPhoneNo(temp);
 
-                hardwareDataDoa.save(hardware);
+                hardwareDataDao.save(hardware);
                 log.info("hardwareData is saved to the database");
                 log.info("addHardwareData service response is returned");
 
@@ -76,7 +73,7 @@ public class HardwareDataServiceImpl implements HardwareDataService{
     public List<Hardware> getHardwareData(String imei) {
         log.info("getHardwareData service by imei is started");
 
-        List<Hardware> hardware = hardwareDataDoa.findByImei(imei);
+        List<Hardware> hardware = hardwareDataDao.findByImei(imei);
         if (hardware.isEmpty())
             throw new EntityNotFoundException(Hardware.class, "imei", imei);
 
@@ -86,14 +83,14 @@ public class HardwareDataServiceImpl implements HardwareDataService{
 
     @Override
     public List<Hardware> getAllHardwareData() {
-        return hardwareDataDoa.findAll();
+        return hardwareDataDao.findAll();
     }
 
     @Override
     public UpdateHardwareDataResponse updateHardwareDataResponse(String imei, HardwareDataRequest updateHardwareDataRequest) {
         log.info("updateHardwareData service is started");
 
-        List<Hardware> hardwareList = hardwareDataDoa.findByImei(imei);
+        List<Hardware> hardwareList = hardwareDataDao.findByImei(imei);
         if (hardwareList.isEmpty())
             throw new EntityNotFoundException(Hardware.class, "imei", imei);
 
@@ -122,7 +119,7 @@ public class HardwareDataServiceImpl implements HardwareDataService{
             response.setPhoneNo(temp);
         }
 
-        hardwareDataDoa.save(hardware);
+        hardwareDataDao.save(hardware);
         log.info("Hardware Data is updated in the database");
         log.info("updateHardwareData service response is returned");
         return response;
