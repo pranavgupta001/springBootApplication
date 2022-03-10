@@ -23,6 +23,9 @@ public class Hardware {
     @NotBlank(message = "imei can't be left blank.")
     private String imei;
 
+    @NotBlank(message = "deviceId can't be left blank.")
+    private String deviceId;
+
     @NotBlank(message = "simNumber can't be left blank.")
     private String simNumber;
 

@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface HardwareDataDao extends JpaRepository<Hardware, String> {
     List<Hardware> findByImei(String imei);
+    List<Hardware> findByDeviceId(String deviceId);
 }
