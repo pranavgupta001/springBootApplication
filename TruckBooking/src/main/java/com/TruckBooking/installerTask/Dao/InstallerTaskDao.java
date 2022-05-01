@@ -9,5 +9,5 @@ import java.util.List;
 public interface InstallerTaskDao extends JpaRepository<InstallerTask, String>  {
     List<InstallerTask> findByVehicleNo(String vehicleNo);
 
-    List<InstallerTask> findByGpsInstallerIdAndInstallerTaskStatus(String gpsInstallerId, InstallerTask.InstallerTaskStatus installerTaskStatus);
+    List<InstallerTask> findByGpsInstallerId(String gpsInstallerId);
 }
