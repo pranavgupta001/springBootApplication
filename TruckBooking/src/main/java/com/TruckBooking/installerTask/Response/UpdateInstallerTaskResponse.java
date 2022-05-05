@@ -28,4 +28,5 @@ public class UpdateInstallerTaskResponse {
     private String gpsInstallerId;
 
     public InstallerTask.InstallerTaskStatus installerTaskStatus;
+
 }

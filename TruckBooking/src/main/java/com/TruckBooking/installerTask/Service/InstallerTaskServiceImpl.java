@@ -98,6 +98,7 @@ public class InstallerTaskServiceImpl implements InstallerTaskService {
             response.setInstallerTaskStatus(InstallerTask.InstallerTaskStatus.Pending);
 
 
+
             installerTaskDao.save(installerTask);
             log.info("installer Task Data is saved to the database");
             log.info("addInstallerTask service response is returned");
@@ -122,7 +123,7 @@ public class InstallerTaskServiceImpl implements InstallerTaskService {
         }
 
         if(gpsInstallerId != null){
-            List<InstallerTask> installerTaskList = installerTaskDao.findByGpsInstallerIdAndInstallerTaskStatus(gpsInstallerId, InstallerTask.InstallerTaskStatus.Pending);
+            List<InstallerTask> installerTaskList = installerTaskDao.findByGpsInstallerId(gpsInstallerId);
 
             if(installerTaskList.isEmpty())
                 throw new EntityNotFoundException(InstallerTask.class, "GpsInstallerId", gpsInstallerId);
@@ -167,7 +168,6 @@ public class InstallerTaskServiceImpl implements InstallerTaskService {
             response.setInstallerTaskId(installerTask.getInstallerTaskId());
             response.setVehicleNo(installerTask.getVehicleNo());
             response.setInstallerTaskStatus(installerTask.getInstallerTaskStatus());
-
             temp = installerTaskRequest.getVehicleOwnerName();
             if (StringUtils.isNotBlank(temp)) {
                 installerTask.setVehicleOwnerName(temp.trim());
@@ -216,6 +216,7 @@ public class InstallerTaskServiceImpl implements InstallerTaskService {
                 installerTask.setGpsInstallerId(temp.trim());
                 response.setGpsInstallerId(temp.trim());
             }
+
             if(installerTaskRequest.getInstallerTaskStatus()!=null)
             {
                 if(String.valueOf(installerTaskRequest.getInstallerTaskStatus()).equals("Pending"))

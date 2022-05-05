@@ -46,5 +46,4 @@ public class InstallerTask {
         Assigned ,Pending, Completed
     }
 
-
 }
