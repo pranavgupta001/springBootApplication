@@ -39,6 +39,20 @@ public @Data class BookingData {
 	@NotBlank(message = "PostLoadId Id can not be null")
 	private String postLoadId;
 
+	//adding new columns
+	@NotBlank(message = "loadingPointCity can not be null")
+	private String loadingPointCity;
+	@NotBlank(message = "unloadingPointCity can not be null")
+	private String unloadingPointCity;
+	@NotBlank(message = "truckNo can not be null")
+	private String truckNo;
+	@NotBlank(message = "driverName can not be null")
+	private String driverName;
+	@NotBlank(message = "phoneNum can not be null")
+	private String driverPhoneNum;
+	@NotBlank(message = "deviceId can not be null")
+	private String deviceId;
+
 	private Long rate;
 	private Unit unitValue;
 

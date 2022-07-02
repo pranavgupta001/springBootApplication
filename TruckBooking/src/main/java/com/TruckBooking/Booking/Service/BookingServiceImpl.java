@@ -7,18 +7,15 @@ import java.net.Socket;
 import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 
 import com.TruckBooking.Booking.Constants.BookingConstants;
 import com.TruckBooking.Booking.Dao.BookingDao;
@@ -31,7 +28,6 @@ import com.TruckBooking.Booking.Model.BookingPostResponse;
 import com.TruckBooking.Booking.Model.BookingPutRequest;
 import com.TruckBooking.Booking.Model.BookingPutResponse;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +49,16 @@ public class BookingServiceImpl implements BookingService {
 		bookingData.setBookingId("booking:" + UUID.randomUUID());
 		bookingData.setLoadId(request.getLoadId());
 		bookingData.setTransporterId(request.getTransporterId());
-		bookingData.setPostLoadId(request.getPostLoadId());
+
+		bookingData.setLoadingPointCity(request.getLoadingPointCity());
+		bookingData.setUnloadingPointCity(request.getUnloadingPointCity());
+		bookingData.setDriverName(request.getDriverName());
+		bookingData.setDriverPhoneNum(request.getDriverPhoneNum());
+		bookingData.setTruckNo(request.getTruckNo());
+        bookingData.setDeviceId(request.getDeviceId());
+
+
+        bookingData.setPostLoadId(request.getPostLoadId());
 		bookingData.setTruckId(request.getTruckId());
 
 		if (request.getRate() != null) {
@@ -101,6 +106,14 @@ public class BookingServiceImpl implements BookingService {
 		response.setCompleted(bookingData.getCompleted());
 		response.setLoadId(bookingData.getLoadId());
 		response.setPostLoadId(bookingData.getPostLoadId());
+
+		response.setLoadingPointCity(bookingData.getLoadingPointCity());
+		response.setUnloadingPointCity(bookingData.getUnloadingPointCity());
+		response.setDriverName(bookingData.getDriverName());
+		response.setDriverPhoneNum(bookingData.getDriverPhoneNum());
+		response.setTruckNo(bookingData.getTruckNo());
+        response.setDeviceId(bookingData.getDeviceId());
+
 		response.setRate(bookingData.getRate());
 		response.setTransporterId(bookingData.getTransporterId());
 		response.setTruckId(bookingData.getTruckId());
@@ -119,7 +132,7 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	
-	//cancel = false, compleate true
+	//cancel = false, complete true
 	@Override
 	public BookingPutResponse updateBooking(String bookingId, BookingPutRequest request) {
 		
@@ -180,6 +193,26 @@ public class BookingServiceImpl implements BookingService {
 			data.setRate(request.getRate());
 		}
 
+		if (request.getLoadingPointCity() != null) {
+			data.setLoadingPointCity(request.getLoadingPointCity());
+		}
+
+		if (request.getUnloadingPointCity() != null) {
+			data.setUnloadingPointCity(request.getUnloadingPointCity());
+		}
+
+		if (request.getTruckNo() != null) {
+			data.setTruckNo(request.getTruckNo());
+		}
+
+		if (request.getDriverPhoneNum() != null) {
+			data.setDriverPhoneNum(request.getDriverPhoneNum());
+		}
+
+		if (request.getDriverName() != null) {
+			data.setDriverName(request.getDriverName());
+		}
+
 		if (request.getCompleted() != null) {
 			if (request.getCompleted() == true) {
 				data.setCompleted(true);
@@ -233,6 +266,14 @@ public class BookingServiceImpl implements BookingService {
 		response.setCompleted(data.getCompleted());
 		response.setLoadId(data.getLoadId());
 		response.setPostLoadId(data.getPostLoadId());
+
+		response.setLoadingPointCity(data.getLoadingPointCity());
+		response.setUnloadingPointCity(data.getUnloadingPointCity());
+		response.setDriverName(data.getDriverName());
+		response.setDriverPhoneNum(data.getDriverPhoneNum());
+		response.setTruckNo(data.getTruckNo());
+        response.setDeviceId(data.getDeviceId());
+
 		response.setRate(data.getRate());
 		response.setTransporterId(data.getTransporterId());
 		response.setTruckId(data.getTruckId());
@@ -274,7 +315,8 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public List<BookingData> getDataById(Integer pageNo, Boolean cancel, Boolean completed, String transporterId,
-			String postLoadId) {
+			String postLoadId, String loadingPointCity, String unloadingPointCity, String truckNo, String driverName,
+            String driverPhoneNum, String deviceId) {
 
 		if (pageNo == null) {
 			pageNo = 0;
@@ -282,7 +324,8 @@ public class BookingServiceImpl implements BookingService {
 		Pageable page = PageRequest.of(pageNo, BookingConstants.pageSize,Sort.Direction.DESC,"timestamp");
 		//		List<BookingData> temp = null;
 
-		if ((cancel == null || completed == null) && (transporterId != null || postLoadId != null)) {
+		if ((cancel == null || completed == null) && (transporterId != null || postLoadId != null || loadingPointCity != null || unloadingPointCity != null ||
+                truckNo != null || driverName != null || driverPhoneNum != null || deviceId != null)) {
 			EntityNotFoundException ex = new EntityNotFoundException(BookingData.class, "completed",
 					String.valueOf(completed), "cancel", String.valueOf(cancel));
 			log.error(String.valueOf(ex));
@@ -297,9 +340,13 @@ public class BookingServiceImpl implements BookingService {
 
 		}
 
-		if (transporterId != null && postLoadId != null) {
+		if (transporterId != null && postLoadId != null &&  loadingPointCity != null && unloadingPointCity != null
+            && truckNo != null && driverName != null && driverPhoneNum != null && deviceId != null) {
 			EntityNotFoundException ex = new EntityNotFoundException(BookingData.class, "transporterId",
-					String.valueOf(transporterId), "postLoadId", String.valueOf(postLoadId));
+					String.valueOf(transporterId), "postLoadId", String.valueOf(postLoadId), "loadingPointCity", String.valueOf(loadingPointCity),
+					"unloadingPointCity", String.valueOf(unloadingPointCity), "truckNo", String.valueOf(truckNo),
+					"driverName", String.valueOf(driverName), "driverPhoneNum",
+                    String.valueOf(driverPhoneNum), "deviceId", String.valueOf(deviceId));
 			log.error(String.valueOf(ex));
 			throw ex;
 
@@ -318,6 +365,82 @@ public class BookingServiceImpl implements BookingService {
 		}
 
 		if (postLoadId != null) {
+			try {
+				log.info("Booking Data with params returned");
+				return bookingDao.findByPostLoadIdAndCancelAndCompleted(postLoadId, cancel, completed, page);
+			} catch (Exception ex) {
+				log.error("Booking Data with params not returned -----" + String.valueOf(ex));
+				throw ex;
+
+			}
+		}
+
+		if (loadingPointCity != null) {
+			try {
+				log.info("Booking Data with params returned");
+				return bookingDao.findByLoadingPointCityAndCancelAndCompleted(loadingPointCity, cancel, completed, page);
+			} catch (Exception ex) {
+				log.error("Booking Data with params not returned -----" + String.valueOf(ex));
+				throw ex;
+			}
+		}
+
+		if (unloadingPointCity != null) {
+			try {
+				log.info("Booking Data with params returned");
+				return bookingDao.findByUnloadingPointCityAndCancelAndCompleted(unloadingPointCity, cancel, completed, page);
+			} catch (Exception ex) {
+				log.error("Booking Data with params not returned -----" + String.valueOf(ex));
+				throw ex;
+
+			}
+		}
+
+		if (truckNo != null) {
+			try {
+				log.info("Booking Data with params returned");
+				return bookingDao.findByTruckNoAndCancelAndCompleted(truckNo, cancel, completed, page);
+			} catch (Exception ex) {
+				log.error("Booking Data with params not returned -----" + String.valueOf(ex));
+				throw ex;
+
+			}
+		}
+
+		if (driverPhoneNum != null) {
+			try {
+				log.info("Booking Data with params returned");
+				return bookingDao.findByDriverPhoneNumAndCancelAndCompleted(driverPhoneNum, cancel, completed, page);
+			} catch (Exception ex) {
+				log.error("Booking Data with params not returned -----" + String.valueOf(ex));
+				throw ex;
+
+			}
+		}
+
+		if (driverName != null) {
+			try {
+				log.info("Booking Data with params returned");
+				return bookingDao.findByDriverNameAndCancelAndCompleted(driverName, cancel, completed, page);
+			} catch (Exception ex) {
+				log.error("Booking Data with params not returned -----" + String.valueOf(ex));
+				throw ex;
+
+			}
+		}
+
+        if (deviceId != null) {
+            try {
+                log.info("Booking Data with params returned");
+                return bookingDao.findByDeviceIdAndCancelAndCompleted(deviceId, cancel, completed, page);
+            } catch (Exception ex) {
+                log.error("Booking Data with params not returned -----" + String.valueOf(ex));
+                throw ex;
+            }
+        }
+
+
+        if (postLoadId != null) {
 			try {
 				log.info("Booking Data with params returned");
 				return bookingDao.findByPostLoadIdAndCancelAndCompleted(postLoadId, cancel, completed, page);
@@ -392,7 +515,7 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Value("${LOAD_IP}")
 	private String loadIp;
-	
+
 	@Value("${LOAD_PORT}")
 	private String loadPort;
 	
@@ -405,10 +528,10 @@ public class BookingServiceImpl implements BookingService {
 			log.info("started update load status");
 			Socket clientSocket = new Socket(loadIp, Integer.parseInt(loadPort));
 			clientSocket.close();
-		    
+
 			RestAssured.baseURI = loadUrl;
-			
-			Response responseupdate = RestAssured.given().header("", "").body(inputJson)
+
+			Response responseupdate = RestAssured.given().header(" ", "").body(inputJson)
 					.header("accept", "application/json")
 					.header("Content-Type", "application/json")
 					.put("/" + loadid).then().extract().response();
