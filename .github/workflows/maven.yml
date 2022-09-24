@@ -23,13 +23,6 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: 'AKIAVAP3QSUCQYB72GMB'
-        aws-secret-access-key: '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'
-        aws-region: 'ap-south-1'
-        
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       
