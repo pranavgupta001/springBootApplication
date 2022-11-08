@@ -28,16 +28,19 @@ public class HardwareController {
         return new ResponseEntity<>(hardwareDataService.addHardwareData(hardwareDataRequest), HttpStatus.CREATED);
     }
 
-    @GetMapping("/hardwaredata/{imei}")
-    public ResponseEntity<Object> findHardwareData(@PathVariable String imei){
+    @GetMapping("/hardwaredata/{hardwareDataId}")
+    public ResponseEntity<Object> findHardwareData(@PathVariable String hardwareDataId){
         log.info("Get by imei Controller Started");
-        return new ResponseEntity<>(hardwareDataService.getHardwareData(imei), HttpStatus.OK);
+        return new ResponseEntity<>(hardwareDataService.getHardwareData(hardwareDataId), HttpStatus.OK);
     }
 
     @GetMapping("/hardwaredata")
-    public ResponseEntity<Object> findAllHardwareData(){
+    public ResponseEntity<Object> findSpecificHardwareData(
+            @RequestParam(name = "imei", required = false) String imei,
+            @RequestParam(name = "deviceId", required = false) String deviceId
+    ){
         log.info("Get All hardware Data Controller Started");
-        return new ResponseEntity<>(hardwareDataService.getAllHardwareData(), HttpStatus.OK);
+        return new ResponseEntity<>(hardwareDataService.getSpecificHardwareData(imei, deviceId), HttpStatus.OK);
     }
 
     @PutMapping("/hardwaredata/{imei}")

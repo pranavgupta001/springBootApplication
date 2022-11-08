@@ -41,7 +41,7 @@ public class BookingController {
 		log.info("Post Controller Started");
 		
 		ResponseEntity<BookingPostResponse> response = new ResponseEntity<>(bookingService.addBooking(request), HttpStatus.CREATED);
-		bookingService.updating_load_status_by_loadid(request.getLoadId(), BookingConstants.loadStatus_ongoing);
+		//bookingService.updating_load_status_by_loadid(request.getLoadId(), BookingConstants.loadStatus_ongoing);
 		return response;
 		//return new ResponseEntity<>(bookingService.addBooking(request), HttpStatus.CREATED);
 	}
@@ -52,9 +52,9 @@ public class BookingController {
 		log.info("Put Controller Started");
 		ResponseEntity<BookingPutResponse> response = new ResponseEntity<>(bookingService.updateBooking(bookingId, request), HttpStatus.OK);
 		
-		if(!request.getCancel() && request.getCompleted())
-		bookingService.updating_load_status_by_loadid(bookingService.getDataById(bookingId).getLoadId(), BookingConstants.loadStatus_completed);
-		
+//		if(!request.getCancel() && request.getCompleted())
+//		bookingService.updating_load_status_by_loadid(bookingService.getDataById(bookingId).getLoadId(), BookingConstants.loadStatus_completed);
+
 		return response;
 	}
 
@@ -69,9 +69,15 @@ public class BookingController {
 			@RequestParam(value = "cancel", required = false) Boolean cancel,
 			@RequestParam(value = "completed", required = false) Boolean completed,
 			@RequestParam(value = "transporterId", required = false) String transporterId,
-			@RequestParam(value = "postLoadId", required = false) String postLoadId) throws EntityNotFoundException {
+			@RequestParam(value = "postLoadId", required = false) String postLoadId,
+			@RequestParam(value = "loadingPointCity", required = false) String loadingPointCity,
+		    @RequestParam(value = "unloadingPointCity", required = false) String unloadingPointCity,
+  		    @RequestParam(value = "truckNo", required = false) String truckNo,
+		    @RequestParam(value = "driverPhoneNum", required = false) String driverPhoneNum,
+            @RequestParam(value = "driverName", required = false) String driverName,
+            @RequestParam(value = "deviceId", required = false) String deviceId) throws EntityNotFoundException {
 		log.info("Get with Params Controller Started");
-		return new ResponseEntity<>(bookingService.getDataById(pageNo, cancel, completed, transporterId, postLoadId),
+		return new ResponseEntity<>(bookingService.getDataById(pageNo, cancel, completed, transporterId, postLoadId, loadingPointCity, unloadingPointCity, truckNo, driverName, driverPhoneNum, deviceId),
 				HttpStatus.OK);
 	}
 
