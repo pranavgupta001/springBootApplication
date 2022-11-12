@@ -42,6 +42,7 @@ public class Load {
 	
 	private String noOfTrucks;
 	private String noOfTyres;
+	private String LR; // optional
 	private String comment; // this should be an optional
 
 	@NotBlank(message = "Load Date Cannot Be Empty")

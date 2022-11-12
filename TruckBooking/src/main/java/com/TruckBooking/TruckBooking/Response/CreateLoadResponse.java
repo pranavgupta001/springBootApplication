@@ -28,6 +28,7 @@ public class CreateLoadResponse {
 	private String loadDate;
 	private String postLoadDate;
 	public Status status;
+	private String LR; //optional
 	private String comment; // this should be an optional
 	private Long rate;
 

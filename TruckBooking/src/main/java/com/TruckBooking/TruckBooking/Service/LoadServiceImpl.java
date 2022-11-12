@@ -97,6 +97,12 @@ public class LoadServiceImpl implements LoadService {
 			load.setNoOfTyres(temp.trim());
 			response.setNoOfTyres(temp.trim());
 		}
+
+		temp = loadrequest.getLR();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setLR(temp.trim());
+			response.setLR(temp.trim());
+		}
 		
 		temp = loadrequest.getWeight().trim();
 		load.setWeight(temp);
@@ -295,6 +301,10 @@ public class LoadServiceImpl implements LoadService {
 			load.setComment(updateLoad.getComment());
 		}
 
+		if(updateLoad.getLR() != null) {
+			load.setLR(updateLoad.getLR());
+		}
+
 		if (updateLoad.getStatus() != null) {
 
 			if (String.valueOf(updateLoad.getStatus()).equals("PENDING")) {
@@ -344,6 +354,7 @@ public class LoadServiceImpl implements LoadService {
 		response.setLoadDate(load.getLoadDate());
 		response.setPostLoadDate(load.getPostLoadDate());
 		response.setComment(load.getComment());
+		response.setLR(load.getLR());
 		response.setStatus(load.getStatus());
 		response.setRate(load.getRate());
 		response.setTimestamp(load.getTimestamp());
