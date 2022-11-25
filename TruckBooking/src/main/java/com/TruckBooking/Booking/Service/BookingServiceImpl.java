@@ -31,6 +31,7 @@ import com.TruckBooking.Booking.Model.BookingPutResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -39,7 +40,7 @@ public class BookingServiceImpl implements BookingService {
 	private BookingDao bookingDao;
 
 	private BookingConstants constants;
-
+	@Transactional
 	@Override
 	public BookingPostResponse addBooking(BookingPostRequest request){
 
