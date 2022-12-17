@@ -22,7 +22,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        cache: maven
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
@@ -34,5 +33,5 @@ jobs:
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
     - run:  sudo docker container start loadPostgres || sudo docker run --name loadPostgres -e POSTGRES_ROOT_PASSWORD=postgres -e POSTGRES_DATABASE=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:alpine 
-    - run: sudo docker run -d --env-file /home/ubuntu/test.env -p 8080:8080 --name loadContainer --link loadPostgres:postgres load  sleep infinity| echo "success"
+    - run: sudo docker run -d --env-file /home/ubuntu/test.env -p 8080:8080 --name loadContainer --link loadPostgres:postgres load | echo "success"
 
