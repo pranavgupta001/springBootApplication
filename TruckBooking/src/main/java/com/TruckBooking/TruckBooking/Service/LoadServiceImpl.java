@@ -72,6 +72,42 @@ public class LoadServiceImpl implements LoadService {
 		load.setUnloadingPointState(temp);
 		response.setUnloadingPointState(temp);
 
+		temp = loadrequest.getLoadingPoint2();
+		if(StringUtils.isNotBlank(temp)){
+			load.setLoadingPoint2(temp.trim());
+			response.setLoadingPoint2(temp.trim());
+		}
+
+		temp = loadrequest.getLoadingPointCity2();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setLoadingPointCity2(temp.trim());
+			response.setLoadingPointCity2(temp.trim());
+		}
+
+		temp = loadrequest.getLoadingPointState2();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setLoadingPointState2(temp.trim());
+			response.setLoadingPointState2(temp.trim());
+		}
+
+		temp = loadrequest.getUnloadingPoint2();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setUnloadingPoint2(temp.trim());
+			response.setUnloadingPoint2(temp.trim());
+		}
+
+		temp = loadrequest.getUnloadingPointCity2();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setUnloadingPointCity2(temp.trim());
+			response.setUnloadingPointCity2(temp.trim());
+		}
+
+		temp = loadrequest.getUnloadingPointState2();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setUnloadingPointState2(temp.trim());
+			response.setUnloadingPointState2(temp.trim());
+		}
+
 		temp = loadrequest.getPostLoadId().trim();
 		load.setPostLoadId(temp);
 		response.setPostLoadId(temp);
@@ -262,6 +298,36 @@ public class LoadServiceImpl implements LoadService {
 			load.setUnloadingPointState(temp.trim());
 		}
 
+		temp = updateLoad.getLoadingPoint2();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setLoadingPoint2(temp.trim());
+		}
+
+		temp = updateLoad.getLoadingPointCity2();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setLoadingPointCity2(temp.trim());
+		}
+
+		temp = updateLoad.getLoadingPointState2();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setLoadingPointState2(temp.trim());
+		}
+
+		temp = updateLoad.getUnloadingPoint2();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setUnloadingPoint2(temp.trim());
+		}
+
+		temp = updateLoad.getUnloadingPointCity2();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setUnloadingPointCity2(temp.trim());
+		}
+
+		temp = updateLoad.getUnloadingPointState2();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setUnloadingPointState2(temp.trim());
+		}
+
 		temp = updateLoad.getNoOfTrucks();
 		if (StringUtils.isNotBlank(temp)) {
 			load.setNoOfTrucks(temp.trim());
@@ -345,6 +411,12 @@ public class LoadServiceImpl implements LoadService {
 		response.setUnloadingPoint(load.getUnloadingPoint());
 		response.setUnloadingPointCity(load.getUnloadingPointCity());
 		response.setUnloadingPointState(load.getUnloadingPointState());
+		response.setLoadingPoint2(load.getLoadingPoint2());
+		response.setLoadingPointCity2(load.getLoadingPointCity2());
+		response.setLoadingPointState2(load.getLoadingPointState2());
+		response.setUnloadingPoint2(load.getUnloadingPoint2());
+		response.setUnloadingPointCity2(load.getUnloadingPointCity2());
+		response.setUnloadingPointState2(load.getUnloadingPointState2());
 		response.setPostLoadId(load.getPostLoadId());
 		response.setProductType(load.getProductType());
 		response.setTruckType(load.getTruckType());
