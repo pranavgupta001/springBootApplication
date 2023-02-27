@@ -28,7 +28,7 @@ jobs:
       run: mvn -B package --file pom.xml
       
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
-    - run: sudo cp /home/ubuntu/env.properties /home/ubuntu/actions-runner/deploy/loadsApi/loadsApi/TruckBooking/target/
+    - run: sudo cp /home/ubuntu/envDev.properties /home/ubuntu/actions-runner/deploy/loadsApi/loadsApi/TruckBooking/target/
     - run: sudo docker container stop loadContainer || true
     - run: sudo docker container stop loadPostgres || true
     - run: sudo docker container rm loadContainer || true
