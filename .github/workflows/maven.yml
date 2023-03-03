@@ -28,7 +28,7 @@ jobs:
       
       
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
-    - run: sudo cp /home/ubuntu/envProd.properties /home/ubuntu/actions-runner/deploy/loadsApi/loadsApi/target/
+    - run: sudo cp /home/ubuntu/envProd.properties /home/ubuntu/actions-runner/deploy/loadsApi/loadsApi/TruckBooking/target/
     - run: sudo docker container stop load-container || true
     - run: sudo docker container stop loadPostgres || true
     - run: sudo docker container rm load-container || true
