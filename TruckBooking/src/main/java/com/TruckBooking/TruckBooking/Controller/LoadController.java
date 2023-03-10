@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Model.LoadRequest;
 import com.TruckBooking.TruckBooking.Service.LoadServiceImpl;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@CrossOrigin
 @RestController
 public class LoadController {
 
