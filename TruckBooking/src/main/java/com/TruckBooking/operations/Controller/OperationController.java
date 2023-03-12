@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.ConnectException;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @Slf4j
 public class OperationController {
