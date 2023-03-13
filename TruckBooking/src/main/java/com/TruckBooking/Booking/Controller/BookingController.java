@@ -9,14 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.TruckBooking.Booking.Constants.BookingConstants;
 import com.TruckBooking.Booking.Entities.BookingData;
@@ -29,7 +22,7 @@ import com.TruckBooking.Booking.Model.BookingPutResponse;
 import com.TruckBooking.Booking.Service.BookingService;
 
 import lombok.extern.slf4j.Slf4j;
-
+@CrossOrigin
 @RestController
 @Slf4j
 @EnableTransactionManagement
