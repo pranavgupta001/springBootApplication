@@ -24,10 +24,9 @@ jobs:
         distribution: 'adopt'
         cache: maven
         
+    - run: sudo docker container stop loadContainer || true    
     - name: Build with Maven
-      run: sudo docker container stop loadContainer || true
-      
-    - run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
     - run: sudo cp /home/ubuntu/envDev.properties /home/ubuntu/actions-runner/deploy/loadsApi/loadsApi/TruckBooking/target/
     - run: sudo docker container rm loadContainer || true
