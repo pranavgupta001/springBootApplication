@@ -22,19 +22,16 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        
+
+    - run: sudo docker container stop load-container || true  
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-      
-      
+       
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
     - run: sudo cp /home/ubuntu/envProd.properties /home/ubuntu/actions-runner/deploy/loadsApi/loadsApi/TruckBooking/target/
-    - run: sudo docker container stop load-container || true
-    - run: sudo docker container stop loadPostgres || true
     - run: sudo docker container rm load-container || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
-    - run: sudo docker container start loadPostgres || sudo docker run --name loadPostgres -e POSTGRES_ROOT_PASSWORD=postgres -e POSTGRES_DATABASE=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:alpine
-    - run: sudo docker run --env-file /home/ubuntu/test.env -p 8080:8080 --name load-container --link loadPostgres:postgres load | echo "success" 
+    - run: sudo docker run --env-file /home/ubuntu/test.env -p 8080:8080 --name load-container  load | echo "success" 
 
  
