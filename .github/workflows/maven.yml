@@ -28,9 +28,8 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
-    - run: sudo cp /home/ubuntu/envDev.properties /home/ubuntu/actions-runner/deploy/loadsApi/loadsApi/TruckBooking/target/
     - run: sudo docker container rm loadContainer || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
-    - run: sudo docker run -d --env-file /home/ubuntu/test.env -p 8080:8080 --name loadContainer load  sleep infinity| echo "success"
+    - run: sudo docker run -d --env-file /home/ubuntu/envDev.properties -p 8080:8080 --name loadContainer load  sleep infinity| echo "success"
 
