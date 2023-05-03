@@ -25,14 +25,6 @@ public class LoadRequest {
 	private String unloadingPointCity;
 	@NotBlank(message = "Unloading Point State Cannot Be Empty")
 	private String unloadingPointState;
-
-	private String loadingPoint2;		//optional
-	private String loadingPointCity2;	//optional
-	private String loadingPointState2;	//optional
-	private String unloadingPoint2;		//optional
-	private String unloadingPointCity2;  //optional
-	private String unloadingPointState2; //optional
-
 	@NotBlank(message = "Product Type Cannot Be Empty")
 	private String productType;
 	@NotBlank(message = "Truck Type Cannot Be Empty")

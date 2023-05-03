@@ -19,14 +19,6 @@ public class CreateLoadResponse {
 	private String unloadingPoint;
 	private String unloadingPointCity;
 	private String unloadingPointState;
-
-	private String loadingPoint2;		//optional
-	private String loadingPointCity2;	//optional
-	private String loadingPointState2;	//optional
-	private String unloadingPoint2;		//optional
-	private String unloadingPointCity2;  //optional
-	private String unloadingPointState2; //optional
-
 	private String postLoadId;
 	private String productType;
 	private String truckType;
