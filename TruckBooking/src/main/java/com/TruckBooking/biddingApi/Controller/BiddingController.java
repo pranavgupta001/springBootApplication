@@ -5,15 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.TruckBooking.biddingApi.Entities.BiddingData;
 import com.TruckBooking.biddingApi.Exception.EntityNotFoundException;
@@ -25,7 +17,7 @@ import com.TruckBooking.biddingApi.Model.BidPutResponse;
 import com.TruckBooking.biddingApi.Service.BiddingService;
 import com.TruckBooking.biddingApi.Util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
-
+@CrossOrigin
 @RestController
 @Slf4j
 public class BiddingController {
