@@ -4,6 +4,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 
+import com.TruckBooking.TruckBooking.Entities.Load.Publish;
 import com.TruckBooking.TruckBooking.Entities.Load.Status;
 
 import lombok.Data;
@@ -61,4 +62,5 @@ public class LoadRequest {
 	}
 
 	public Status status;
+    public Publish publish;
 }
