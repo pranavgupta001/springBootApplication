@@ -16,6 +16,7 @@ import com.TruckBooking.ULIP.Service.ULIPService;
 
 
 
+@CrossOrigin
 @RestController
 public class ULIPController {
 	
