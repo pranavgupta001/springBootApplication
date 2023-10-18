@@ -1,5 +1,6 @@
 package com.TruckBooking.TruckBooking.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,9 @@ public interface LoadService {
 	public CreateLoadResponse addLoad(LoadRequest load);
 
 	public List<Load> getLoads(Integer pageNo, String loadingPointCity, String unloadingPointCity, String shipperId,
-			String truckType, boolean suggestedLoads, String transporterId);
-
+			String truckType, boolean suggestedLoads, String transporterId, Timestamp startTimestamp, Timestamp endTimestamp);
+	
+	
 	public UpdateLoadResponse updateLoad(String loadId, LoadRequest loadrequest);
 
 	public CreateLoadResponse getLoad(String loadId);
