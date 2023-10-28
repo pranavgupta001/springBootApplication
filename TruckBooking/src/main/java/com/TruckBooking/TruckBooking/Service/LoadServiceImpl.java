@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.TruckBooking.ContractRateUpload.Dao.ContractRateRepo;
 import com.TruckBooking.ContractRateUpload.Dao.IndentDao;
 import com.TruckBooking.ContractRateUpload.Entity.Indent;
-import com.TruckBooking.ContractRateUpload.Entity.Indent.TransporterStatus;
 import com.TruckBooking.ContractRateUpload.Entity.Rates;
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
@@ -314,7 +313,7 @@ public class LoadServiceImpl implements LoadService {
 		log.info("getLoad service by Id is started");
 		Optional<Load> load = loadDao.findByLoadId(loadId);
 		if (load.isEmpty())
-			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
+			throw new EntityNotFoundException(Load.class, "id", loadId);
 		log.info("getLoad service response is returned");
 		CreateLoadResponse response=new CreateLoadResponse();
 
