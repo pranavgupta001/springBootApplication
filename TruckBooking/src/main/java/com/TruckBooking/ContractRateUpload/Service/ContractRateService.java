@@ -215,7 +215,7 @@ public class ContractRateService {
             }
         }
     }*/
-    @Scheduled(fixedRate = 5000)
+    //@Scheduled(fixedRate = 5000)
     public void findRank(){
         List<Load> loads = loadDao.findByPublishMethodAndStatus("Contract",Status.PENDING);
         List<String> tId;
@@ -239,7 +239,7 @@ public class ContractRateService {
 
     }
 
-    @Scheduled(cron = "* * * * * *")
+//    @Scheduled(cron = "* * * * * *")
     public void triggerMail() throws MessagingException {
         //System.out.println("Email function running");
         List<Indent> responses = this.rankrepo.findAll();
