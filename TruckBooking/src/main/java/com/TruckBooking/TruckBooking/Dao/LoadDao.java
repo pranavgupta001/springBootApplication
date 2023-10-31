@@ -40,8 +40,6 @@ public interface LoadDao extends JpaRepository<Load, String> {
 
 	List<Load> findByStatus(Status status, Pageable pageable);
 	
-	List<Load> findByPublishMethodAndStatus(String publish, Status status);
-	
-	List<Load>findByPublishAndStatus(Publish publish,Status status);
+	List<Load> findByPublishMethodAndStatus(String publishMethod, Status status);
 
 }
