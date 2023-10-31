@@ -1,4 +1,4 @@
-package com.TruckBooking.InvoiceServices.Model;
+package com.TruckBooking.Invoice_Services.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Data
 
-public class InvoiceModel {
+public class InvoiceRequest {
 
     @NotBlank(message = "transporterId can not be null")
     public String transporterId;

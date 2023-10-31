@@ -34,7 +34,7 @@ public class EmailSender {
     @Value("${SHIPPER_HOST}")
     private String shipperHost;
 
-    //@Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 60000)
     public void sendEmail() throws MessagingException {
         List<TransporterEmail> emailList=transporterEmailDao.findByStatus("not-sent");
         for(TransporterEmail transporterEmail:emailList){
@@ -56,7 +56,7 @@ public class EmailSender {
                     +load.getLoadingPoint()+","+load.getLoadingPointCity()+","+load.getLoadingPointState()
                     +"<br> to <br>"+load.getUnloadingPoint()+","+load.getUnloadingPointCity()+","+load.getUnloadingPointState()+
                     "<hr>"+
-                    "<Fh3>Requirements</h3>"+
+                    "<h3>Requirements</h3>"+
                     "Truck Type: "+load.getTruckType()+"<br>"+
                     "Tyre :"+load.getNoOfTyres()+"<br>"+
                     "Weight :"+load.getWeight()+"<br>"+

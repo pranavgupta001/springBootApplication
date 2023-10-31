@@ -1,18 +1,14 @@
-package com.TruckBooking.InvoiceServices.Entity;
+package com.TruckBooking.Invoice_Services.Entity;
 
-import com.TruckBooking.InvoiceServices.Response.CreateInvoiceResponse;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import java.util.UUID;
 
 @Data
 @Entity
-public class InvoiceDetails {
+public class Invoice {
 
     @Id
     public String invoiceId;

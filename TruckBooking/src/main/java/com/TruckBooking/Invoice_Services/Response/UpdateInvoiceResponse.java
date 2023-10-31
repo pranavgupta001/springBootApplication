@@ -1,10 +1,9 @@
-package com.TruckBooking.InvoiceServices.Response;
+package com.TruckBooking.Invoice_Services.Response;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 @Data
-public class CreateInvoiceResponse {
+public class UpdateInvoiceResponse {
     public String invoiceId;
     public String transporterId;
     public String shipperId;
@@ -14,5 +13,4 @@ public class CreateInvoiceResponse {
     public String partyName;
     public String dueDate;
     public String bookingId;
-
 }

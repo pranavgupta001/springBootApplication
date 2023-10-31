@@ -3,7 +3,6 @@ package com.TruckBooking.TruckBooking.Constants;
 public class CommonConstants {
 	public static String pending = "pending";
 	public static Integer pagesize = 15;
-	//jo commaly used string values are stro3ed in a variable for reusablity;
 	public static String loadingError = "Enter loading point";
 	public static String unloadingError = "Enter unloading point";
 
