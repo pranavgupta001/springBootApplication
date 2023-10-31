@@ -259,6 +259,7 @@ public class LoadServiceImpl implements LoadService {
 			// Collections.reverse(load);
 			return loadDao.findByStatus(Load.Status.PENDING,currentPage);
 		}
+
 		if (loadingPointCity != null) {
 			if (unloadingPointCity != null) {
 				List<Load> load = loadDao.findByLoadingPointCityAndUnloadingPointCityAndStatus(loadingPointCity,
