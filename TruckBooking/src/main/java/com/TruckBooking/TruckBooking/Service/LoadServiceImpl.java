@@ -393,7 +393,6 @@ public class LoadServiceImpl implements LoadService {
 			load.setLoadingPointCity(temp.trim());
 		}
 
-
 		temp = updateLoad.getLoadingPointState();
 		if (StringUtils.isNotBlank(temp)) {
 			load.setLoadingPointState(temp.trim());
