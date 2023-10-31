@@ -316,14 +316,12 @@ public class LoadServiceImpl implements LoadService {
 //		Setting up the transporter List for response
 		ArrayList<ArrayList<String>> emailList=new ArrayList<>();
 		for(TransporterEmail transporterEmail:list){
-			//for(int i=0;i<emailList.size();i++){
 			ArrayList<String> temp=new ArrayList<>();
 			temp.add(transporterEmail.getEmail());
 			temp.add(transporterEmail.getName());
 			temp.add(transporterEmail.getPhoneNo());
 			temp.add(transporterEmail.getTransporterId());
 			emailList.add(temp);
-			//}
 		}
 //		Setting all the of load fields for the response
 		response.setLoadId(load.get().getLoadId());
