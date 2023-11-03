@@ -21,6 +21,12 @@ public class CreateLoadResponse {
 	private String unloadingPointCity;
 	private String unloadingPointState;
 
+	private String postLoadId;           //optional
+	private String productType;          //optional
+	private String truckType;            //optional
+	private String weight;               //optional
+	private String postLoadDate;         //optional
+
 	private String loadingPoint2;		//optional
 	private String loadingPointCity2;	//optional
 	private String loadingPointState2;	//optional
@@ -29,16 +35,11 @@ public class CreateLoadResponse {
 	private String unloadingPointState2; //optional
 
 	private ArrayList<ArrayList<String>> transporterList;
-	private String postLoadId;
-	private String productType;
-	private String truckType;
 	private String noOfTrucks;
 	private String noOfTyres;
-	private String weight;
 	private String loadingDate;
 	private String publishMethod;
 	private String loadingTime;
-	private String postLoadDate;
 	public Status status;
 	private String LR; //optional
 	private String biddingEndDate;  //optional

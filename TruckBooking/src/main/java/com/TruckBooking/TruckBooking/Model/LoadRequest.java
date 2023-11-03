@@ -20,14 +20,18 @@ public class LoadRequest {
 	private String loadingPointCity;
 	@NotBlank(message = "Loading Point State Cannot Be Empty")
 	private String loadingPointState;
-	@NotBlank(message = "PostLoad Id Cannot Be Empty")
-	private String postLoadId;
 	@NotBlank(message = "Unloading Point Cannot Be Empty")
 	private String unloadingPoint;
 	@NotBlank(message = "Unloading Point City Cannot Be Empty")
 	private String unloadingPointCity;
 	@NotBlank(message = "Unloading Point State Cannot Be Empty")
 	private String unloadingPointState;
+
+	private String postLoadId;
+	private String productType;
+	private String truckType;
+	private String weight;
+
 	private String loadingPoint2;		//optional
 	private String loadingPointCity2;	//optional
 	private String loadingPointState2;	//optional
@@ -35,12 +39,7 @@ public class LoadRequest {
 	private String unloadingPointCity2;  //optional
 	private String unloadingPointState2; //optional
 	private ArrayList<ArrayList<String>> transporterList;
-	@NotBlank(message = "Product Type Cannot Be Empty")
-	private String productType;
-	@NotBlank(message = "Truck Type Cannot Be Empty")
-	private String truckType;
-	@NotBlank(message = "Weight Cannot Be Empty")
-	private String weight;	
+
 	private String noOfTrucks;
 	private String noOfTyres;
 	private String LR; // optional

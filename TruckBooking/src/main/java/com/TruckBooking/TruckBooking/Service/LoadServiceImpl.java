@@ -32,7 +32,7 @@ import com.TruckBooking.ContractRateUpload.Entity.Rates;
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
-import com.TruckBooking.TruckBooking.Entities.Load.Publish;
+//import com.TruckBooking.TruckBooking.Entities.Load.Publish;
 import com.TruckBooking.TruckBooking.Entities.Load.Status;
 import com.TruckBooking.TruckBooking.Exception.BusinessException;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
@@ -126,16 +126,34 @@ public class LoadServiceImpl implements LoadService {
 		}
 
 		temp = loadrequest.getPostLoadId().trim();
-		load.setPostLoadId(temp);
-		response.setPostLoadId(temp);
+		if (StringUtils.isNotBlank(temp)){
+			load.setPostLoadId(temp);
+			response.setPostLoadId(temp);
+		}
 
 		temp = loadrequest.getProductType().trim();
-		load.setProductType(temp);
-		response.setProductType(temp);
+		if (StringUtils.isNotBlank(temp)){
+			load.setProductType(temp);
+			response.setProductType(temp);
+		}
 
 		temp = loadrequest.getTruckType().trim();
-		load.setTruckType(temp);
-		response.setTruckType(temp);
+		if (StringUtils.isNotBlank(temp)){
+			load.setTruckType(temp);
+			response.setTruckType(temp);
+		}
+
+		temp = loadrequest.getWeight().trim();
+		if (StringUtils.isNotBlank(temp)){
+			load.setWeight(temp);
+			response.setWeight(temp);
+		}
+
+		temp=ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("E, MMM dd yyyy"));
+		if (StringUtils.isNotBlank(temp)){
+			load.setPostLoadDate(temp);
+			response.setPostLoadDate(temp);
+		}
 
 		temp=null;
 		temp = loadrequest.getNoOfTrucks();
@@ -168,10 +186,6 @@ public class LoadServiceImpl implements LoadService {
 			load.setBiddingEndTime(temp.trim());
 			response.setBiddingEndTime(temp.trim());
 		}
-		
-		temp = loadrequest.getWeight().trim();
-		load.setWeight(temp);
-		response.setWeight(temp);
 
 		temp = loadrequest.getLoadingDate();
 		if(StringUtils.isNotBlank(temp)) {
@@ -193,8 +207,10 @@ public class LoadServiceImpl implements LoadService {
 
 		
 		temp=ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("E, MMM dd yyyy"));
-		load.setPostLoadDate(temp);
-		response.setPostLoadDate(temp);
+		if (StringUtils.isNotBlank(temp)){
+			load.setPostLoadDate(temp);
+			response.setPostLoadDate(temp);
+		}
 		
 		load.setStatus(Load.Status.PENDING);
 		response.setStatus(Load.Status.PENDING);
