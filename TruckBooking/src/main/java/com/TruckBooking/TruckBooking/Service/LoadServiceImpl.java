@@ -290,7 +290,7 @@ public class LoadServiceImpl implements LoadService {
 			return load;
 		}
 
-	
+
 		if(transporterId!=null){
 			List<Load> load=transporterEmailDao.findLoadsByTransporterId(transporterId);
 			return load;
