@@ -20,6 +20,7 @@ public @Data class BookingPutRequest {
 	private String truckNo;
 	private String driverName;
 	private String driverPhoneNum;
+	private String deviceId;
 	private Boolean cancel;
 	private Boolean completed;
 	private String bookingDate;

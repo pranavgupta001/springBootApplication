@@ -215,12 +215,16 @@ public class BookingServiceImpl implements BookingService {
 			data.setDriverName(request.getDriverName());
 		}
 
+		if (request.getDeviceId() != null){
+			data.setDeviceId(request.getDeviceId());
+		}
+
 		if (request.getCompleted() != null) {
-			if (request.getCompleted() == true) {
+			if (request.getCompleted()) {
 				data.setCompleted(true);
 				data.setCancel(false);
 				////cancel = false complete true
-			} else if (data.getCompleted() == true && request.getCompleted() == false) {
+			} else if (data.getCompleted()) {
 				log.error(BookingConstants.uAlreadyCompleted);
 				throw new BusinessException(BookingConstants.uAlreadyCompleted);
 
@@ -228,9 +232,9 @@ public class BookingServiceImpl implements BookingService {
 		}
 
 		if (request.getCancel() != null) {
-			if (request.getCancel() == true) {
-				if ((data.getCompleted() == true)
-						|| (request.getCompleted() != null && request.getCompleted() == true)) {
+			if (request.getCancel()) {
+				if ((data.getCompleted())
+						|| (request.getCompleted() != null && request.getCompleted())) {
 					log.error(BookingConstants.uCanelIsTrueWhenCompleteIsTrue);
 					throw new BusinessException(BookingConstants.uCanelIsTrueWhenCompleteIsTrue);
 
@@ -245,7 +249,7 @@ public class BookingServiceImpl implements BookingService {
 			data.setBookingDate(request.getBookingDate());
 		}
 
-		if (request.getCompletedDate() != null && (data.getCompleted() == null || data.getCompleted() == false)) {
+		if (request.getCompletedDate() != null && (data.getCompleted() == null || !data.getCompleted())) {
 			log.error(BookingConstants.uCompletedDateWhenCompletedIsNotTrue);
 			throw new BusinessException(BookingConstants.uCompletedDateWhenCompletedIsNotTrue);
 

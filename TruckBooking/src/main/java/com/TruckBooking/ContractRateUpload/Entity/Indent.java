@@ -52,6 +52,7 @@ public class Indent {
     private Timestamp assignedTime;
 
     // Status of Load Entity is used here to avoid any mismatch in services.
+    @Enumerated(EnumType.STRING)
     private Load.Status status;
 
     // Custom constructor
