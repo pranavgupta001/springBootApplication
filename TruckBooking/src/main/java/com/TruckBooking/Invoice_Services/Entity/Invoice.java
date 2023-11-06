@@ -1,19 +1,23 @@
 package com.TruckBooking.Invoice_Services.Entity;
 
+import com.TruckBooking.TruckBooking.Entities.Load;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @Entity
+
 public class Invoice {
 
     @Id
     public String invoiceId;
     @NotBlank(message = "transporterId can not be null")
     public String transporterId;
+    public String transporterName;
+
 
     public String shipperId; //optional
 
@@ -27,7 +31,9 @@ public class Invoice {
 
     public String dueDate; //optional
 
-    public String bookingId; //optional
+
+
+    public String invoiceStatus;
 
 
 

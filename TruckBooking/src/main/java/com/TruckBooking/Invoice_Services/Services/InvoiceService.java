@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface InvoiceService {
     public CreateInvoiceResponse addInvoice(InvoiceRequest invoiceModel);
-    public List<Invoice>getInvoices(String transporterId);
+    public List<Invoice>getInvoices(String transporterId,String shipperId);
     public UpdateInvoiceResponse updateInvoice(String invoiceId, InvoiceRequest invoiceModel);
     public CreateInvoiceResponse getInvoiceById(String invoiceId);
-  public   CreateInvoiceResponse getInvoicebyshipperId(String shipperId);
+
 
   }

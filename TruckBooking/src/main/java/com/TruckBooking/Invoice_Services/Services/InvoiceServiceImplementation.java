@@ -5,6 +5,7 @@ import com.TruckBooking.Invoice_Services.Entity.Invoice;
 import com.TruckBooking.Invoice_Services.Model.InvoiceRequest;
 import com.TruckBooking.Invoice_Services.Response.CreateInvoiceResponse;
 import com.TruckBooking.Invoice_Services.Response.UpdateInvoiceResponse;
+import com.TruckBooking.TruckBooking.Entities.Load;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -73,21 +76,26 @@ public class InvoiceServiceImplementation implements InvoiceService {
             invoice.setInvoiceAmount(temp);
             response.setInvoiceAmount(temp);
         }
+        temp=invoiceRequest.getTransporterName();
+        if(StringUtils.isNotBlank(temp)){
+            invoice.setTransporterName(temp);
+        }
         temp = invoiceRequest.getPartyName();
         if (StringUtils.isNotBlank(temp)) {
             invoice.setPartyName(temp);
             response.setPartyName(temp);
+        }
+        temp=invoiceRequest.getInvoiceStatus();
+        if(StringUtils.isNotBlank(temp)){
+            invoice.setInvoiceStatus(temp);
         }
         temp = invoiceRequest.getDueDate();
         if (StringUtils.isNotBlank(temp)) {
             invoice.setDueDate(temp);
             response.setDueDate(temp);
         }
-        temp = invoiceRequest.getBookingId();
-        if (StringUtils.isNotBlank(temp)) {
-            invoice.setBookingId(temp);
-            response.setBookingId(temp);
-        }
+
+
         invoiceDao.save(invoice);
         return response;
 
@@ -110,7 +118,9 @@ public class InvoiceServiceImplementation implements InvoiceService {
         response.setTransporterId(invoiceAns.getTransporterId());
         response.setShipperId(invoiceAns.getShipperId());
         response.setPartyName(invoiceAns.getPartyName());
-        response.setBookingId(invoiceAns.getBookingId());
+        response.setTransporterName(invoiceAns.getTransporterName());
+        response.setInvoiceStatus(invoiceAns.getInvoiceStatus());
+
         response.setDueDate(invoiceAns.getDueDate());
         return response;
 
@@ -120,14 +130,20 @@ public class InvoiceServiceImplementation implements InvoiceService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
-    public List<Invoice> getInvoices(String transporterId) {
+    public List<Invoice> getInvoices(String transporterId,String shipperId) {
 
-        log.info("getInvoices services by transporterId started");
-         List<Invoice>listans = invoiceDao.findBytransporterId(transporterId);
-        if (listans.isEmpty()) {
-            throw new EntityNotFoundException(Invoice.class, "id", transporterId.toString());
+        log.info("getInvoice services with params started");
+        List<Invoice> listans = null;
+        if(transporterId!=null) {
+            listans = invoiceDao.findBytransporterId(transporterId);
+            return listans;
         }
-         return listans;
+        if(shipperId!=null){
+           listans = invoiceDao.findByshipperId(shipperId);
+            return listans;
+        }
+        log.info("getInvoice service response is returned");
+        return  listans ;
     }
 
     //This request updates the data in the database according to the invoiceID provided in the url
@@ -151,6 +167,9 @@ public class InvoiceServiceImplementation implements InvoiceService {
         if (StringUtils.isNotBlank(temp)) {
             invoice.setInvoiceAmount(temp);
         }
+
+
+
         temp = invoiceRequest.getPartyName().trim();
         if (StringUtils.isNotBlank(temp)) {
             invoice.setPartyName(temp);
@@ -159,11 +178,12 @@ public class InvoiceServiceImplementation implements InvoiceService {
         if (StringUtils.isNotBlank(temp)) {
             invoice.setDueDate(temp);
         }
-        //creating an object to be send to the postman
+        //creating an object to be sent to the postman
         UpdateInvoiceResponse response = new UpdateInvoiceResponse();
         response.setInvoiceNo(invoice.getInvoiceNo());
         response.setDueDate(invoice.getDueDate());
         response.setInvoiceId(invoiceId);
+
         response.setInvoiceAmount(invoice.getInvoiceAmount());
         response.setInvoiceDate(invoice.getInvoiceDate());
         response.setPartyName(invoice.getPartyName());
@@ -171,28 +191,8 @@ public class InvoiceServiceImplementation implements InvoiceService {
         return response;
 
     }
-    //This request retrieves the data for a shipperid provided.
-    public CreateInvoiceResponse getInvoicebyshipperId(String shipperId) {
-        log.info("CreateInvoiceResponse started");
-        Optional<Invoice> invoice = invoiceDao.findByshipperId(shipperId);
-        CreateInvoiceResponse response=new CreateInvoiceResponse();
-        Invoice ans = invoice.get();
-        response.setInvoiceId(ans.getInvoiceId());
-
-        response.setInvoiceNo(ans.getInvoiceNo());
-        response.setInvoiceAmount(ans.getInvoiceAmount());
-        response.setBookingId(ans.getBookingId());
-        response.setPartyName(ans.getPartyName());
-        response.setDueDate(ans.getDueDate());
-        response.setInvoiceDate(ans.getInvoiceDate());
-        response.setTransporterId(ans.getTransporterId());
-        response.setShipperId(ans.getShipperId());
-        return response;
 
 
-
-
-    }
 }
 
 
