@@ -1,6 +1,7 @@
 package com.TruckBooking.TruckBooking.Response;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +21,12 @@ public class CreateLoadResponse {
 	private String unloadingPointCity;
 	private String unloadingPointState;
 
+	private String postLoadId;           //optional
+	private String productType;          //optional
+	private String truckType;            //optional
+	private String weight;               //optional
+	private String postLoadDate;         //optional
+
 	private String loadingPoint2;		//optional
 	private String loadingPointCity2;	//optional
 	private String loadingPointState2;	//optional
@@ -27,16 +34,16 @@ public class CreateLoadResponse {
 	private String unloadingPointCity2;  //optional
 	private String unloadingPointState2; //optional
 
-	private String postLoadId;
-	private String productType;
-	private String truckType;
+	private ArrayList<ArrayList<String>> transporterList;
 	private String noOfTrucks;
 	private String noOfTyres;
-	private String weight;
-	private String loadDate;
-	private String postLoadDate;
+	private String loadingDate;
+	private String publishMethod;
+	private String loadingTime;
 	public Status status;
 	private String LR; //optional
+	private String biddingEndDate;  //optional
+	private String biddingEndTime; //optional
 	private String comment; // this should be an optional
 	private Long rate;
 

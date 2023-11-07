@@ -1,5 +1,6 @@
 package com.TruckBooking.TruckBooking.Dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.TruckBooking.TruckBooking.Entities.Load;
+//import com.TruckBooking.TruckBooking.Entities.Load.Publish;
 import com.TruckBooking.TruckBooking.Entities.Load.Status;
 
 @Repository
@@ -26,8 +28,6 @@ public interface LoadDao extends JpaRepository<Load, String> {
 
 	List<Load> findByTruckTypeAndStatus(String truckType,Status status, Pageable pageable);
 
-	List<Load> findByLoadDateAndStatus(String loadDate, Status status,Pageable pageable);
-
 	List<Load> findByLoadingPointCityAndStatus(String loadingPointCity, Status status,Pageable pageable);
 
 	List<Load> findByLoadingPointStateAndStatus(String loadingPointState, Status status,Pageable pageable);
@@ -36,5 +36,10 @@ public interface LoadDao extends JpaRepository<Load, String> {
 
 	List<Load> findByUnloadingPointStateAndStatus(String loadingPointState,Status status, Pageable pageable);
 	
+	List<Load> findByTimestampBetween(Timestamp startTimestamp, Timestamp endTimestamp);
+
 	List<Load> findByStatus(Status status, Pageable pageable);
+	
+	List<Load> findByPublishMethodAndStatus(String publishMethod, Status status);
+
 }

@@ -1,5 +1,7 @@
 package com.TruckBooking.TruckBooking.Controller;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -48,14 +50,18 @@ public class LoadController {
 			@RequestParam(name = "unloadingPointCity", required = false) String unloadingPointCity,
 			@RequestParam(name = "postLoadId", required = false) String postLoadId,
 			@RequestParam(name = "truckType", required = false) String truckType,
-			@RequestParam(name = "loadDate", required = false) String loadDate,
-			@RequestParam(name = "suggestedLoads", required = false) boolean suggestedLoads) {
+			@RequestParam(name = "suggestedLoads", required = false) boolean suggestedLoads,
+			@RequestParam(name="transporterId", required=false) String transporterId,
+			 @RequestParam (name="startTimestamp", required=false)Timestamp startTimestamp,
+		        @RequestParam (name="endTimestamp", required=false) Timestamp endTimestamp) {
 
 		log.info("Get with Params Controller Started");
 
 		return new ResponseEntity<>(loadService.getLoads(pageNo, loadingPointCity, unloadingPointCity, postLoadId,
-				truckType, loadDate, suggestedLoads), HttpStatus.OK);
+				truckType,suggestedLoads, transporterId, startTimestamp, endTimestamp), HttpStatus.OK);
 	}
+	
+	
 
 	@GetMapping("/load/{loadId}")
 	public ResponseEntity<Object> findLoad(@PathVariable String loadId) {

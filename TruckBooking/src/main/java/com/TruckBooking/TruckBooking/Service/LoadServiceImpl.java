@@ -1,5 +1,6 @@
 package com.TruckBooking.TruckBooking.Service;
 
+import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,17 +10,30 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
+
+import com.TruckBooking.TruckBooking.Dao.TransporterEmailDao;
+import com.TruckBooking.TruckBooking.Entities.TransporterEmail;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.TruckBooking.ContractRateUpload.Dao.ContractRateRepo;
+import com.TruckBooking.ContractRateUpload.Dao.IndentDao;
+import com.TruckBooking.ContractRateUpload.Entity.Indent;
+import com.TruckBooking.ContractRateUpload.Entity.Rates;
 import com.TruckBooking.TruckBooking.Constants.CommonConstants;
 import com.TruckBooking.TruckBooking.Dao.LoadDao;
 import com.TruckBooking.TruckBooking.Entities.Load;
+//import com.TruckBooking.TruckBooking.Entities.Load.Publish;
+import com.TruckBooking.TruckBooking.Entities.Load.Status;
 import com.TruckBooking.TruckBooking.Exception.BusinessException;
 import com.TruckBooking.TruckBooking.Exception.EntityNotFoundException;
 import com.TruckBooking.TruckBooking.Model.LoadRequest;
@@ -34,6 +48,9 @@ public class LoadServiceImpl implements LoadService {
 
 	@Autowired
 	LoadDao loadDao;
+
+	@Autowired
+	TransporterEmailDao transporterEmailDao;
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
@@ -109,16 +126,34 @@ public class LoadServiceImpl implements LoadService {
 		}
 
 		temp = loadrequest.getPostLoadId().trim();
-		load.setPostLoadId(temp);
-		response.setPostLoadId(temp);
+		if (StringUtils.isNotBlank(temp)){
+			load.setPostLoadId(temp);
+			response.setPostLoadId(temp);
+		}
 
 		temp = loadrequest.getProductType().trim();
-		load.setProductType(temp);
-		response.setProductType(temp);
+		if (StringUtils.isNotBlank(temp)){
+			load.setProductType(temp);
+			response.setProductType(temp);
+		}
 
 		temp = loadrequest.getTruckType().trim();
-		load.setTruckType(temp);
-		response.setTruckType(temp);
+		if (StringUtils.isNotBlank(temp)){
+			load.setTruckType(temp);
+			response.setTruckType(temp);
+		}
+
+		temp = loadrequest.getWeight().trim();
+		if (StringUtils.isNotBlank(temp)){
+			load.setWeight(temp);
+			response.setWeight(temp);
+		}
+
+		temp=ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("E, MMM dd yyyy"));
+		if (StringUtils.isNotBlank(temp)){
+			load.setPostLoadDate(temp);
+			response.setPostLoadDate(temp);
+		}
 
 		temp=null;
 		temp = loadrequest.getNoOfTrucks();
@@ -140,17 +175,42 @@ public class LoadServiceImpl implements LoadService {
 			response.setLR(temp.trim());
 		}
 		
-		temp = loadrequest.getWeight().trim();
-		load.setWeight(temp);
-		response.setWeight(temp);
+		temp = loadrequest.getBiddingEndDate();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setBiddingEndDate(temp.trim());
+			response.setBiddingEndDate(temp.trim());
+		}
+		
+		temp = loadrequest.getBiddingEndTime();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setBiddingEndTime(temp.trim());
+			response.setBiddingEndTime(temp.trim());
+		}
 
-		temp = loadrequest.getLoadDate().trim();
-		load.setLoadDate(temp);
-		response.setLoadDate(temp);
+		temp = loadrequest.getLoadingDate();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setLoadingDate(temp.trim());
+			response.setLoadingDate(temp.trim());
+		}
+		
+		temp = loadrequest.getPublishMethod();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setPublishMethod(temp.trim());
+			response.setPublishMethod(temp.trim());
+		}
+		
+		temp = loadrequest.getLoadingTime();
+		if(StringUtils.isNotBlank(temp)) {
+			load.setLoadingTime(temp.trim());
+			response.setLoadingTime(temp.trim());
+		}
+
 		
 		temp=ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("E, MMM dd yyyy"));
-		load.setPostLoadDate(temp);
-		response.setPostLoadDate(temp);
+		if (StringUtils.isNotBlank(temp)){
+			load.setPostLoadDate(temp);
+			response.setPostLoadDate(temp);
+		}
 		
 		load.setStatus(Load.Status.PENDING);
 		response.setStatus(Load.Status.PENDING);
@@ -180,6 +240,18 @@ public class LoadServiceImpl implements LoadService {
 		}
 
 		loadDao.save(load);
+		if(loadrequest.getTransporterList()!=null) {
+			for (ArrayList<String> detail : loadrequest.getTransporterList()) {
+				TransporterEmail transporterEmail = new TransporterEmail();
+				transporterEmail.setEmail(detail.get(0));
+				transporterEmail.setName(detail.get(1));
+				transporterEmail.setPhoneNo(detail.get(2));
+				transporterEmail.setTransporterId(detail.get(3));
+				transporterEmail.setLoad(load);
+				transporterEmailDao.save(transporterEmail);
+			}
+			response.setTransporterList(loadrequest.getTransporterList());
+		}
 		log.info("load is saved to the database");
 		log.info("addLoad service response is returned");
 		response.setTimestamp(load.getTimestamp());
@@ -190,7 +262,7 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
 	public List<Load> getLoads(Integer pageNo, String loadingPointCity, String unloadingPointCity, String postLoadId,
-			String truckType, String loadDate, boolean suggestedLoads) {
+			String truckType, boolean suggestedLoads, String transporterId, Timestamp startTimestamp, Timestamp endTimestamp) {
 		log.info("getLoads service with params started");
 
 		if (pageNo == null)
@@ -234,26 +306,92 @@ public class LoadServiceImpl implements LoadService {
 			return load;
 		}
 
-		if (loadDate != null) {
-			List<Load> load = loadDao.findByLoadDateAndStatus(loadDate,Load.Status.PENDING, currentPage);
-			// Collections.reverse(load);
+
+		if(transporterId!=null){
+			List<Load> load=transporterEmailDao.findLoadsByTransporterId(transporterId);
 			return load;
 		}
-
+		
+		if(startTimestamp!=null && endTimestamp!=null){
+			List<Load> load=loadDao.findByTimestampBetween(startTimestamp, endTimestamp);
+			return load;
+		}
 
 		log.info("getLoads service response is returned");
 		return loadDao.findByStatus(Load.Status.PENDING, currentPage);
 	}
 
+	
+	
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
-	public Load getLoad(String loadId) {
+	public CreateLoadResponse getLoad(String loadId) {
 		log.info("getLoad service by Id is started");
 		Optional<Load> load = loadDao.findByLoadId(loadId);
 		if (load.isEmpty())
-			throw new EntityNotFoundException(Load.class, "id", loadId.toString());
+			throw new EntityNotFoundException(Load.class, "id", loadId);
 		log.info("getLoad service response is returned");
-		return load.get();
+		CreateLoadResponse response=new CreateLoadResponse();
+
+//		Getting List of all Transporter Associated with load
+		List<TransporterEmail> list=transporterEmailDao.findByLoadLoadId(loadId);
+
+//		Setting up the transporter List for response
+		ArrayList<ArrayList<String>> emailList=new ArrayList<>();
+		for(TransporterEmail transporterEmail:list){
+			ArrayList<String> temp=new ArrayList<>();
+			temp.add(transporterEmail.getEmail());
+			temp.add(transporterEmail.getName());
+			temp.add(transporterEmail.getPhoneNo());
+			temp.add(transporterEmail.getTransporterId());
+			emailList.add(temp);
+		}
+//		Setting all the of load fields for the response
+		response.setLoadId(load.get().getLoadId());
+
+		response.setLoadingPoint(load.get().getLoadingPoint());
+		response.setLoadingPointCity(load.get().getLoadingPointCity());
+		response.setLoadingPointState(load.get().getLoadingPointState());
+
+		response.setUnloadingPoint(load.get().getUnloadingPoint());
+		response.setUnloadingPointCity(load.get().getUnloadingPointCity());
+		response.setUnloadingPointState(load.get().getUnloadingPointState());
+
+		response.setLoadingPoint2(load.get().getLoadingPoint2());
+		response.setLoadingPointCity2(load.get().getLoadingPointCity2());
+		response.setLoadingPointState2(load.get().getLoadingPointState2());
+
+		response.setUnloadingPoint2(load.get().getUnloadingPoint2());
+		response.setUnloadingPointCity2(load.get().getUnloadingPointCity2());
+		response.setUnloadingPointState2(load.get().getUnloadingPointState2());
+
+		response.setPostLoadId(load.get().getPostLoadId());
+		response.setProductType(load.get().getProductType());
+		response.setTruckType(load.get().getTruckType());
+		response.setNoOfTrucks(load.get().getNoOfTrucks());
+		response.setNoOfTyres(load.get().getNoOfTyres());
+		response.setWeight(load.get().getWeight());
+		response.setLoadingDate(load.get().getLoadingDate());
+		response.setPublishMethod(load.get().getPublishMethod());
+		response.setLoadingTime(load.get().getLoadingTime());
+		response.setPostLoadDate(load.get().getPostLoadDate());
+		response.setStatus(load.get().getStatus());
+		response.setLR(load.get().getLR());
+		response.setComment(load.get().getComment());
+		response.setRate(load.get().getRate());
+		String temp = String.valueOf(load.get().getUnitValue());
+		if ("PER_TON".equals(temp)) {
+			response.setUnitValue(CreateLoadResponse.UnitValue.PER_TON);
+		}
+		else if ("PER_TRUCK".equals(temp)) {
+			response.setUnitValue(CreateLoadResponse.UnitValue.PER_TRUCK);
+		}
+		response.setTimestamp(load.get().getTimestamp());
+
+		response.setTransporterList(emailList);
+
+//		Sending the response
+		return response;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -353,9 +491,19 @@ public class LoadServiceImpl implements LoadService {
 			load.setWeight(temp.trim());
 		}
 
-		temp = updateLoad.getLoadDate();
+		temp = updateLoad.getLoadingDate();
 		if (StringUtils.isNotBlank(temp)) {
-			load.setLoadDate(temp.trim());
+			load.setLoadingDate(temp.trim());
+		}
+		
+		temp = updateLoad.getPublishMethod();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setPublishMethod(temp.trim());
+		}
+		
+		temp = updateLoad.getLoadingTime();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setLoadingTime(temp.trim());
 		}
 
 		temp = updateLoad.getPostLoadId();
@@ -370,6 +518,17 @@ public class LoadServiceImpl implements LoadService {
 		if(updateLoad.getLR() != null) {
 			load.setLR(updateLoad.getLR());
 		}
+		
+		temp = updateLoad.getBiddingEndDate();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setBiddingEndDate(temp.trim());
+		}
+		
+		temp = updateLoad.getBiddingEndTime();
+		if (StringUtils.isNotBlank(temp)) {
+			load.setBiddingEndTime(temp.trim());
+		}
+		
 
 		if (updateLoad.getStatus() != null) {
 
@@ -423,10 +582,14 @@ public class LoadServiceImpl implements LoadService {
 		response.setNoOfTrucks(load.getNoOfTrucks());
 		response.setNoOfTyres(load.getNoOfTyres());
 		response.setWeight(load.getWeight());
-		response.setLoadDate(load.getLoadDate());
+		response.setLoadingDate(load.getLoadingDate());
 		response.setPostLoadDate(load.getPostLoadDate());
 		response.setComment(load.getComment());
 		response.setLR(load.getLR());
+		response.setBiddingEndDate(load.getBiddingEndDate());
+		response.setBiddingEndTime(load.getBiddingEndTime());
+		response.setPublishMethod(load.getPublishMethod());
+		response.setLoadingTime(load.getLoadingTime());
 		response.setStatus(load.getStatus());
 		response.setRate(load.getRate());
 		response.setTimestamp(load.getTimestamp());
@@ -455,4 +618,5 @@ public class LoadServiceImpl implements LoadService {
 		log.info("load is deleted successfully");
 	}
 
+	
 }
