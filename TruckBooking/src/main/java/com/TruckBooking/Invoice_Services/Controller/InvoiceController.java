@@ -45,12 +45,12 @@ public class InvoiceController {
         return new ResponseEntity<>(invoiceService.getInvoice(transporterId,shipperId), HttpStatus.OK);
 
     }
-    @PutMapping("invoice/{invoiceId}")
+    @PutMapping("/invoice/{invoiceId}")
     public ResponseEntity<Object> updateInvoice(@PathVariable String invoiceId , @RequestBody InvoiceRequest invoiceModel){
         log.info("updateInvoices started");
         return new ResponseEntity<>(invoiceService.updateInvoice(invoiceId,invoiceModel),HttpStatus.OK);
     }
-    @DeleteMapping("invoice/{invoiceId}")
+    @DeleteMapping("/invoice/{invoiceId}")
     public ResponseEntity<Object>deleteInvoice(@PathVariable String invoiceId){
         log.info("deleteInvoice started");
 
