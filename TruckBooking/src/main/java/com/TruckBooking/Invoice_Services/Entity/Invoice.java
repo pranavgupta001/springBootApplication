@@ -5,8 +5,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
-
+@Table(name = "InvoiceServices")
 @Data
 @Entity
 
@@ -16,7 +17,11 @@ public class Invoice {
     public String invoiceId;
     @NotBlank(message = "transporterId can not be null")
     public String transporterId;
-    public String transporterName;
+    public String transporterName;//optional
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name="bookingId")
+    private List<String>bookingId=new ArrayList<>();
+
 
 
     public String shipperId; //optional

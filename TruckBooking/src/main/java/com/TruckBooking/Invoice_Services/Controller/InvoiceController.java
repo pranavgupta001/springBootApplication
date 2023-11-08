@@ -42,13 +42,20 @@ public class InvoiceController {
     public ResponseEntity<List<Invoice>> findinvoiceService(@RequestParam(name="transporterId",required = false)String transporterId,
           @RequestParam(name="shipperId",required = false)String shipperId){
         log.info("Get with Params Controller Started");
-        return new ResponseEntity<>(invoiceService.getInvoices(transporterId,shipperId), HttpStatus.OK);
+        return new ResponseEntity<>(invoiceService.getInvoice(transporterId,shipperId), HttpStatus.OK);
 
     }
     @PutMapping("invoice/{invoiceId}")
-    public ResponseEntity<Object>updateInvoices(@PathVariable String invoiceId , @RequestBody InvoiceRequest invoiceModel){
+    public ResponseEntity<Object> updateInvoice(@PathVariable String invoiceId , @RequestBody InvoiceRequest invoiceModel){
         log.info("updateInvoices started");
         return new ResponseEntity<>(invoiceService.updateInvoice(invoiceId,invoiceModel),HttpStatus.OK);
+    }
+    @DeleteMapping("invoice/{invoiceId}")
+    public ResponseEntity<Object>deleteInvoice(@PathVariable String invoiceId){
+        log.info("deleteInvoice started");
+
+        invoiceService.deleteInvoice(invoiceId);
+        return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
 
 
