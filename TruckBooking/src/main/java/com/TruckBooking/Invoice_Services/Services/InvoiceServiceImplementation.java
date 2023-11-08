@@ -228,6 +228,7 @@ public class InvoiceServiceImplementation implements InvoiceService {
         return response;
 
     }
+    //This request retrievs data from the database
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
     public void deleteInvoice(String invoiceId){
