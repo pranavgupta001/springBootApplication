@@ -1,9 +1,10 @@
 package com.TruckBooking.Invoice_Services.Response;
 
-import com.TruckBooking.Invoice_Services.Entity.Invoice;
-import com.TruckBooking.TruckBooking.Entities.Load;
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
 import java.util.List;
 
 @Data
@@ -11,6 +12,9 @@ public class CreateInvoiceResponse {
     public String invoiceId;
     public String transporterId;
     public String transporterName;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name="bookingId")
+    public List<String>bookingId;
 
     public  String invoiceStatus;
 
