@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 @CrossOrigin
 @RestController
-@RequestMapping("/invoices")
+@RequestMapping
 @Slf4j
 public class InvoiceController {
     private InvoiceService invoiceService;
@@ -23,7 +23,7 @@ public class InvoiceController {
     public InvoiceController(InvoiceService invoiceService){
         this.invoiceService =invoiceService;
     }
-    @PostMapping
+    @PostMapping("/invoice")
     public ResponseEntity<Object>postInvoiceService( @Valid @RequestBody InvoiceRequest invoice) {
         log.info("Invoice created sucessfully");
 
@@ -31,28 +31,31 @@ public class InvoiceController {
 
 
     }
-    @GetMapping("/{shipperId}")
-    public ResponseEntity<Object>getInvoiceService(@PathVariable String shipperId){
-        log.info("getInvoicesService started sucessfully");
-        return new ResponseEntity<>(invoiceService.getInvoicebyshipperId(shipperId), HttpStatus.OK);
-    }
+
     @GetMapping("/invoice/{invoiceId}")
     public ResponseEntity<Object>getInvoiceById(@PathVariable String invoiceId){
         log.info("getInvoiceServiceBYinvoiceID started sucessfully");
         return new ResponseEntity<>(invoiceService.getInvoiceById(invoiceId),HttpStatus.OK);
     }
 
-    @GetMapping
-
-    public ResponseEntity<List<Invoice>> findinvoiceService(@RequestParam String transporterId) {
+    @GetMapping("/invoice")
+    public ResponseEntity<List<Invoice>> findinvoiceService(@RequestParam(name="transporterId",required = false)String transporterId,
+          @RequestParam(name="shipperId",required = false)String shipperId){
         log.info("Get with Params Controller Started");
+        return new ResponseEntity<>(invoiceService.getInvoice(transporterId,shipperId), HttpStatus.OK);
 
-        return new ResponseEntity<>(invoiceService.getInvoices(transporterId), HttpStatus.OK);
     }
-    @PutMapping("/{invoiceId}")
-    public ResponseEntity<Object>updateInvoices(@PathVariable String invoiceId , @RequestBody InvoiceRequest invoiceModel){
+    @PutMapping("/invoice/{invoiceId}")
+    public ResponseEntity<Object> updateInvoice(@PathVariable String invoiceId , @RequestBody InvoiceRequest invoiceModel){
         log.info("updateInvoices started");
         return new ResponseEntity<>(invoiceService.updateInvoice(invoiceId,invoiceModel),HttpStatus.OK);
+    }
+    @DeleteMapping("/invoice/{invoiceId}")
+    public ResponseEntity<Object>deleteInvoice(@PathVariable String invoiceId){
+        log.info("deleteInvoice started");
+
+        invoiceService.deleteInvoice(invoiceId);
+        return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
 
 
