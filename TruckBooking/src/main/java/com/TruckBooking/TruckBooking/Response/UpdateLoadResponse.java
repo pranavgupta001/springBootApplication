@@ -33,10 +33,14 @@ public class UpdateLoadResponse {
 	private String noOfTrucks;
 	private String noOfTyres;
 	private String weight;
-	private String loadDate;
+	private String loadingDate;
+	private String publishMethod;
+	private String loadingTime;
 	private String postLoadDate;
 	public Status status;
 	private String LR; // optional
+	private String biddingEndDate;  //optional
+	private String biddingEndTime; //optional
 	private String comment; // this should be an optional
 	private Long rate;
 

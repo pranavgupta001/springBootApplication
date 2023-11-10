@@ -8,8 +8,6 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0'
-host: 'localhost:8080'
-basePath: /
 tags:
   - name: load-controller
     description: Load Controller
@@ -43,11 +41,6 @@ paths:
       produces:
         - '*/*'
       parameters:
-        - name: loadDate
-          in: query
-          description: loadDate
-          required: false
-          type: string
         - name: loadingPointCity
           in: query
           description: loadingPointCity
@@ -213,43 +206,67 @@ definitions:
   CreateLoadResponse:
     type: object
     properties:
-      comment:
-        type: string
-      loadDate:
-        type: string
-      loadId:
-        type: string
       loadingPoint:
         type: string
       loadingPointCity:
         type: string
       loadingPointState:
         type: string
-      noOfTrucks:
-        type: string
-      postLoadId:
-        type: string
-      productType:
-        type: string
-      rate:
-        type: integer
-        format: int64
-      status:
-        type: string
-      truckType:
-        type: string
-      unitValue:
-        type: string
-        enum:
-          - PER_TON
-          - PER_TRUCK
       unloadingPoint:
         type: string
       unloadingPointCity:
         type: string
       unloadingPointState:
         type: string
+      productType:
+        type: string
+      truckType:
+        type: string
       weight:
+        type: string
+      postLoadId:
+        type: string
+      postLoadDate:
+        type: string
+      loadingPoint2:
+        type: string
+      loadingPointCity2:
+        type: string
+      loadingPointState2:
+        type: string
+      unloadingPoint2:
+        type: string
+      unloadingPointCity2:
+        type: string
+      unloadingPointState2:
+        type: string
+      noOfTrucks:
+        type: string
+      noOfTyres:
+        type: string
+      LR:
+        type: string
+      publishMethod:
+        type: string
+      loadingDate:
+        type: string
+      loadingTime:
+        type: string
+      comment:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      biddingEndDate:
+        type: string
+      biddingEndTime:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      status:
         type: string
     title: CreateLoadResponse
   DeleteLoadResponse:
@@ -261,124 +278,210 @@ definitions:
   Load:
     type: object
     properties:
-      comment:
-        type: string
-      loadDate:
-        type: string
-      loadId:
-        type: string
       loadingPoint:
         type: string
       loadingPointCity:
         type: string
       loadingPointState:
         type: string
-      noOfTrucks:
-        type: string
-      postLoadId:
-        type: string
-      productType:
-        type: string
-      rate:
-        type: integer
-        format: int64
-      status:
-        type: string
-      truckType:
-        type: string
-      unitValue:
-        type: string
-        enum:
-          - PER_TON
-          - PER_TRUCK
       unloadingPoint:
         type: string
       unloadingPointCity:
         type: string
       unloadingPointState:
         type: string
+      productType:
+        type: string
+      truckType:
+        type: string
       weight:
+        type: string
+      postLoadId:
+        type: string
+      postLoadDate:
+        type: string
+      loadingPoint2:
+        type: string
+      loadingPointCity2:
+        type: string
+      loadingPointState2:
+        type: string
+      unloadingPoint2:
+        type: string
+      unloadingPointCity2:
+        type: string
+      unloadingPointState2:
+        type: string
+      noOfTrucks:
+        type: string
+      noOfTyres:
+        type: string
+      LR:
+        type: string
+      publishMethod:
+        type: string
+      loadingDate:
+        type: string
+      loadingTime:
+        type: string
+      comment:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      biddingEndDate:
+        type: string
+      biddingEndTime:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      status:
         type: string
     title: Load
   LoadRequest:
     type: object
     properties:
-      comment:
-        type: string
-      loadDate:
-        type: string
       loadingPoint:
         type: string
       loadingPointCity:
         type: string
       loadingPointState:
         type: string
-      noOfTrucks:
-        type: string
-      postLoadId:
-        type: string
-      productType:
-        type: string
-      rate:
-        type: integer
-        format: int64
-      status:
-        type: string
-      truckType:
-        type: string
-      unitValue:
-        type: string
-        enum:
-          - PER_TON
-          - PER_TRUCK
       unloadingPoint:
         type: string
       unloadingPointCity:
         type: string
       unloadingPointState:
         type: string
+      productType:
+        type: string
+      truckType:
+        type: string
       weight:
         type: string
+      postLoadId:
+        type: string
+      postLoadDate:
+        type: string
+      loadingPoint2:
+        type: string
+      loadingPointCity2:
+        type: string
+      loadingPointState2:
+        type: string
+      unloadingPoint2:
+        type: string
+      unloadingPointCity2:
+        type: string
+      unloadingPointState2:
+        type: string
+      noOfTrucks:
+        type: string
+      noOfTyres:
+        type: string
+      LR:
+        type: string
+      publishMethod:
+        type: string
+      loadingDate:
+        type: string
+      loadingTime:
+        type: string
+      comment:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      biddingEndDate:
+        type: string
+      biddingEndTime:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      status:
+        type: string
+   required:
+      - loadingPoint
+      - loadingPointCity
+      - loadingPointState
+      - unloadingPoint
+      - unloadingPointCity 
+      - loadingPointState
+      - productType
+      - truckType
+      - weight
+      - postLoadId
+      - postLoadDate
     title: LoadRequest
   UpdateLoadResponse:
     type: object
     properties:
-      comment:
-        type: string
-      loadDate:
-        type: string
-      loadId:
-        type: string
       loadingPoint:
         type: string
       loadingPointCity:
         type: string
       loadingPointState:
         type: string
-      noOfTrucks:
-        type: string
-      postLoadId:
-        type: string
-      productType:
-        type: string
-      rate:
-        type: integer
-        format: int64
-      status:
-        type: string
-      truckType:
-        type: string
-      unitValue:
-        type: string
-        enum:
-          - PER_TON
-          - PER_TRUCK
       unloadingPoint:
         type: string
       unloadingPointCity:
         type: string
       unloadingPointState:
         type: string
+      productType:
+        type: string
+      truckType:
+        type: string
       weight:
+        type: string
+      postLoadId:
+        type: string
+      postLoadDate:
+        type: string
+      loadingPoint2:
+        type: string
+      loadingPointCity2:
+        type: string
+      loadingPointState2:
+        type: string
+      unloadingPoint2:
+        type: string
+      unloadingPointCity2:
+        type: string
+      unloadingPointState2:
+        type: string
+      noOfTrucks:
+        type: string
+      noOfTyres:
+        type: string
+      LR:
+        type: string
+      publishMethod:
+        type: string
+      loadingDate:
+        type: string
+      loadingTime:
+        type: string
+      comment:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      biddingEndDate:
+        type: string
+      biddingEndTime:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      status:
         type: string
     title: UpdateLoadResponse

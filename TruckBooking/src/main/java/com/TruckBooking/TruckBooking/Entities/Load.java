@@ -25,14 +25,22 @@ public class Load {
 	private String loadingPointCity;
 	@NotBlank(message = "Loading Point State Cannot Be Empty")
 	private String loadingPointState;
-	@NotBlank(message = "PostLoad Id Cannot Be Empty")
-	private String postLoadId;
+
 	@NotBlank(message = "Unloading Point Cannot Be Empty")
 	private String unloadingPoint;
 	@NotBlank(message = "Unloading Point City Cannot Be Empty")
 	private String unloadingPointCity;
 	@NotBlank(message = "Unloading Point State Cannot Be Empty")
 	private String unloadingPointState;
+
+	private String postLoadId;       // optional
+	private String productType;      // optional
+	private String truckType;        // optional
+	private String weight;           // optional
+	private String postLoadDate;     // optional
+
+	@CreationTimestamp
+	public Timestamp timestamp;
 
 	private String loadingPoint2;		//optional
 	private String loadingPointCity2;	//optional
@@ -41,24 +49,22 @@ public class Load {
 	private String unloadingPointCity2;  //optional
 	private String unloadingPointState2; //optional
 
-	@NotBlank(message = "Product Type Cannot Be Empty")
-	private String productType;
-	@NotBlank(message = "Truck Type Cannot Be Empty")
-	private String truckType;
-	@NotBlank(message = "Weight Cannot Be Empty")
-	private String weight;
 	
 	private String noOfTrucks;
 	private String noOfTyres;
 	private String LR; // optional
 	private String comment; // this should be an optional
 
-	@NotBlank(message = "Load Date Cannot Be Empty")
-	private String loadDate;
 	
-	private String postLoadDate;
+	private String loadingDate;
+	private String publishMethod;
+	private String loadingTime;
+
 	
 	private Long rate; // optional
+	
+	private String biddingEndDate;  //optional
+	private String biddingEndTime; //optional
 
 	@Enumerated(EnumType.STRING)
 	private UnitValue unitValue; // optional
@@ -66,15 +72,15 @@ public class Load {
 	@Enumerated(EnumType.STRING)
 	public Status status;
 
-	@CreationTimestamp
-	public Timestamp timestamp;
-
 	public enum UnitValue {
 		PER_TON, PER_TRUCK
 	}
 
 	public enum Status {
-		PENDING, ON_GOING, COMPLETED, EXPIRED
+		PENDING, EXPIRED, NOT_ASSIGNED, INDENT_ASSIGNED, TRANSPORTER_REJECTED, ON_GOING, COMPLETED
+	}
+	public enum Publish {
+		CONTRACT, BIDDING
 	}
 
 }
