@@ -53,6 +53,8 @@ public class LoadController {
 			@RequestParam(name = "suggestedLoads", required = false) boolean suggestedLoads,
 			@RequestParam(name="transporterId", required=false) String transporterId,
 			 @RequestParam (name="startTimestamp", required=false)Timestamp startTimestamp,
+				@RequestParam(name="unloadingPointGeoId",required = false) List<String> unloadingPointGeoId,
+				@RequestParam(name="loadingPointGeoId",required = false)List<String>loadingPointGeoId,
 		        @RequestParam (name="endTimestamp", required=false) Timestamp endTimestamp) {
 
 		log.info("Get with Params Controller Started");

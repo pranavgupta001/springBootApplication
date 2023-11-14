@@ -1,7 +1,6 @@
 package com.TruckBooking.TruckBooking.Model;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import com.TruckBooking.TruckBooking.Entities.Load.Publish;
@@ -10,6 +9,7 @@ import com.TruckBooking.TruckBooking.Entities.Load.Status;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class LoadRequest {
@@ -49,6 +49,18 @@ public class LoadRequest {
 	private String loadingDate;
 	private String publishMethod;
 	private String loadingTime;
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Column(name="loadingPointGeoId")
+	private List<String> loadingPointGeoId=new ArrayList<>(); //optional
+
+
+
+
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Column(name="unloadingPointGeoId")
+	private List<String> unloadingPointGeoId=new ArrayList<>(); //optional
+
+
 	private Long rate;
 	@Enumerated(EnumType.STRING)
 	private UnitValue unitValue;

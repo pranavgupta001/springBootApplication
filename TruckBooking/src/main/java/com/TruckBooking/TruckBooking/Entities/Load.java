@@ -1,12 +1,10 @@
 package com.TruckBooking.TruckBooking.Entities;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -65,6 +63,20 @@ public class Load {
 	
 	private String biddingEndDate;  //optional
 	private String biddingEndTime; //optional
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Column(name="unloadingPointGeoId")
+	private List<String> unloadingPointGeoId=new ArrayList<>(); //optional
+
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Column(name="loadingPointGeoId")
+	private List<String> loadingPointGeoId=new ArrayList<>(); //optional
+
+
+
+
+
+
+
 
 	@Enumerated(EnumType.STRING)
 	private UnitValue unitValue; // optional

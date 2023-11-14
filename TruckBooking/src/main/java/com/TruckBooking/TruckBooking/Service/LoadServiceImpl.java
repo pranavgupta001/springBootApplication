@@ -198,6 +198,16 @@ public class LoadServiceImpl implements LoadService {
 			load.setPublishMethod(temp.trim());
 			response.setPublishMethod(temp.trim());
 		}
+		List<String>ansList=loadrequest.getLoadingPointGeoId();
+		if(ansList!=null){
+			load.setLoadingPointGeoId(ansList);
+			response.setLoadingPointGeoId(ansList);
+		}
+		List<String>ansList2=loadrequest.getUnloadingPointGeoId();
+		if(ansList2!=null){
+			load.setUnloadingPointGeoId(ansList2);
+			response.setUnloadingPointGeoId(ansList2);
+		}
 		
 		temp = loadrequest.getLoadingTime();
 		if(StringUtils.isNotBlank(temp)) {
@@ -360,6 +370,8 @@ public class LoadServiceImpl implements LoadService {
 		response.setLoadingPoint2(load.get().getLoadingPoint2());
 		response.setLoadingPointCity2(load.get().getLoadingPointCity2());
 		response.setLoadingPointState2(load.get().getLoadingPointState2());
+		response.setLoadingPointGeoId(load.get().getLoadingPointGeoId());
+		response.setUnloadingPointGeoId(load.get().getUnloadingPointGeoId());
 
 		response.setUnloadingPoint2(load.get().getUnloadingPoint2());
 		response.setUnloadingPointCity2(load.get().getUnloadingPointCity2());
@@ -409,6 +421,14 @@ public class LoadServiceImpl implements LoadService {
 		temp = updateLoad.getLoadingPoint();
 		if (StringUtils.isNotBlank(temp)) {
 			load.setLoadingPoint(temp.trim());
+		}
+		List<String>L=updateLoad.getLoadingPointGeoId();
+		if(L!=null){
+			load.setLoadingPointGeoId(L);
+		}
+		List<String>L1=updateLoad.getUnloadingPointGeoId();
+		if(L1!=null){
+			load.setUnloadingPointGeoId(L1);
 		}
 
 		temp = updateLoad.getLoadingPointCity();
@@ -593,6 +613,8 @@ public class LoadServiceImpl implements LoadService {
 		response.setStatus(load.getStatus());
 		response.setRate(load.getRate());
 		response.setTimestamp(load.getTimestamp());
+		response.setLoadingPointGeoId(load.getLoadingPointGeoId());
+		response.setUnloadingPointGeoId(load.getUnloadingPointGeoId());
 
 		temp = String.valueOf(load.getUnitValue());
 		if ("PER_TON".equals(temp)) {
