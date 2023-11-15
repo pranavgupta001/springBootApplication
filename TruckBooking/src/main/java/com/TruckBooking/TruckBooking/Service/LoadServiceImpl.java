@@ -422,13 +422,13 @@ public class LoadServiceImpl implements LoadService {
 		if (StringUtils.isNotBlank(temp)) {
 			load.setLoadingPoint(temp.trim());
 		}
-		List<String>L=updateLoad.getLoadingPointGeoId();
-		if(L!=null){
-			load.setLoadingPointGeoId(L);
+		List<String>loadingPointGeoId=updateLoad.getLoadingPointGeoId();
+		if(loadingPointGeoId!=null){
+			load.setLoadingPointGeoId(loadingPointGeoId);
 		}
-		List<String>L1=updateLoad.getUnloadingPointGeoId();
-		if(L1!=null){
-			load.setUnloadingPointGeoId(L1);
+		List<String>unloadingPointGeoId=updateLoad.getUnloadingPointGeoId();
+		if(unloadingPointGeoId!=null){
+			load.setUnloadingPointGeoId(unloadingPointGeoId);
 		}
 
 		temp = updateLoad.getLoadingPointCity();
