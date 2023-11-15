@@ -2,9 +2,9 @@ package com.TruckBooking.TruckBooking.Response;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 import com.TruckBooking.TruckBooking.Entities.Load.Status;
 
@@ -46,6 +46,20 @@ public class CreateLoadResponse {
 	private String biddingEndTime; //optional
 	private String comment; // this should be an optional
 	private Long rate;
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Column(name="loadingPointGeoId")
+	private List<String> loadingPointGeoId=new ArrayList<>(); //optional
+
+
+
+
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Column(name="unloadingPointGeoId")
+	private List<String> unloadingPointGeoId=new ArrayList<>(); //optional
+
+
+
+
 
 	@Enumerated(EnumType.STRING)
 	private UnitValue unitValue;
