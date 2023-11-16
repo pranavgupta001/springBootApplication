@@ -269,6 +269,7 @@ public class LoadServiceImpl implements LoadService {
 		return response;
 	}
 
+	@SuppressWarnings("unused")
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	@Override
 	public List<Load> getLoads(Integer pageNo, String loadingPointCity, String unloadingPointCity, String postLoadId,
@@ -324,6 +325,12 @@ public class LoadServiceImpl implements LoadService {
 		
 		if(startTimestamp!=null && endTimestamp!=null){
 			List<Load> load=loadDao.findByTimestampBetween(startTimestamp, endTimestamp);
+			return load;
+		}
+		
+		if(postLoadId!=null && (startTimestamp!=null && endTimestamp!=null))
+		{
+			List<Load> load=loadDao.findByPostLoadIdAndTimestampBetween(postLoadId, startTimestamp, endTimestamp);
 			return load;
 		}
 

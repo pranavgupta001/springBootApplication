@@ -38,6 +38,8 @@ public interface LoadDao extends JpaRepository<Load, String> {
 	
 	List<Load> findByTimestampBetween(Timestamp startTimestamp, Timestamp endTimestamp);
 
+	List<Load> findByPostLoadIdAndTimestampBetween(String postLoadId, Timestamp startTimestamp, Timestamp endTimestamp);
+
 	List<Load> findByStatus(Status status, Pageable pageable);
 	
 	List<Load> findByPublishMethodAndStatus(String publishMethod, Status status);
