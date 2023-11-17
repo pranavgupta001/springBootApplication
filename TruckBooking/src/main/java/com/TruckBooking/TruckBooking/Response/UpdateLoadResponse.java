@@ -1,9 +1,10 @@
 package com.TruckBooking.TruckBooking.Response;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 import com.TruckBooking.TruckBooking.Entities.Load.Status;
 
@@ -26,6 +27,16 @@ public class UpdateLoadResponse {
 	private String unloadingPoint2;		//optional
 	private String unloadingPointCity2;  //optional
 	private String unloadingPointState2; //optional
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Column(name="loadingPointGeoId")
+	private List<String> loadingPointGeoId=new ArrayList<>(); //optional
+
+
+
+
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Column(name="unloadingPointGeoId")
+	private List<String> unloadingPointGeoId=new ArrayList<>(); //optional
 
 	private String postLoadId;
 	private String productType;
