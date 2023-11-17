@@ -3,7 +3,7 @@ package com.TruckBooking.TruckBooking.Model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-import com.TruckBooking.TruckBooking.Entities.Load.Publish;
+//import com.TruckBooking.TruckBooking.Entities.Load.Publish;
 import com.TruckBooking.TruckBooking.Entities.Load.Status;
 
 import lombok.Data;
@@ -27,10 +27,10 @@ public class LoadRequest {
 	@NotBlank(message = "Unloading Point State Cannot Be Empty")
 	private String unloadingPointState;
 
-	private String postLoadId;
-	private String productType;
-	private String truckType;
-	private String weight;
+	private String postLoadId;       //optional
+	private String productType;      //optional
+	private String truckType;        //optional
+	private String weight;           //optional
 
 	private String loadingPoint2;		//optional
 	private String loadingPointCity2;	//optional
@@ -68,5 +68,4 @@ public class LoadRequest {
 		PER_TON, PER_TRUCK
 	}
 	public Status status;
-        public Publish publish;
 }

@@ -125,28 +125,28 @@ public class LoadServiceImpl implements LoadService {
 			response.setUnloadingPointState2(temp.trim());
 		}
 
-		temp = loadrequest.getPostLoadId().trim();
+		temp = loadrequest.getPostLoadId();
 		if (StringUtils.isNotBlank(temp)){
-			load.setPostLoadId(temp);
-			response.setPostLoadId(temp);
+			load.setPostLoadId(temp.trim());
+			response.setPostLoadId(temp.trim());
 		}
 
-		temp = loadrequest.getProductType().trim();
+		temp = loadrequest.getProductType();
 		if (StringUtils.isNotBlank(temp)){
-			load.setProductType(temp);
-			response.setProductType(temp);
+			load.setProductType(temp.trim());
+			response.setProductType(temp.trim());
 		}
 
-		temp = loadrequest.getTruckType().trim();
+		temp = loadrequest.getTruckType();
 		if (StringUtils.isNotBlank(temp)){
-			load.setTruckType(temp);
-			response.setTruckType(temp);
+			load.setTruckType(temp.trim());
+			response.setTruckType(temp.trim());
 		}
 
-		temp = loadrequest.getWeight().trim();
+		temp = loadrequest.getWeight();
 		if (StringUtils.isNotBlank(temp)){
-			load.setWeight(temp);
-			response.setWeight(temp);
+			load.setWeight(temp.trim());
+			response.setWeight(temp.trim());
 		}
 
 		temp=ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).format(DateTimeFormatter.ofPattern("E, MMM dd yyyy"));

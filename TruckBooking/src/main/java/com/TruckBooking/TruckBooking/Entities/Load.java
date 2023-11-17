@@ -91,8 +91,4 @@ public class Load {
 	public enum Status {
 		PENDING, EXPIRED, NOT_ASSIGNED, INDENT_ASSIGNED, TRANSPORTER_REJECTED, ON_GOING, COMPLETED
 	}
-	public enum Publish {
-		CONTRACT, BIDDING
-	}
-
 }
