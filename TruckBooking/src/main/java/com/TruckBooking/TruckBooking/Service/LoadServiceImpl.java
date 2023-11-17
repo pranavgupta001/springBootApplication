@@ -332,7 +332,7 @@ public class LoadServiceImpl implements LoadService {
 		{
 			List<Load> load=loadDao.findByPostLoadIdAndTimestampBetween(postLoadId, startTimestamp, endTimestamp);
 			return load;
-		}
+		} //refering to method to sort data by filters of postloadid and date range
 
 		log.info("getLoads service response is returned");
 		return loadDao.findByStatus(Load.Status.PENDING, currentPage);
