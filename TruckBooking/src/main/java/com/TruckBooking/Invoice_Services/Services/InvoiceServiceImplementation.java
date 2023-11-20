@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -139,16 +140,16 @@ public class InvoiceServiceImplementation implements InvoiceService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
-    public List<Invoice> getInvoice(String transporterId, String shipperId) {
+    public List<Invoice> getInvoice(String transporterId, String shipperId,LocalDateTime fromTimestamp, LocalDateTime toTimestamp) {
 
         log.info("getInvoice services with params started");
         List<Invoice> listans = null;
         if(transporterId!=null) {
-            listans = invoiceDao.findBytransporterId(transporterId);
+            listans = invoiceDao.findByTransporterIdAndInvoiceTimestampBetween(transporterId ,fromTimestamp,  toTimestamp);
             return listans;
         }
         if(shipperId!=null){
-           listans = invoiceDao.findByshipperId(shipperId);
+           listans = invoiceDao. findByShipperIdAndInvoiceTimestampBetween(shipperId,fromTimestamp,toTimestamp);
             return listans;
         }
         log.info("getInvoice service response is returned");

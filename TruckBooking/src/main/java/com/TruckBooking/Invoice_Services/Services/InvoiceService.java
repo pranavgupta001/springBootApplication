@@ -5,11 +5,12 @@ import com.TruckBooking.Invoice_Services.Model.InvoiceRequest;
 import com.TruckBooking.Invoice_Services.Response.CreateInvoiceResponse;
 import com.TruckBooking.Invoice_Services.Response.UpdateInvoiceResponse;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface InvoiceService {
     public CreateInvoiceResponse addInvoice(InvoiceRequest invoiceModel);
-    public List<Invoice> getInvoice(String transporterId, String shipperId);
+    public List<Invoice> getInvoice(String transporterId, String shipperId, LocalDateTime fromTimestamp, LocalDateTime toTimestamp);
     public UpdateInvoiceResponse updateInvoice(String invoiceId, InvoiceRequest invoiceModel);
     public CreateInvoiceResponse getInvoiceById(String invoiceId);
     public void deleteInvoice(String invoiceId);
