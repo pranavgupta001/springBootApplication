@@ -17,8 +17,7 @@ public class CreateInvoiceResponse {
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name="bookingId")
     public List<String>bookingId;
-    @CreationTimestamp
-    public Timestamp invoiceTimestamp;
+
 
     public  String invoiceStatus;
 

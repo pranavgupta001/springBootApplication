@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +20,9 @@ public interface InvoiceDao extends JpaRepository<Invoice,String> {
    // List<Invoice> findByStatus(Invoice.Status status);
 
     //List<Invoice> findBytransporterId(String transporterId);
-    List<Invoice> findByTransporterIdAndInvoiceTimestampBetween(String transporterId, LocalDateTime fromTimestamp, LocalDateTime toTimestamp);
+    List<Invoice> findByTransporterIdAndInvoiceTimestampBetween(String transporterId, Timestamp fromTimestamp, Timestamp toTimestamp);
 
-    List<Invoice> findByShipperIdAndInvoiceTimestampBetween(String shipperId, LocalDateTime fromTimestamp, LocalDateTime toTimestamp);
+    List<Invoice> findByShipperIdAndInvoiceTimestampBetween(String shipperId, Timestamp fromTimestamp, Timestamp toTimestamp);
 }
 
 
