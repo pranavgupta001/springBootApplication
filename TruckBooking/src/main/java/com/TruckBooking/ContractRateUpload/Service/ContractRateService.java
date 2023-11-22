@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import java.util.Iterator;
-
 import com.TruckBooking.ContractRateUpload.EmailSender.SendEmail;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -57,10 +54,10 @@ public class ContractRateService {
     }
 
     // this function helps us to save excel file.
-    public boolean save(MultipartFile file) {
+    public boolean save(MultipartFile file, String shipperId) {
 
         try {
-            List<Rates> products = extractRateListFromExcel(file.getInputStream());
+            List<Rates> products = extractRateListFromExcel(file.getInputStream(), shipperId);
             contractRateRepo.saveAll(products);
             log.info("Saved");
             return true;
@@ -71,7 +68,7 @@ public class ContractRateService {
     }
 
     // convert Excel sheet data to a list of rates
-    public List<Rates> extractRateListFromExcel(InputStream is){
+    public List<Rates> extractRateListFromExcel(InputStream is, String shipperId){
 
         List<Rates> rateList = new ArrayList<>();
 
@@ -135,6 +132,7 @@ public class ContractRateService {
                     // >=7 means that no non-empty cells contains null values.
                     //since we only have to add those rows that satisfy the conditions.
                     if (cId >= 7) {
+                        rates.setShipperId(shipperId);
                         rateList.add(rates);
                     }
                 }
@@ -147,7 +145,6 @@ public class ContractRateService {
             log.error("No Excel Sheet Detected");
         }
         return rateList;
-
     }
 
     // Find the ranks for particular LoadId and arrange them in ascending order in Indent Table

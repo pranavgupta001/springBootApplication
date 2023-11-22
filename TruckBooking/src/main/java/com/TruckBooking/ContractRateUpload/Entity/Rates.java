@@ -38,6 +38,9 @@ public class Rates {
     @Column(name = "TransporterId")
     private String TransporterId;
 
+    @Column(name = "ShipperId")
+    private String shipperId;
+
     @Column(name = "TransporterName")
     private String TransporterName;
 
