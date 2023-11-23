@@ -306,6 +306,12 @@ public class LoadServiceImpl implements LoadService {
 		}
 
 		if (postLoadId != null) {
+			if(startTimestamp!=null && endTimestamp!=null)
+			{
+				List<Load> load=loadDao.findByPostLoadIdAndTimestampBetween(postLoadId, startTimestamp, endTimestamp);
+				return load;
+			} //refering to method to sort data by filters of postloadid and date range
+			
 			List<Load> load = loadDao.findByPostLoadIdAndStatus(postLoadId, Arrays.asList(Load.Status.PENDING, Load.Status.EXPIRED),currentPage);
 			// Collections.reverse(load);
 			return load;
@@ -328,11 +334,7 @@ public class LoadServiceImpl implements LoadService {
 			return load;
 		}
 		
-		if(postLoadId!=null && (startTimestamp!=null && endTimestamp!=null))
-		{
-			List<Load> load=loadDao.findByPostLoadIdAndTimestampBetween(postLoadId, startTimestamp, endTimestamp);
-			return load;
-		} //refering to method to sort data by filters of postloadid and date range
+		
 
 		log.info("getLoads service response is returned");
 		return loadDao.findByStatus(Load.Status.PENDING, currentPage);
