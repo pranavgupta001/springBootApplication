@@ -46,5 +46,4 @@ public class Controller {
         return new ResponseEntity<>(contractRateService.getRates(shipperId), HttpStatus.OK);
 
     }
-
 }
