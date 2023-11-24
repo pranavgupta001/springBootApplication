@@ -273,4 +273,8 @@ public class ContractRateService {
         }
         triggerMail();
     }
+
+    public List<Rates> getRates(String shipperId){
+        return contractRateRepo.findByShipperId(shipperId);
+    }
 }

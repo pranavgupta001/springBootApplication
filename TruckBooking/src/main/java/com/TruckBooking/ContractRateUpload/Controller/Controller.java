@@ -21,7 +21,6 @@ public class Controller {
 
     @Autowired
     ContractRateService contractRateService;
-    ContractRateRepo contractRateRepo;
 
 	//upload the excel file.
     @PostMapping("/ContractRateUpload")
@@ -41,10 +40,11 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload excel file ");
     }
 
-    @GetMapping("/getSheet")
-    public ResponseEntity<?> returnSheet(@RequestParam("shipperId") String shipperId){
-        List<Rates> getRates = contractRateRepo.findByShipperId(shipperId);
-        return new ResponseEntity<>(getRates, HttpStatus.OK);
+    @GetMapping("/getRates")
+    public ResponseEntity<?> returnRates(@RequestParam("shipperId") String shipperId){
+
+        return new ResponseEntity<>(contractRateService.getRates(shipperId), HttpStatus.OK);
+
     }
 
 }
