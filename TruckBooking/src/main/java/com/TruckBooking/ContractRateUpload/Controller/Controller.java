@@ -1,7 +1,10 @@
 package com.TruckBooking.ContractRateUpload.Controller;
 
+import java.util.List;
 import java.util.Map;
 
+import com.TruckBooking.ContractRateUpload.Dao.ContractRateRepo;
+import com.TruckBooking.ContractRateUpload.Entity.Rates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +24,11 @@ public class Controller {
 
 	//upload the excel file.
     @PostMapping("/ContractRateUpload")
-    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("shipperId") String shipperId) {
         if (contractRateService.isExcelFile(file)) {
+            boolean saved = contractRateService.save(file, shipperId);
             //true
-            if (contractRateService.save(file)){
+            if (saved){
                 return ResponseEntity.ok(Map.of("message", "File is uploaded and data is saved to database"));
             }
             else{
@@ -36,4 +40,10 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload excel file ");
     }
 
+    @GetMapping("/getRates")
+    public ResponseEntity<?> returnRates(@RequestParam("shipperId") String shipperId){
+
+        return new ResponseEntity<>(contractRateService.getRates(shipperId), HttpStatus.OK);
+
+    }
 }

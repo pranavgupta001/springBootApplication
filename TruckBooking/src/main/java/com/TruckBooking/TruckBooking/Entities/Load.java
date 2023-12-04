@@ -71,13 +71,6 @@ public class Load {
 	@Column(name="loadingPointGeoId")
 	private List<String> loadingPointGeoId=new ArrayList<>(); //optional
 
-
-
-
-
-
-
-
 	@Enumerated(EnumType.STRING)
 	private UnitValue unitValue; // optional
 
