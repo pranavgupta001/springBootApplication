@@ -54,7 +54,7 @@ public class ContractRateService {
     }
 
     // this function helps us to save excel file.
-    public boolean save(MultipartFile file, String shipperId) {
+    public boolean saveRates(MultipartFile file, String shipperId) {
 
         try {
             List<Rates> products = extractRateListFromExcel(file.getInputStream(), shipperId);
@@ -145,6 +145,19 @@ public class ContractRateService {
             log.error("No Excel Sheet Detected");
         }
         return rateList;
+    }
+
+    public boolean saveIndent(Indent indent ){
+        indent.setPosition(0);
+        indent.setStatus(Status.NOT_ASSIGNED);
+        try{
+            indentDao.save(indent);
+            return true;
+        }
+        catch(Exception e){
+            log.error(e.toString());
+            return false;
+        }
     }
 
     // Find the ranks for particular LoadId and arrange them in ascending order in Indent Table

@@ -1,10 +1,8 @@
 package com.TruckBooking.ContractRateUpload.Controller;
 
-import java.util.List;
 import java.util.Map;
 
-import com.TruckBooking.ContractRateUpload.Dao.ContractRateRepo;
-import com.TruckBooking.ContractRateUpload.Entity.Rates;
+import com.TruckBooking.ContractRateUpload.Entity.Indent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +24,7 @@ public class Controller {
     @PostMapping("/ContractRateUpload")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("shipperId") String shipperId) {
         if (contractRateService.isExcelFile(file)) {
-            boolean saved = contractRateService.save(file, shipperId);
+            boolean saved = contractRateService.saveRates(file, shipperId);
             //true
             if (saved){
                 return ResponseEntity.ok(Map.of("message", "File is uploaded and data is saved to database"));
@@ -46,4 +44,14 @@ public class Controller {
         return new ResponseEntity<>(contractRateService.getRates(shipperId), HttpStatus.OK);
 
     }
+
+    @PostMapping("/uploadIndent")
+    public ResponseEntity<?> saveIndent(@RequestBody Indent indent){
+        boolean saved = contractRateService.saveIndent(indent);
+        if (saved){
+            return ResponseEntity.ok(Map.of("message", "Indent Uploaded"));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not uploaded, check the data again");
+    }
+
 }
