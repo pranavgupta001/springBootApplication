@@ -147,17 +147,11 @@ public class ContractRateService {
         return rateList;
     }
 
-    public boolean saveIndent(Indent indent ){
+    public Indent saveIndent(Indent indent ){
         indent.setPosition(0);
         indent.setStatus(Status.NOT_ASSIGNED);
-        try{
-            indentDao.save(indent);
-            return true;
-        }
-        catch(Exception e){
-            log.error(e.toString());
-            return false;
-        }
+        indentDao.save(indent);
+        return indent;
     }
 
     // Find the ranks for particular LoadId and arrange them in ascending order in Indent Table
