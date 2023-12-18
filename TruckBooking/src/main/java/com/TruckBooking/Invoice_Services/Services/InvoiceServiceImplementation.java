@@ -133,7 +133,7 @@ public class InvoiceServiceImplementation implements InvoiceService {
         response.setTransporterName(invoiceAns.getTransporterName());
         response.setInvoiceStatus(invoiceAns.getInvoiceStatus());
         response.setBookingId(invoiceAns.getBookingId());
-        response.setBookingId(invoiceAns.getBookingId());
+
         response.setDueDate(invoiceAns.getDueDate());
         //returning the response
         return response;
@@ -174,6 +174,7 @@ public class InvoiceServiceImplementation implements InvoiceService {
 
         Invoice invoice = ans.get();
         //updating the values in the database
+        invoice.setInvoiceId(invoiceId);
         temp = invoiceRequest.getInvoiceNo();
         if (StringUtils.isNotBlank(temp)) {
             invoice.setInvoiceNo(temp);
