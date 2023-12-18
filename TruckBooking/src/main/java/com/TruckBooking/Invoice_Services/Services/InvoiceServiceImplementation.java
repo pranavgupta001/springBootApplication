@@ -133,7 +133,7 @@ public class InvoiceServiceImplementation implements InvoiceService {
         response.setTransporterName(invoiceAns.getTransporterName());
         response.setInvoiceStatus(invoiceAns.getInvoiceStatus());
         response.setBookingId(invoiceAns.getBookingId());
-
+        response.setBookingId(invoiceAns.getBookingId());
         response.setDueDate(invoiceAns.getDueDate());
         //returning the response
         return response;
