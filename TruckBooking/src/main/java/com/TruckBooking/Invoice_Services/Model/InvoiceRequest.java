@@ -42,7 +42,6 @@ public class InvoiceRequest {
 
     public String dueDate;
 
-    public String invoiceId;
 
 
 
