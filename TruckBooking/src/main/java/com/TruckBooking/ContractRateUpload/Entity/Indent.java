@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class Indent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,6 @@ public class Indent {
     private List<String> transporterEmail = new ArrayList<>();
     // Email List of all the transporters, so we do not have to make connection to database again and again for address of each.
 
-    @NotNull
     @Column(name = "Position")
     private int position;
     //Position is an index for the transporter to whom our system has assigned the load and waiting for the conformation.
