@@ -161,7 +161,7 @@ public class InvoiceServiceImplementation implements InvoiceService {
         log.info("getInvoice service response is returned");
         return  listans ;
     }
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
 
     //This request updates the data in the database according to the invoiceID provided in the url
