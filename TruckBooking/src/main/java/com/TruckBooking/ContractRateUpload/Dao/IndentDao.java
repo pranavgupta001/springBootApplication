@@ -14,5 +14,6 @@ import java.util.List;
 public interface IndentDao extends JpaRepository<Indent,Long>{
 
     List<Indent> findByStatus( Load.Status status);
+    Indent findByLoadId(String loadId);
 
 }
