@@ -19,10 +19,10 @@ import com.TruckBooking.ContractRateUpload.Dao.ContractRateRepo;
 import com.TruckBooking.ContractRateUpload.Dao.IndentDao;
 import com.TruckBooking.ContractRateUpload.Entity.Indent;
 import com.TruckBooking.ContractRateUpload.Entity.Rates;
-import com.TruckBooking.TruckBooking.Dao.LoadDao;
-import com.TruckBooking.TruckBooking.Dao.TransporterEmailDao;
-import com.TruckBooking.TruckBooking.Entities.Load;
-import com.TruckBooking.TruckBooking.Entities.Load.Status;
+import com.TruckBooking.LoadsApi.Dao.LoadDao;
+import com.TruckBooking.LoadsApi.Dao.TransporterEmailDao;
+import com.TruckBooking.LoadsApi.Entities.Load;
+import com.TruckBooking.LoadsApi.Entities.Load.Status;
 
 import lombok.extern.slf4j.Slf4j;
 

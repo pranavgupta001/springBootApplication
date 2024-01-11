@@ -1,13 +1,10 @@
 package com.TruckBooking.Invoice_Services.Dao;
 
 import com.TruckBooking.Invoice_Services.Entity.Invoice;
-import com.TruckBooking.TruckBooking.Entities.Load;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

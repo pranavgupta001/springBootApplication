@@ -1,7 +1,5 @@
-package com.TruckBooking.routeData.Exception;
+package com.TruckBooking.LoadsApi.Exception;
 
-import com.TruckBooking.LoadsApi.Exception.BusinessException;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -22,10 +20,12 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Slf4j
 @ControllerAdvice
-public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
+public class LoadExceptionAdvice extends ResponseEntityExceptionHandler {
 
 	/**
 	 * Handle MissingServletRequestParameterException. Triggered when a 'required'
@@ -42,7 +42,7 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("handleMissingServletRequestParameter is started");
 		String error = ex.getParameterName() + " parameter is missing";
-		return buildResponseEntity(new RouteDataErrorResponse(HttpStatus.BAD_REQUEST, error, ex));
+		return buildResponseEntity(new LoadErrorResponse(HttpStatus.BAD_REQUEST, error, ex));
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 		builder.append(ex.getContentType());
 		builder.append(" media type is not supported. Supported media types are ");
 		ex.getSupportedMediaTypes().forEach(t -> builder.append(t).append(", "));
-		return buildResponseEntity(new RouteDataErrorResponse(HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+		return buildResponseEntity(new LoadErrorResponse(HttpStatus.UNSUPPORTED_MEDIA_TYPE,
 				builder.substring(0, builder.length() - 2), ex));
 	}
 
@@ -82,11 +82,11 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("handleMethodArgumentNotValid is started");
-		RouteDataErrorResponse routeDataErrorResponse = new RouteDataErrorResponse(HttpStatus.BAD_REQUEST);
-		routeDataErrorResponse.setMessage("Validation error");
-		routeDataErrorResponse.addValidationErrors(ex.getBindingResult().getFieldErrors());
-		routeDataErrorResponse.addValidationError(ex.getBindingResult().getGlobalErrors());
-		return buildResponseEntity(routeDataErrorResponse);
+		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
+		loadErrorResponse.setMessage("Validation error");
+		loadErrorResponse.addValidationErrors(ex.getBindingResult().getFieldErrors());
+		loadErrorResponse.addValidationError(ex.getBindingResult().getGlobalErrors());
+		return buildResponseEntity(loadErrorResponse);
 	}
 
 	/**
@@ -99,10 +99,10 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
 	protected ResponseEntity<Object> handleConstraintViolation(javax.validation.ConstraintViolationException ex) {
 		log.error("handleConstraintViolation is started");
-		RouteDataErrorResponse routeDataErrorResponse = new RouteDataErrorResponse(HttpStatus.BAD_REQUEST);
-		routeDataErrorResponse.setMessage("Validation error");
-		routeDataErrorResponse.addValidationErrors(ex.getConstraintViolations());
-		return buildResponseEntity(routeDataErrorResponse);
+		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
+		loadErrorResponse.setMessage("Validation error");
+		loadErrorResponse.addValidationErrors(ex.getConstraintViolations());
+		return buildResponseEntity(loadErrorResponse);
 	}
 
 	/**
@@ -115,9 +115,9 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
 		log.error("handleEntityNotFound is started");
-		RouteDataErrorResponse routeDataErrorResponse = new RouteDataErrorResponse(HttpStatus.NOT_FOUND);
-		routeDataErrorResponse.setMessage(ex.getMessage());
-		return buildResponseEntity(routeDataErrorResponse);
+		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.NOT_FOUND);
+		loadErrorResponse.setMessage(ex.getMessage());
+		return buildResponseEntity(loadErrorResponse);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 		ServletWebRequest servletWebRequest = (ServletWebRequest) request;
 		log.info("{} to {}", servletWebRequest.getHttpMethod(), servletWebRequest.getRequest().getServletPath());
 		String error = "Malformed JSON request";
-		return buildResponseEntity(new RouteDataErrorResponse(HttpStatus.BAD_REQUEST, error, ex));
+		return buildResponseEntity(new LoadErrorResponse(HttpStatus.BAD_REQUEST, error, ex));
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.error("handleHttpMessageNotWritable is started");
 		String error = "Error writing JSON output";
-		return buildResponseEntity(new RouteDataErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
+		return buildResponseEntity(new LoadErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
 	}
 
 	/**
@@ -170,11 +170,11 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 		log.error("handleNoHandlerFoundException is started");
-		RouteDataErrorResponse routeDataErrorResponse = new RouteDataErrorResponse(HttpStatus.BAD_REQUEST);
-		routeDataErrorResponse.setMessage(
+		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
+		loadErrorResponse.setMessage(
 				String.format("Could not find the %s method for URL %s", ex.getHttpMethod(), ex.getRequestURL()));
-		routeDataErrorResponse.setDebugMessage(ex.getMessage());
-		return buildResponseEntity(routeDataErrorResponse);
+		loadErrorResponse.setDebugMessage(ex.getMessage());
+		return buildResponseEntity(loadErrorResponse);
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(javax.persistence.EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(javax.persistence.EntityNotFoundException ex) {
 		log.error("handleEntityNotFound is started");
-		return buildResponseEntity(new RouteDataErrorResponse(HttpStatus.NOT_FOUND, ex));
+		return buildResponseEntity(new LoadErrorResponse(HttpStatus.NOT_FOUND, ex));
 	}
 
 	/**
@@ -198,9 +198,9 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 			WebRequest request) {
 		log.error("handleDataIntegrityViolation is started");
 		if (ex.getCause() instanceof ConstraintViolationException) {
-			return buildResponseEntity(new RouteDataErrorResponse(HttpStatus.CONFLICT, "Database error", ex.getCause()));
+			return buildResponseEntity(new LoadErrorResponse(HttpStatus.CONFLICT, "Database error", ex.getCause()));
 		}
-		return buildResponseEntity(new RouteDataErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex));
+		return buildResponseEntity(new LoadErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex));
 	}
 
 	/**
@@ -213,30 +213,30 @@ public class RouteDataExceptionAdvice extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
 			WebRequest request) {
 		log.error("handleMethodArgumentTypeMismatch is started");
-		RouteDataErrorResponse routeDataErrorResponse = new RouteDataErrorResponse(HttpStatus.BAD_REQUEST);
-		routeDataErrorResponse
+		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.BAD_REQUEST);
+		loadErrorResponse
 				.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'",
 						ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
-		routeDataErrorResponse.setDebugMessage(ex.getMessage());
-		return buildResponseEntity(routeDataErrorResponse);
+		loadErrorResponse.setDebugMessage(ex.getMessage());
+		return buildResponseEntity(loadErrorResponse);
 	}
 
-	@ExceptionHandler(com.TruckBooking.LoadsApi.Exception.BusinessException.class)
+	@ExceptionHandler(BusinessException.class)
 	protected ResponseEntity<Object> handleBusinessException(BusinessException ex) {
 		log.error("handleBusiness Exception is started");
-		RouteDataErrorResponse routeDataErrorResponse = new RouteDataErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY);
-		routeDataErrorResponse.setMessage(ex.getMessage());
-		return buildResponseEntity(routeDataErrorResponse);
+		LoadErrorResponse loadErrorResponse = new LoadErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY);
+		loadErrorResponse.setMessage(ex.getMessage());
+		return buildResponseEntity(loadErrorResponse);
 	}
 
 	@ExceptionHandler(Exception.class)  
 	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request)  
 	{  
 		log.error("handleAllExceptions is started");
-		return buildResponseEntity(new RouteDataErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR , ex));
+		return buildResponseEntity(new LoadErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR , ex));
 	}  
 
-	private ResponseEntity<Object> buildResponseEntity(RouteDataErrorResponse routeDataErrorResponse) {
-		return new ResponseEntity<>(routeDataErrorResponse, routeDataErrorResponse.getStatus());
+	private ResponseEntity<Object> buildResponseEntity(LoadErrorResponse loadErrorResponse) {
+		return new ResponseEntity<>(loadErrorResponse, loadErrorResponse.getStatus());
 	}
 }
