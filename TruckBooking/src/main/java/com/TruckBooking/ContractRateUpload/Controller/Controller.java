@@ -32,8 +32,6 @@ public class Controller {
             else{
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Check the details again");
             }
-
-
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload excel file ");
     }
@@ -47,11 +45,9 @@ public class Controller {
 
     @PostMapping("/uploadIndent")
     public ResponseEntity<?> saveIndent(@RequestBody Indent indent){
-        boolean saved = contractRateService.saveIndent(indent);
-        if (saved){
-            return ResponseEntity.ok(Map.of("message", "Indent Uploaded"));
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not uploaded, check the data again");
+
+        return new ResponseEntity<>(contractRateService.saveIndent(indent), HttpStatus.CREATED);
+
     }
 
 }

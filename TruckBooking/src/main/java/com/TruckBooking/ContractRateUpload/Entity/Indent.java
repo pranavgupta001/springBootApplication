@@ -1,16 +1,13 @@
 package com.TruckBooking.ContractRateUpload.Entity;
 
-import com.TruckBooking.TruckBooking.Entities.Load;
+import com.TruckBooking.LoadsApi.Entities.Load;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.repository.cdi.Eager;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
