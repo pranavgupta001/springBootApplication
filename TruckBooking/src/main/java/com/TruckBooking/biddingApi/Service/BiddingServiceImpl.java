@@ -1,9 +1,7 @@
 package com.TruckBooking.biddingApi.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -99,23 +97,22 @@ public class BiddingServiceImpl implements BiddingService {
 		}
 	}
 
+
 	@Override
 	public List<BiddingData> getBid(Integer pageNo, String loadId, String transporterId,String token) {
 		// TODO Auto-generated method stub
-
-		//		List<BiddingData> list = null;
 		if (pageNo == null)
 			pageNo = 0;
 
+
+		List<BiddingData> bids;
 		if (loadId != null && transporterId == null) {
 
 
 			try {
 				Pageable page = PageRequest.of(pageNo, Constants.pageSize, Sort.Direction.DESC, "timestamp");
-				//				list = biddingDao.findByLoadId(loadId, page);
-				//				Collections.reverse(list);
 				log.info("Bidding Data with params returned");
-				return biddingDao.findByLoadId(loadId, page);
+				bids= biddingDao.findByLoadId(loadId, page);
 			} catch (Exception ex) {
 				log.error("Bidding Data with params not returned -----" + String.valueOf(ex));
 				throw ex;
@@ -125,9 +122,6 @@ public class BiddingServiceImpl implements BiddingService {
 
 			try {
 				Pageable page = PageRequest.of(pageNo, Constants.pageSize, Sort.Direction.DESC, "timestamp");
-				//				list = biddingDao.findByTransporterId(transporterId, page);
-				//				Collections.reverse(list);
-				//				log.info("Bidding Data with params returned");
 				return biddingDao.findByTransporterId(transporterId, page);
 			} catch (Exception ex) {
 				log.error("Bidding Data with params not returned -----" + String.valueOf(ex));
@@ -138,10 +132,8 @@ public class BiddingServiceImpl implements BiddingService {
 
 			try {
 				Pageable page = PageRequest.of(pageNo, Constants.pageSize, Sort.Direction.DESC, "timestamp");
-				//				list = biddingDao.findByLoadIdAndTransporterId(loadId, transporterId, page);
-				//				Collections.reverse(list);
 				log.info("Bidding Data with params returned");
-				return biddingDao.findByLoadIdAndTransporterId(loadId, transporterId, page);
+				bids= biddingDao.findByLoadIdAndTransporterId(loadId, transporterId, page);
 			} catch (Exception ex) {
 				log.error("Bidding Data with params not returned -----" + String.valueOf(ex));
 				throw ex;
@@ -151,17 +143,57 @@ public class BiddingServiceImpl implements BiddingService {
 
 			try {
 				Pageable page = PageRequest.of(pageNo, Constants.pageSize, Sort.Direction.DESC, "timestamp");
-				//				list = biddingDao.getAll(p);
-				//				Collections.reverse(list);
 				log.info("Bidding Data get all returned");
-				return biddingDao.getAll(page);
+
+				bids = biddingDao.getAll(page);
 			} catch (Exception ex) {
 				log.error("Bidding Data get all not returned -----" + String.valueOf(ex));
 				throw ex;
 			}
 
 		}
+		calculateRank(bids);
+
+		return bids;
+
 	}
+	private void calculateRank(List<BiddingData> bids) {
+		//grouping by loadId
+		Map<String, List<BiddingData>> bidsByLoadId = bids.stream()
+				.collect(Collectors.groupingBy(BiddingData::getLoadId));
+
+		// Iterate through each loadId
+		bidsByLoadId.forEach((loadId, loadBids) -> {
+			// Sorting bids based on currentBid
+			loadBids.sort(Comparator.comparingLong(BiddingData::getCurrentBid));
+
+			//Get transporterId respectively
+			List<String> rank = loadBids.stream()
+					.map(BiddingData::getTransporterId)
+					.collect(Collectors.toList());
+
+			loadBids.forEach(bid -> bid.setRank(rank));
+		});
+	}
+
+
+
+	private void Rank(BiddingData bid) {
+
+
+		String loadId = bid.getLoadId();
+
+		List<BiddingData> allBidsForLoadId = biddingDao.findByLoadId(loadId);
+
+		allBidsForLoadId.sort(Comparator.comparingLong(BiddingData::getCurrentBid));
+
+		List<String> rank = allBidsForLoadId.stream()
+				.map(BiddingData::getTransporterId)
+				.collect(Collectors.toList());
+
+		bid.setRank(rank);
+	}
+
 
 	@Override
 	public BidDeleteResponse deleteBid(String id,String token) {
@@ -199,6 +231,7 @@ public class BiddingServiceImpl implements BiddingService {
 	@Override
 	public BiddingData getBidById(String id,String token) {
 		Optional<BiddingData> temp = (biddingDao.findById(id));
+		BiddingData bid = temp.get();
 
 		if (temp.isEmpty()) {
 			EntityNotFoundException ex = new EntityNotFoundException(BiddingData.class, "bidId", id.toString());
@@ -207,6 +240,7 @@ public class BiddingServiceImpl implements BiddingService {
 		}
 
 		try {
+			Rank(bid);
 			log.info("Bidding Data returned");
 			return temp.orElse(null);
 		} catch (Exception ex) {
@@ -215,6 +249,9 @@ public class BiddingServiceImpl implements BiddingService {
 
 		}
 	}
+
+
+
 
 	@Override
 	public BidPutResponse updateBid(String id, BidPutRequest bidPutRequest,String token) {
@@ -510,4 +547,5 @@ public class BiddingServiceImpl implements BiddingService {
 
 		}
 	}
+
 }

@@ -56,7 +56,15 @@ public @Data class BiddingData {
 
 	private String biddingDate;
 
+
 	@CreationTimestamp
 	public Timestamp timestamp;
+
+	@Column(name = "transporterId")
+	@ElementCollection(targetClass = String.class)
+	private List<String> rank;
+
+
+
 
 }
