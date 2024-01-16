@@ -55,6 +55,10 @@ public @Data class BookingData {
 
 	private Long rate;
 	private Unit unitValue;
+	private String lr;            // optional
+	private String remarks;       // optional
+	private Integer damage;        // optional
+	private String companyName;   // optional
 
 	@Column(name = "truckIds")
 	@ElementCollection(targetClass = String.class)
