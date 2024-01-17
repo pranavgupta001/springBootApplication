@@ -19,5 +19,5 @@ public class PlacementInfo {
     @CollectionTable(name = "placement_map", joinColumns = @JoinColumn(name = "transporter_id"))
     @MapKeyColumn(name = "placement_map_key")
     @Column(name = "placement_map_value")
-    private Map<String, String> placementMap = new HashMap<>();// "year: 2023" : "[10, 20, 30, 40]", "month: Jan": "[10, 25, 39, 06]", "week: 1": "[10, 20, 30, 40]"
+    private Map<String, String> placementMap = new HashMap<>();// "year: 2023" : "[10, 20, 30, 40, 34]", "month: Jan": "[10, 25, 39, 06]", "week: 10": "[10, 20, 30, 40]"
 }

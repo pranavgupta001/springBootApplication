@@ -94,13 +94,13 @@ public class PlacementServiceImpl implements PlacementService{
         return response;
     }
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 6000000)   // every 10 mins
     public void FindPlacement() {
-        List<BookingData> bookingDataList = bookingDao.findByTimestampIsBefore(lastSchedulerTimestamp);
+        List<BookingData> bookingDataList = bookingDao.findByTimestampIsAfter(lastSchedulerTimestamp);
         lastSchedulerTimestamp = Timestamp.from(Instant.now());
 
         if (!bookingDataList.isEmpty()) {
-            System.out.println("Bookings are Found");
+            //System.out.println("Bookings are Found");
 
             for (BookingData bookingData : bookingDataList) {
                 // getting transporterId from booking Data
@@ -108,15 +108,15 @@ public class PlacementServiceImpl implements PlacementService{
                 // these ids will be stored.
                 String transporterId = bookingData.getTransporterId();
                 Rates rates = contractRateRepo.findByTransporterId(transporterId);
-                String shipperId = "Shipper Name";//rates.getShipperId();
-                String transporterName = "Transporter Name";//rates.getTransporterName();
+                String shipperId = rates.getShipperId();
+                String transporterName = rates.getTransporterName();
 
                 String loadId = bookingData.getLoadId(); // to get the data from indent table load Id is reqd.
                 Timestamp bookingTimestamp = bookingData.getTimestamp();
                 long bookingMillis = bookingTimestamp.getTime(); // getting bookingMillis to make booking calendar and find the year, month, week of booking
                 Calendar bookingCalendar = Calendar.getInstance();
                 bookingCalendar.setTimeInMillis(bookingMillis);
-                String bookingYear = "year: " + bookingCalendar.get(Calendar.YEAR);
+                String bookingYear = "year: " + bookingCalendar.get(Calendar.YEAR);  // in which booking was made
                 String bookingMonth = "month: " +( 1+ bookingCalendar.get(Calendar.MONTH)); // adding 1 since monthNumber begins with 0 i.e. 0 -> Jan
                 String bookingWeek = "week: " + bookingCalendar.get(Calendar.WEEK_OF_YEAR);
 
@@ -153,7 +153,7 @@ public class PlacementServiceImpl implements PlacementService{
         }
     }
 
-    private int getIndex(Timestamp indentTimestamp, long bookingMillis) {
+    private int getIndex(Timestamp indentTimestamp, long bookingMillis) {  // [0,0,0,0,0] 5 indexes and where to add according to calculates time duration
         long indentMillis = indentTimestamp.getTime(); // getting indentMillis to calculate the time difference between
         // load assigning to the transporter and transporter assigning the vehicle for load\
 
@@ -180,6 +180,8 @@ public class PlacementServiceImpl implements PlacementService{
         int[] placementArray;
         if (placementMap.containsKey(bookingTime)) {
             String[] arr = placementMap.get(bookingTime).substring(1,placementMap.get(bookingTime).length()-1).split(", ");
+            // Above line will convert from  "[12, 43, 75, 87, 9]"   to ["12", "43", "75", "87", "9"]
+            // Basically converting Stringified array to an array of String  to get these values as Numbers.
             arr[index] = Integer.parseInt(arr[index])+1+"";
             placementMap.put(bookingTime, Arrays.toString(arr));
         } else {

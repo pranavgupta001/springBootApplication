@@ -40,5 +40,5 @@ public interface BookingDao extends JpaRepository<BookingData, String> {
 
 	List<BookingData> findByDeviceIdAndCancelAndCompleted(String deviceId, Boolean cancel, Boolean completed, Pageable page);
 
-	List<BookingData> findByTimestampIsBefore(Timestamp timestamp);
+	List<BookingData> findByTimestampIsAfter(Timestamp timestamp);
 }

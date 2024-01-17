@@ -15,7 +15,7 @@ public class PlacementController {
     private PlacementService placementService;
 
     @GetMapping("/placementEfficiencyGraph")
-    public ResponseEntity<?> placementG(@RequestParam String id){   // id - common for both transporterId and shipperId
+    public ResponseEntity<?> placementGraph(@RequestParam String id){   // id - common for both transporterId and shipperId
         Object response = placementService.getPlacementData(id);
         if (response.getClass().equals("".getClass())){    // checking if the response returned is String or Not.
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
