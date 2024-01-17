@@ -145,7 +145,7 @@ public class BiddingServiceImpl implements BiddingService {
 				Pageable page = PageRequest.of(pageNo, Constants.pageSize, Sort.Direction.DESC, "timestamp");
 				log.info("Bidding Data get all returned");
 
-				bids = biddingDao.getAll(page);
+				return biddingDao.getAll(page);
 			} catch (Exception ex) {
 				log.error("Bidding Data get all not returned -----" + String.valueOf(ex));
 				throw ex;
