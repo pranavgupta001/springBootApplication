@@ -35,9 +35,11 @@ public @Data class BiddingData {
 	private String loadId;
 
 	@NotNull(message = "Current Bid can not be null")
-	private Long currentBid;
+	private Integer transporterBid;
 
-	private Long previousBid;
+	//private Integer previousBid;
+
+	private Integer shipperBid;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "Unit can not be null")

@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public @Data class BidPutRequest {
 
-	private Long currentBid;
-	private Long previousBid;
+	private Integer transporterBid;
+	//private Integer previousBid;
+	private Integer shipperBid;
 	private Unit unitValue;
 	private List<String> truckId;
 

@@ -44,7 +44,9 @@ public class BiddingServiceImpl implements BiddingService {
 
 		data.setTransporterId(request.getTransporterId());
 		data.setLoadId(request.getLoadId());
-		data.setCurrentBid(request.getCurrentBid());
+		//data.setCurrentBid(request.getCurrentBid());
+		data.setTransporterBid(request.getTransporterBid());
+		data.setShipperBid(request.getShipperBid());
 
 		if ("PER_TON".equals(String.valueOf(request.getUnitValue()))) {
 			data.setUnitValue(BiddingData.Unit.PER_TON);
@@ -78,7 +80,8 @@ public class BiddingServiceImpl implements BiddingService {
 		response.setStatus(Constants.success);
 		response.setBidId(id);
 		response.setLoadId(data.getLoadId());
-		response.setCurrentBid(data.getCurrentBid());
+		//response.setCurrentBid(data.getCurrentBid());
+		response.setTransporterBid(data.getTransporterBid());
 		response.setTransporterId(data.getTransporterId());
 		response.setShipperApproval(data.getShipperApproval());
 		response.setTransporterApproval(data.getTransporterApproval());
@@ -165,7 +168,8 @@ public class BiddingServiceImpl implements BiddingService {
 		// Iterate through each loadId
 		bidsByLoadId.forEach((loadId, loadBids) -> {
 			// Sorting bids based on currentBid
-			loadBids.sort(Comparator.comparingLong(BiddingData::getCurrentBid));
+			//loadBids.sort(Comparator.comparingLong(BiddingData::getCurrentBid));
+			loadBids.sort(Comparator.comparingInt(BiddingData::getTransporterBid));
 
 			//Get transporterId respectively
 			List<String> rank = loadBids.stream()
@@ -185,7 +189,8 @@ public class BiddingServiceImpl implements BiddingService {
 
 		List<BiddingData> allBidsForLoadId = biddingDao.findByLoadId(loadId);
 
-		allBidsForLoadId.sort(Comparator.comparingLong(BiddingData::getCurrentBid));
+		//allBidsForLoadId.sort(Comparator.comparingLong(BiddingData::getCurrentBid));
+		allBidsForLoadId.sort(Comparator.comparingInt(BiddingData::getTransporterBid));
 
 		List<String> rank = allBidsForLoadId.stream()
 				.map(BiddingData::getTransporterId)
@@ -268,7 +273,7 @@ public class BiddingServiceImpl implements BiddingService {
 
 		if (String.valueOf(bidPutRequest.getTransporterApproval()).equals("true")
 				&& String.valueOf(bidPutRequest.getShipperApproval()).equals("null")) {
-			if (bidPutRequest.getCurrentBid() != null) {
+			if (bidPutRequest.getTransporterBid() != null) {
 
 				if (bidPutRequest.getUnitValue() == null) {
 					log.error(Constants.unitValueisNull);
@@ -285,8 +290,9 @@ public class BiddingServiceImpl implements BiddingService {
 						throw new BusinessException(Constants.UnknownUnit);
 
 					}
-					data.setPreviousBid(data.getCurrentBid());
-					data.setCurrentBid(bidPutRequest.getCurrentBid());
+					//data.setPreviousBid(data.getTransporterBid());
+					data.setTransporterBid(bidPutRequest.getTransporterBid());
+					data.setShipperBid(bidPutRequest.getShipperBid());
 					if (bidPutRequest.getBiddingDate() != null) {
 						data.setBiddingDate(bidPutRequest.getBiddingDate());
 					}
@@ -309,8 +315,9 @@ public class BiddingServiceImpl implements BiddingService {
 					response.setStatus(Constants.uSuccess);
 					response.setBidId(id);
 					response.setLoadId(data.getLoadId());
-					response.setCurrentBid(data.getCurrentBid());
-					response.setPreviousBid(data.getPreviousBid());
+					//response.setCurrentBid(data.getCurrentBid());
+					response.setTransporterBid(data.getTransporterBid());
+					//response.setPreviousBid(data.getPreviousBid());
 					response.setTransporterId(data.getTransporterId());
 					response.setShipperApproval(data.getShipperApproval());
 					response.setTransporterApproval(data.getTransporterApproval());
@@ -329,7 +336,7 @@ public class BiddingServiceImpl implements BiddingService {
 				}
 
 				// accept by transporter
-			} else if (bidPutRequest.getCurrentBid() == null && data.getShipperApproval() == true) {
+			} else if (bidPutRequest.getTransporterBid() == null && data.getShipperApproval() == true) {
 
 				data.setTransporterApproval(true);
 
@@ -338,8 +345,9 @@ public class BiddingServiceImpl implements BiddingService {
 				response.setStatus(Constants.uSuccess);
 				response.setBidId(id);
 				response.setLoadId(data.getLoadId());
-				response.setCurrentBid(data.getCurrentBid());
-				response.setPreviousBid(data.getPreviousBid());
+				response.setTransporterBid(data.getTransporterBid());
+				//response.setPreviousBid(data.getPreviousBid());
+				response.setShipperBid(data.getShipperBid());
 				response.setTransporterId(data.getTransporterId());
 				response.setShipperApproval(data.getShipperApproval());
 				response.setTransporterApproval(data.getTransporterApproval());
@@ -362,7 +370,7 @@ public class BiddingServiceImpl implements BiddingService {
 		else if (String.valueOf(bidPutRequest.getShipperApproval()).equals("true")
 				&& String.valueOf(bidPutRequest.getTransporterApproval()).equals("null")) {
 
-			if (bidPutRequest.getCurrentBid() != null) {
+			if (bidPutRequest.getTransporterBid() != null) {
 				if (bidPutRequest.getUnitValue() == null) {
 					log.error(Constants.unitValueisNull);
 					throw new BusinessException(Constants.unitValueisNull);
@@ -377,8 +385,9 @@ public class BiddingServiceImpl implements BiddingService {
 						throw new BusinessException(Constants.UnknownUnit);
 
 					}
-					data.setPreviousBid(data.getCurrentBid());
-					data.setCurrentBid(bidPutRequest.getCurrentBid());
+					//data.setPreviousBid(data.getTransporterBid());
+					data.setTransporterBid(bidPutRequest.getTransporterBid());
+					data.setShipperBid(bidPutRequest.getShipperBid());
 					if (bidPutRequest.getBiddingDate() != null) {
 						data.setBiddingDate(bidPutRequest.getBiddingDate());
 					}
@@ -402,8 +411,10 @@ public class BiddingServiceImpl implements BiddingService {
 					response.setStatus(Constants.uSuccess);
 					response.setBidId(id);
 					response.setLoadId(data.getLoadId());
-					response.setCurrentBid(data.getCurrentBid());
-					response.setPreviousBid(data.getPreviousBid());
+					//response.setCurrentBid(data.getCurrentBid());
+					response.setTransporterBid(data.getTransporterBid());
+					//response.setPreviousBid(data.getPreviousBid());
+					response.setShipperBid(data.getShipperBid());
 					response.setTransporterId(data.getTransporterId());
 					response.setShipperApproval(data.getShipperApproval());
 					response.setTransporterApproval(data.getTransporterApproval());
@@ -421,7 +432,7 @@ public class BiddingServiceImpl implements BiddingService {
 					}
 				}
 				// accept by shipper
-			} else if (bidPutRequest.getCurrentBid() == null && data.getTransporterApproval() == true) {
+			} else if (bidPutRequest.getTransporterBid() == null && data.getTransporterApproval() == true) {
 
 				data.setShipperApproval(true);
 
@@ -436,8 +447,10 @@ public class BiddingServiceImpl implements BiddingService {
 				response.setStatus(Constants.uSuccess);
 				response.setBidId(id);
 				response.setLoadId(data.getLoadId());
-				response.setCurrentBid(data.getCurrentBid());
-				response.setPreviousBid(data.getPreviousBid());
+//				response.setCurrentBid(data.getCurrentBid());
+				response.setTransporterBid(data.getTransporterBid());
+				//response.setPreviousBid(data.getPreviousBid());
+				response.setShipperBid(data.getShipperBid());
 				response.setTransporterId(data.getTransporterId());
 				response.setShipperApproval(data.getShipperApproval());
 				response.setTransporterApproval(data.getTransporterApproval());
@@ -484,8 +497,10 @@ public class BiddingServiceImpl implements BiddingService {
 			response.setStatus(Constants.uSuccess);
 			response.setBidId(id);
 			response.setLoadId(data.getLoadId());
-			response.setCurrentBid(data.getCurrentBid());
-			response.setPreviousBid(data.getPreviousBid());
+//			response.setCurrentBid(data.getCurrentBid());
+			response.setTransporterBid(data.getTransporterBid());
+			//response.setPreviousBid(data.getPreviousBid());
+			response.setShipperBid(data.getShipperBid());
 			response.setTransporterId(data.getTransporterId());
 			response.setShipperApproval(data.getShipperApproval());
 			response.setTransporterApproval(data.getTransporterApproval());
@@ -519,8 +534,10 @@ public class BiddingServiceImpl implements BiddingService {
 			response.setStatus(Constants.uSuccess);
 			response.setBidId(id);
 			response.setLoadId(data.getLoadId());
-			response.setCurrentBid(data.getCurrentBid());
-			response.setPreviousBid(data.getPreviousBid());
+			//response.setCurrentBid(data.getCurrentBid());
+			response.setTransporterBid(data.getTransporterBid());
+			//response.setPreviousBid(data.getPreviousBid());
+			response.setShipperBid(data.getShipperBid());
 			response.setTransporterId(data.getTransporterId());
 			response.setShipperApproval(data.getShipperApproval());
 			response.setTransporterApproval(data.getTransporterApproval());
