@@ -34,10 +34,8 @@ public @Data class BiddingData {
 	@NotBlank(message = "Load Id can not be null")
 	private String loadId;
 
-	@NotNull(message = "Current Bid can not be null")
+	@NotNull(message = "TransporterBid can not be null")
 	private Integer transporterBid;
-
-	//private Integer previousBid;
 
 	private Integer shipperBid;
 
