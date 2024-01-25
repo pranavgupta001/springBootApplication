@@ -5,7 +5,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ master ]
 
 defaults:
   run:
@@ -13,7 +13,7 @@ defaults:
     
 jobs:
   build:
-    runs-on: ['self-hosted','loadDev']
+    runs-on: ['self-hosted', 'Linux', 'X64', 'main' ]
 
     steps:
     - uses: actions/checkout@v2
@@ -22,14 +22,15 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        cache: maven
-        
-    - run: sudo docker container stop loadContainer || true    
+
+    - run: sudo docker container stop load-container || true  
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+       
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
-    - run: sudo docker container rm loadContainer || true
+    - run: sudo docker container rm load-container || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
-    - run: sudo docker run -d --env-file /home/ubuntu/envDev.properties -p 8080:8080 --name loadContainer load  sleep infinity| echo "success"
+    - run: sudo docker run --env-file /home/ubuntu/envProd.properties -p 8080:8080 --name load-container  load | echo "success" 
 
+ 
