@@ -21,7 +21,7 @@ public class UpdateLoadResponse {
 	private String unloadingPointCity;
 	private String unloadingPointState;
 
-	private String shipperName;
+	private String companyName;
 
 	private String loadingPoint2;		//optional
 	private String loadingPointCity2;	//optional

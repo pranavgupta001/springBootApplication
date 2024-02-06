@@ -1,0 +1,528 @@
+[33mcommit 6f772a377156e9ac9669613543203bd90914b9bc[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Shravan Parikh <102890682+Shravan-Parikh@users.noreply.github.com>
+Date:   Mon Jan 8 15:52:46 2024 +0530
+
+    Update application.properties
+
+[33mcommit fa84e25cf63cded16f02d086fff96e8ca3f9c2df[m
+Author: Shravan Parikh <102890682+Shravan-Parikh@users.noreply.github.com>
+Date:   Mon Jan 8 15:49:13 2024 +0530
+
+    Create env.properties
+
+[33mcommit 8590216dca11314cef13a71ed4dd928466964057[m[33m ([m[1;32mmaster[m[33m)[m
+Merge: 40fba1f 4307d7c
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Fri Nov 10 22:12:32 2023 +0530
+
+    Merge pull request #186 from jeetd46/master
+    
+    Dev to Main
+
+[33mcommit 4307d7c7ae4b9c3893b5afcf1a0ee9b6b9a09838[m
+Merge: 2d13281 e2c1bfe
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Fri Nov 10 17:47:33 2023 +0530
+
+    Merge pull request #1 from jeetd46/dev
+    
+    Dev to Main
+
+[33mcommit e2c1bfeff2ff2ba255e4c42e5252a1b6a659f9e7[m
+Merge: b027475 5a05a1f
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Thu Nov 9 11:18:14 2023 +0530
+
+    Merge pull request #183 from rupalisingh12/dev
+    
+    added cros origin annotation
+
+[33mcommit 5a05a1fd171ab8f1860781762702b830e253a4d6[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Thu Nov 9 00:29:14 2023 +0530
+
+    again removed crosorigin
+
+[33mcommit 786af7497b9238db4945c47f7f51a206bf153287[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Thu Nov 9 00:26:49 2023 +0530
+
+    just removed cros origin from main class
+
+[33mcommit 07a159bd47fe08917e20a2bec33e9bda03d53b00[m
+Merge: 05bc85b 486d7e7
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Thu Nov 9 00:18:42 2023 +0530
+
+    Merge branch 'newBranchForFurtherChanges' into dev
+
+[33mcommit 486d7e7872fec5b579cd478365d27d6890c00654[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Thu Nov 9 00:00:02 2023 +0530
+
+    just added a forward slash in controller and added a comment in invoiceServiceImplementation above delete function
+
+[33mcommit 05bc85b4a757d20607e7c1e1a7796ce44f468585[m
+Merge: c7657c9 fe0f4a7
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Wed Nov 8 23:41:10 2023 +0530
+
+    Merge branch 'newBranchForFurtherChanges' into dev
+
+[33mcommit c7657c9cbad34491a793d37329e5e95104ec3e22[m
+Merge: 3885dde b027475
+Author: Rupali <132844967+rupalisingh12@users.noreply.github.com>
+Date:   Wed Nov 8 23:03:12 2023 +0530
+
+    Merge branch 'liveasy97:dev' into dev
+
+[33mcommit fe0f4a71198f808154a9045edcf9dbf97871bb2d[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Wed Nov 8 22:13:17 2023 +0530
+
+    fixed shipperId code
+
+[33mcommit 2d1328165acd2826b33ca08e27715c9ee452ed26[m
+Merge: 40fba1f b027475
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Tue Nov 7 20:53:05 2023 +0530
+
+    Merge branch 'dev'
+
+[33mcommit b02747531fb40f2a8c83398578baa961b2d41fc6[m
+Merge: 67c01c9 42dc844
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Tue Nov 7 12:08:51 2023 +0530
+
+    Merge pull request #185 from rupalisingh12/add-cross-origin-change
+    
+    now just added cros origin and no new change
+
+[33mcommit 42dc8446aba364849d9056fdadc4f4a859171391[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Nov 7 12:02:03 2023 +0530
+
+    now just added cros origin and no new change
+
+[33mcommit 3885dde912fc710af27f04b19fa323ccae794012[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Nov 7 00:51:41 2023 +0530
+
+    added cros origin annotation
+
+[33mcommit 67c01c9fa7950fb3ca36a23d6cf26c2c863ef15e[m
+Merge: 54e02d5 271194c
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Mon Nov 6 17:06:53 2023 +0530
+
+    Merge pull request #182 from Anush-Saxena/dev
+    
+    DeviceId updated
+
+[33mcommit 271194cda46a68c8d87efe76193ae2196d809c62[m
+Author: anush.hash <saxenaanush88@gmail.com>
+Date:   Fri Nov 3 20:53:26 2023 +0530
+
+    Load var made optional
+
+[33mcommit 54e02d5858f1de05cb72b4d7ae5c6029eb13a356[m
+Merge: c0bc771 f645ae3
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Fri Nov 3 11:48:43 2023 +0530
+
+    Merge pull request #181 from rupalisingh12/dev
+    
+    Add Invoice
+
+[33mcommit f212697252bdf67aab8fbcbfc2b2056d802bc46a[m
+Author: anush.hash <saxenaanush88@gmail.com>
+Date:   Fri Nov 3 02:20:50 2023 +0530
+
+    DeviceId updated
+
+[33mcommit f645ae3afed100bcae74ddd2908413b05066acf3[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Oct 31 21:51:35 2023 +0530
+
+    revert not useful changes
+
+[33mcommit 8c5b1a991b78301305f83f5417dd5e9e014a0450[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Oct 31 21:48:44 2023 +0530
+
+    revert made changes
+
+[33mcommit 70a3f10287fa8a30a75620bdb2b1e280bbcd9821[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Oct 31 20:47:27 2023 +0530
+
+    fix
+
+[33mcommit 9168bb74c80b7dd9629cbb692d7363abe9166dfb[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Oct 31 20:46:56 2023 +0530
+
+    revert
+
+[33mcommit 6aff35568e29c2223eb896adc0c308f85041a6e8[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Oct 31 20:42:46 2023 +0530
+
+    reverting changes
+
+[33mcommit fc95625543ec77b586e9ddc6a25f6ce99f97b975[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Oct 31 18:42:28 2023 +0530
+
+    fix application properties
+
+[33mcommit 5d906ecca4f61aabbbdbb6b5547b7b614d1da04d[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Tue Oct 31 18:39:27 2023 +0530
+
+    revert not required changed
+
+[33mcommit c0bc771482df3c665a76d998ee585efb16642aad[m
+Merge: e9cb216 2a03c25
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Tue Oct 31 17:45:52 2023 +0530
+
+    Merge pull request #177 from Anush-Saxena/dev
+    
+    Contract Rate Done
+
+[33mcommit 28212de280c706a35d3997f0cdc21ae62053cc45[m
+Author: rupalisingh12 <rupalisinghkumr12@gmail.com>
+Date:   Mon Oct 30 14:41:55 2023 +0530
+
+    Add Invoice Service
+
+[33mcommit 2a03c250ea3058a854e9bd316716ae8bce447809[m
+Author: Anush Saxena <saxenaanush88@gmail.com>
+Date:   Sun Oct 29 00:53:41 2023 +0530
+
+    Contract Rate Done
+
+[33mcommit e9cb216b7957e319606c838e7dbef748dfaa935d[m
+Merge: 824f7a8 62d4108
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Wed Oct 18 22:42:28 2023 +0530
+
+    Merge pull request #175 from jayshree2419/dev
+    
+    Updated feature of loads by date
+
+[33mcommit 62d41084ce3f6eb021837407e3218c8d198abf86[m
+Author: jayshree2419 <jayshreechoudhary15@gmail.com>
+Date:   Wed Oct 18 22:32:03 2023 +0530
+
+    UPDATED Feature of getting loads by date added
+
+[33mcommit a9a3b219e86ae3a85e0f628fa66d098d5747dcdb[m
+Author: jayshree2419 <jayshreechoudhary15@gmail.com>
+Date:   Wed Oct 18 15:27:35 2023 +0530
+
+    Feature of getting loads by date added
+
+[33mcommit 824f7a860ad9581425da881385428a364cfd13a0[m
+Merge: db051f7 bf36d51
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Wed Oct 4 22:44:39 2023 +0530
+
+    Merge pull request #172 from jayshree2419/dev
+    
+    XMLHTTP Error Update
+
+[33mcommit bf36d51a17592c550c2c75a35ae283c31810ff62[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Wed Oct 4 22:32:27 2023 +0530
+
+    Update BookingController.java
+
+[33mcommit 83a2375981594f558d5a426e21ccab6ce444d2af[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Wed Oct 4 22:31:56 2023 +0530
+
+    Update ULIPController.java
+
+[33mcommit e18bf877ba1d7d525d92b57a8e219aea297b5f1c[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Wed Oct 4 22:20:34 2023 +0530
+
+    Update BookingController.java
+
+[33mcommit f2a44a1d74fbdbd329e3300d65852cf378d9bc84[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Wed Oct 4 22:19:36 2023 +0530
+
+    Update ULIPController.java
+
+[33mcommit 5d4f58ec9e3712d454c0127f093f2663cc633539[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Wed Oct 4 22:19:10 2023 +0530
+
+    Update TruckBookingApplication.java
+
+[33mcommit db051f75b14a7bb00d08a0a0f2272ca59b831879[m
+Merge: 935cb7a dff8ac5
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Wed Oct 4 19:29:05 2023 +0530
+
+    Merge pull request #169 from Anush-Saxena/dev
+    
+    Dev
+
+[33mcommit 935cb7ac959d2b809b16a87b5316614e5e778676[m
+Merge: 31a1265 dcd7b32
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Wed Oct 4 12:01:40 2023 +0530
+
+    Merge pull request #170 from jayshree2419/dev
+    
+    XMLHTTP Updates
+
+[33mcommit dcd7b327a5918a4e749406573bbf9eff22a3142a[m
+Author: jayshree2419 <jayshreechoudhary15@gmail.com>
+Date:   Wed Oct 4 09:40:53 2023 +0530
+
+    XMLHTTP Update
+
+[33mcommit dff8ac5d8a7f17fd745b958d3c40b8b669012b19[m
+Merge: bb85432 31a1265
+Author: Anush Saxena <59112413+Anush-Saxena@users.noreply.github.com>
+Date:   Tue Oct 3 19:06:57 2023 +0530
+
+    Merge branch 'liveasy97:dev' into dev
+
+[33mcommit bb854325809bdbc0dd25beeaea903bae8abf66af[m
+Author: Anush Saxena <saxenaanush88@gmail.com>
+Date:   Tue Oct 3 18:56:58 2023 +0530
+
+    Indent Resolve
+
+[33mcommit 31a12654828a0177435a635944c47258cd669a2b[m
+Merge: 165fee4 da92b59
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Wed Sep 27 12:13:42 2023 +0530
+
+    Merge pull request #168 from jayshree2419/dev
+    
+    Added endpoints for ULIP APIs
+
+[33mcommit da92b59ce75a3e11077c77b1953d0dca157dd4a5[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Tue Sep 26 22:17:43 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 4da4a50284bff6cad164a5a13fb8ef89fdc628a3[m
+Author: jayshree2419 <jayshreechoudhary15@gmail.com>
+Date:   Mon Sep 25 23:32:48 2023 +0530
+
+    Added ULIP API Endpoints
+
+[33mcommit 2d8be21bac0c5bb8a650dd62143c2dd93bca75cc[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Wed Sep 13 12:18:20 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit c7dcbea5ffe92acc1a51624afe26931ec269ac45[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Wed Sep 13 12:14:33 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit ce5ef84ced31b23c633cfb428eff0c8a9783aca5[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Wed Sep 13 12:08:00 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit e2aa4ceef2a0da6a0100a6277d4770e6d56dc7a4[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Tue Sep 12 22:02:53 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 7f931e3f5481f4471da5425da29270867d7b81f8[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Tue Sep 12 22:02:08 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit e4a0842a9c336af802acabbd9eed1cb745f072fd[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Tue Sep 12 21:59:32 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit c5fc644efd22ff299ba8dabeba6917a899d1fa35[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Mon Sep 11 22:10:38 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit fe9523e1b1e2fde044750e23c22e60ec7278305a[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Mon Sep 11 22:09:48 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit b594481d48536badb6e34663c90c05c012fd7b67[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Mon Sep 11 16:32:53 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 2d4c78514d3f665b0eec3e05ace0fb7964319ab5[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Mon Sep 11 16:28:42 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 1abf48bda6626603794a7f310c5e2d2b054f3e4f[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Mon Sep 11 16:25:41 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit a4cad1a0f7f242d181ce11f8d3c4fbb1b4657c81[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Mon Sep 11 16:22:52 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 13e35fc5e7d838a118bd08319559de0a899d8e91[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Mon Sep 11 16:19:03 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 025d0d8f67d90108fddb8ce210e15952ac15feb5[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Thu Sep 7 21:57:38 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 2c04c0c3258624dcd145b81b11253b49849e6288[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Thu Sep 7 20:11:47 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit e45a4d35e384f61cbcd70e1fff68cc37089fb850[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Thu Sep 7 20:08:28 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit e58e49936653bde70d1c8a4aea1287fcc67a2bc3[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Thu Sep 7 20:01:27 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 4c0829921348834ed085ae1e915302f8a53cd214[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Thu Sep 7 19:57:01 2023 +0530
+
+    Update Load.yaml
+
+[33mcommit 54b989bfe6b6307e609eaddac9c27d11632f194c[m
+Author: jayshree2419 <78597325+jayshree2419@users.noreply.github.com>
+Date:   Thu Sep 7 19:54:55 2023 +0530
+
+    Update LoadRequest.java
+
+[33mcommit 165fee4409f36c9455cb49cac0e9a193ca6e744e[m
+Merge: bd73859 2516399
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Tue Sep 5 18:43:52 2023 +0530
+
+    Merge pull request #167 from Anush-Saxena/dev
+    
+    Dev
+
+[33mcommit 2516399954bb58ce1be3e32d74aaafa4aec2cbfa[m
+Author: Anush Saxena <saxenaanush88@gmail.com>
+Date:   Tue Sep 5 12:39:36 2023 +0530
+
+    Email Bug Resolved
+
+[33mcommit c496038b53246703ccf4969bfd785932b78bbbb0[m
+Merge: b5df290 bd73859
+Author: Anush Saxena <59112413+Anush-Saxena@users.noreply.github.com>
+Date:   Tue Sep 5 12:30:17 2023 +0530
+
+    Merge branch 'liveasy97:dev' into dev
+
+[33mcommit b5df2909c058ae490472051a509ddb45f73ea403[m
+Author: Anush Saxena <saxenaanush88@gmail.com>
+Date:   Tue Aug 29 13:54:33 2023 +0530
+
+    Email bug resolved
+
+[33mcommit 40fba1f0cf30c4c2aa9c22ba8e798aecd711630b[m
+Merge: d3e6862 aae1e35
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Mon Aug 28 11:50:30 2023 +0530
+
+    Merge pull request #163 from jeetd46/master
+    
+    Update application.properties
+
+[33mcommit bd73859186ecf29526bd5efa089c1c0fa326a894[m
+Merge: f188744 2c9543d
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Mon Aug 28 11:48:43 2023 +0530
+
+    Merge pull request #162 from jeetd46/dev
+    
+    Update application.properties
+
+[33mcommit aae1e35456def9dd03d5431e8daa14875505053f[m
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Sun Aug 27 19:43:58 2023 +0530
+
+    Update application.properties
+
+[33mcommit 2c9543d17a907f77a555fcf7f8ad1989b8d6303c[m
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Sun Aug 27 19:36:03 2023 +0530
+
+    Update application.properties
+
+[33mcommit f188744671f4098ca8ed2c1ed8de45fc677899c2[m
+Merge: 9f5f13b 4518547
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Tue Aug 22 22:20:37 2023 +0530
+
+    Merge pull request #160 from liveasy97/jeetd46-patch-9
+    
+    Delete TruckBooking/src/main/java/com/TruckBooking/operations directory
+
+[33mcommit 45185474c6e50220d3be70941a33bf19b02df9f1[m[33m ([m[1;31morigin/jeetd46-patch-9[m[33m)[m
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Tue Aug 22 17:47:28 2023 +0530
+
+    Delete TruckBooking/src/main/java/com/TruckBooking/operations directory
+
+[33mcommit 9f5f13bf48611b4dd05fa16c294fec0e7402cac4[m
+Merge: efa7570 4c6f7a7
+Author: jeetd46 <115579363+jeetd46@users.noreply.github.com>
+Date:   Mon Aug 21 17:27:37 2023 +0530
+
+    Merge pull request #159 from asv02/dev
+    
+    Dev
+
+[33mcommit 4c6f7a711daddae3b4ba7e97de0b97485039b286[m
+Author: Akash Suryavanshi <96387070+asv02@users.noreply.github.com>
+Date:   Sun Aug 20 14:25:09 2023 +0530
+
+    Update LoadServiceImpl.java
+
+[33mcommit efa7570b70cb2ba94aed6ec3b1e503310470b8a0[m
+Merge: 9bba1ee b03e059
+Author: jeetd46 <

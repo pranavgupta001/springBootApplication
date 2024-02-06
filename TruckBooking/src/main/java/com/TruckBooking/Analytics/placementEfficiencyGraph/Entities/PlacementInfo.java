@@ -1,32 +1,23 @@
 package com.TruckBooking.Analytics.placementEfficiencyGraph.Entities;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-//
 @Entity
 @Data
-@NoArgsConstructor
 public class PlacementInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String transporterId;
 
-    private int year;   //2023
-    private int month;  // 12
-    private int week;   // 3
+    private String transporterName;
+    private String shipperId;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<Integer> placementList; //Stores bookings according to time taken to assign vehicle [20,30,20,20,10]
-                                         // if delivery between 0-5 hrs than index=0,5-10 hrs indx=1, 10-15 hrs indx=2 n so on upto indx=4
-                                         // indx 4 for time >20hrs
-    public PlacementInfo(int year, int month, int week, List<Integer> placementList){
-        this.year = year;
-        this.month = month;
-        this.week = week;
-        this.placementList = placementList;
-    }
+    @CollectionTable(name = "placement_map", joinColumns = @JoinColumn(name = "transporter_id"))
+    @MapKeyColumn(name = "placement_map_key")
+    @Column(name = "placement_map_value")
+    private Map<String, String> placementMap = new HashMap<>();// "year: 2023" : "[10, 20, 30, 40, 34]", "month: Jan": "[10, 25, 39, 06]", "week: 10": "[10, 20, 30, 40]"
 }

@@ -372,6 +372,8 @@ public class LoadServiceImpl implements LoadService {
 		response.setUnloadingPointCity(load.get().getUnloadingPointCity());
 		response.setUnloadingPointState(load.get().getUnloadingPointState());
 
+		response.setCompanyName(load.get().getCompanyName());
+
 		response.setLoadingPoint2(load.get().getLoadingPoint2());
 		response.setLoadingPointCity2(load.get().getLoadingPointCity2());
 		response.setLoadingPointState2(load.get().getLoadingPointState2());
@@ -459,6 +461,11 @@ public class LoadServiceImpl implements LoadService {
 		temp = updateLoad.getUnloadingPointState();
 		if (StringUtils.isNotBlank(temp)) {
 			load.setUnloadingPointState(temp.trim());
+		}
+
+		temp = updateLoad.getCompanyName();
+		if (StringUtils.isNotBlank(temp)){
+			load.setCompanyName(temp.trim());
 		}
 
 		temp = updateLoad.getLoadingPoint2();
