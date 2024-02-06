@@ -69,4 +69,6 @@ public @Data class BookingData {
 	@CreationTimestamp
 	public Timestamp timestamp;
 
+
+
 }
