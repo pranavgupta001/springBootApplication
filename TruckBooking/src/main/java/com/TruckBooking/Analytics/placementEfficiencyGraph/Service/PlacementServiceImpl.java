@@ -47,11 +47,11 @@ public class PlacementServiceImpl implements PlacementService{
         }
         else{
             // shipperId = "shipperId:heX codE"
-            Optional<List<PlacementInfo>> optional = placementDao.findByShipperId(id);
-            if (optional.isPresent()){
+            List<PlacementInfo> infoList = placementDao.findByShipperId(id);
+            if (!infoList.isEmpty()){
 
                 List<PlacementEfficiencyResponse> responseList = new ArrayList<>();
-                for (PlacementInfo info: optional.get()){
+                for (PlacementInfo info: infoList){
                     responseList.add(setResponse(info));      // adding in a list since all the transporter belong to this particular shipper.
                 }
                 return responseList;
@@ -94,7 +94,7 @@ public class PlacementServiceImpl implements PlacementService{
         return response;
     }
 
-    @Scheduled(fixedDelay = 6000000)   // every 10 mins
+    @Scheduled(fixedDelay = 600000)   // every 10 mins
     public void FindPlacement() {
         List<BookingData> bookingDataList = bookingDao.findByTimestampIsAfter(lastSchedulerTimestamp);
         lastSchedulerTimestamp = Timestamp.from(Instant.now());
@@ -124,7 +124,7 @@ public class PlacementServiceImpl implements PlacementService{
 
                 int index = getIndex(indent.getAssignedTime(), bookingMillis);
 
-                Optional<com.TruckBooking.Analytics.placementEfficiencyGraph.Entities.PlacementInfo> optional = placementDao.findById(transporterId); // finding if the placement for this transporter existed before or not
+                Optional<PlacementInfo> optional = placementDao.findById(transporterId); // finding if the placement for this transporter existed before or not
                 PlacementInfo placementInfo;
                 if (optional.isPresent()) {
                     placementInfo = optional.get();
@@ -153,12 +153,12 @@ public class PlacementServiceImpl implements PlacementService{
         }
     }
 
-    private int getIndex(Timestamp indentTimestamp, long bookingMillis) {  // [0,0,0,0,0] 5 indexes and where to add according to calculates time duration
+    private int getIndex(Timestamp indentTimestamp, long bookingMillis) {  // [0,0,0,0,0] 5 indexes and where to add according to calculated time duration
         long indentMillis = indentTimestamp.getTime(); // getting indentMillis to calculate the time difference between
         // load assigning to the transporter and transporter assigning the vehicle for load\
 
-        int millisInAnHour = 3600000;  // millis in 1 hour
-        int index; // index for the list at which we will add the booking
+        int millisInAnHour = 3600000;     // millis in 1 hour
+        int index;                        // index for the list at which we will add the booking
         long difference = bookingMillis - indentMillis;
 
         if (difference <= 5 * millisInAnHour) {  // 0-5 hours
