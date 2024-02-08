@@ -28,14 +28,14 @@ jobs:
     - name: Upload file
       run: cp /home/ubuntu/firebaseKey.json ./src/main/resources  
 
-    - run: sudo docker container stop load-container || true  
+    - run: sudo docker container stop loadContainer || true  
     - name: Build with Maven
       run: mvn -B package --file pom.xml
        
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
-    - run: sudo docker container rm load-container || true
+    - run: sudo docker container rm loadContainer || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
-    - run: sudo docker run --env-file /home/ubuntu/envDev.properties -p 8080:8080 --name load-container  load | echo "success" 
+    - run: sudo docker run --env-file /home/ubuntu/envDev.properties -p 8080:8080 --name loadContainer  load | echo "success" 
 
  
