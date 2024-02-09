@@ -13,7 +13,7 @@ defaults:
     
 jobs:
   build:
-    runs-on: ['self-hosted', 'Linux', 'X64', 'loadDev' ]
+    runs-on: ['self-hosted','loadDev']
 
     steps:
     - uses: actions/checkout@v2
@@ -22,19 +22,14 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-
-
-         # Step to upload a file from the host
-    - name: Upload file
-      run: cp /home/ubuntu/firebaseKey.json ./src/main/resources  
-
-    - run: sudo docker container stop loadContainer || true  
+    
+        
+    - run: sudo docker container stop loadContainer || true    
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-       
     - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
     - run: sudo docker container rm loadContainer || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
     - run: sudo docker run -d --env-file /home/ubuntu/envDev.properties -p 8080:8080 --name loadContainer load  sleep infinity| echo "success"
- 
+
