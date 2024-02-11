@@ -31,4 +31,4 @@ jobs:
     - run: sudo docker container rm loadContainer || true
     - run: sudo docker image rm load || true
     - run: sudo docker build -t load .
-    - run: sudo docker run -d --env-file /home/ubuntu/envDev.properties -p 8080:8080 --name loadContainer load  sleep infinity| echo "success"
+    # - run: sudo docker run -d --env-file /home/ubuntu/envDev.properties -p 8080:8080 --name loadContainer load  sleep infinity| echo "success"
