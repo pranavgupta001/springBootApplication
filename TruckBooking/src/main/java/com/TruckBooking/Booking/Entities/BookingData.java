@@ -55,6 +55,7 @@ public @Data class BookingData {
 
 	private Long rate;
 	private Unit unitValue;
+
 	private String lr;            // optional
 	private String remarks;       // optional
 	private Integer damage;        // optional
@@ -72,7 +73,4 @@ public @Data class BookingData {
 
 	@CreationTimestamp
 	public Timestamp timestamp;
-
-
-
 }
