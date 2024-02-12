@@ -1,6 +1,9 @@
 package com.TruckBooking.Analytics.placementEfficiencyGraph.Controller;
 
 import com.TruckBooking.Analytics.placementEfficiencyGraph.Service.PlacementService;
+
+import io.swagger.annotations.Api;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@Api(tags ="Placement Service", description = "Everything about Placement Graphs")
 public class PlacementController {
 
     @Autowired

@@ -60,6 +60,10 @@ public class BiddingServiceImpl implements BiddingService {
 		if (request.getBiddingDate() != null) {
 			data.setBiddingDate(request.getBiddingDate());
 		}
+		
+		if (request.getCompanyName() != null) {
+			data.setCompanyName(request.getCompanyName());
+		}
 
 		if (request.getTruckId() != null) {
 			data.setTruckId(request.getTruckId());
@@ -86,6 +90,7 @@ public class BiddingServiceImpl implements BiddingService {
 		response.setTruckId(data.getTruckId());
 		response.setUnitValue(data.getUnitValue());
 		response.setBiddingDate(data.getBiddingDate());
+		response.setCompanyName(data.getCompanyName());
 
 		try {
 			log.info("Post Service Response returned");
@@ -293,6 +298,10 @@ public class BiddingServiceImpl implements BiddingService {
 					if (bidPutRequest.getBiddingDate() != null) {
 						data.setBiddingDate(bidPutRequest.getBiddingDate());
 					}
+					
+					if (bidPutRequest.getCompanyName() != null) {
+						data.setCompanyName(bidPutRequest.getCompanyName());
+					}
 
 					if (bidPutRequest.getTruckId() != null) {
 						data.setTruckId(bidPutRequest.getTruckId());
@@ -319,6 +328,7 @@ public class BiddingServiceImpl implements BiddingService {
 					response.setTruckId(data.getTruckId());
 					response.setUnitValue(data.getUnitValue());
 					response.setBiddingDate(data.getBiddingDate());
+					response.setCompanyName(data.getCompanyName());
 
 					try {
 						log.info("Put Service Response returned");
@@ -348,6 +358,7 @@ public class BiddingServiceImpl implements BiddingService {
 				response.setTruckId(data.getTruckId());
 				response.setUnitValue(data.getUnitValue());
 				response.setBiddingDate(data.getBiddingDate());
+				response.setCompanyName(data.getCompanyName());
 
 				try {
 					log.info("Put Service Response returned");
@@ -384,6 +395,10 @@ public class BiddingServiceImpl implements BiddingService {
 					if (bidPutRequest.getBiddingDate() != null) {
 						data.setBiddingDate(bidPutRequest.getBiddingDate());
 					}
+					
+					if (bidPutRequest.getCompanyName() != null) {
+						data.setCompanyName(bidPutRequest.getCompanyName());
+					}
 
 					if (bidPutRequest.getTruckId() != null) {
 						log.error(Constants.TRUCK_ID_UPDATE_BY_SHIPPER);
@@ -412,6 +427,7 @@ public class BiddingServiceImpl implements BiddingService {
 					response.setTruckId(data.getTruckId());
 					response.setUnitValue(data.getUnitValue());
 					response.setBiddingDate(data.getBiddingDate());
+					response.setCompanyName(data.getCompanyName());
 
 					try {
 						log.info("Put Service Response returned");
@@ -446,6 +462,7 @@ public class BiddingServiceImpl implements BiddingService {
 				response.setTruckId(data.getTruckId());
 				response.setUnitValue(data.getUnitValue());
 				response.setBiddingDate(data.getBiddingDate());
+				response.setCompanyName(data.getCompanyName());
 
 				try {
 					log.info("Put Service Response returned");
@@ -494,6 +511,7 @@ public class BiddingServiceImpl implements BiddingService {
 			response.setTruckId(data.getTruckId());
 			response.setUnitValue(data.getUnitValue());
 			response.setBiddingDate(data.getBiddingDate());
+			response.setCompanyName(data.getCompanyName());
 
 			try {
 				log.info("Put Service Response returned");
@@ -529,6 +547,7 @@ public class BiddingServiceImpl implements BiddingService {
 			response.setTruckId(data.getTruckId());
 			response.setUnitValue(data.getUnitValue());
 			response.setBiddingDate(data.getBiddingDate());
+			response.setCompanyName(data.getCompanyName());
 
 			try {
 				log.info("Put Service Response returned");

@@ -4,6 +4,8 @@ package com.TruckBooking.installerTask.Controller;
 import com.TruckBooking.installerTask.Entities.InstallerTask;
 import com.TruckBooking.installerTask.Model.InstallerTaskRequest;
 import com.TruckBooking.installerTask.Service.InstallerTaskService;
+
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import java.util.List;
 @CrossOrigin
 @Slf4j
 @RestController
+@Api(tags ="Installer Task Service", description = "Everything about Installer Tasks")
 public class InstallerTaskController {
 
     @Autowired

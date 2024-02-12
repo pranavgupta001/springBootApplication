@@ -4,7 +4,7 @@ import com.TruckBooking.Invoice_Services.Entity.Invoice;
 import com.TruckBooking.Invoice_Services.Model.InvoiceRequest;
 import com.TruckBooking.Invoice_Services.Services.InvoiceService;
 
-
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping
 @Slf4j
+@Api(tags ="Invoice Service", description = "Everything about Invoices")
 public class InvoiceController {
     private InvoiceService invoiceService;
     @Autowired

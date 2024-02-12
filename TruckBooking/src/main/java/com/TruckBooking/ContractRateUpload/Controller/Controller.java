@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.TruckBooking.ContractRateUpload.Service.ContractRateService;
+
+import io.swagger.annotations.Api;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @CrossOrigin
 @RestController
+@Api(tags ="Contract Rate Upload Service", description = "Everything about Contract Rates")
 public class Controller {
 
     @Autowired

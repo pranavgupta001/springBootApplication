@@ -2,6 +2,8 @@ package com.TruckBooking.hardwareData.Controller;
 
 import com.TruckBooking.hardwareData.Model.HardwareDataRequest;
 import com.TruckBooking.hardwareData.Service.HardwareDataServiceImpl;
+
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import javax.validation.Valid;
 @CrossOrigin
 @Slf4j
 @RestController
+@Api(tags ="Hardware Data Service", description = "Everything about Hardware Data")
 public class HardwareController {
 
     @Autowired

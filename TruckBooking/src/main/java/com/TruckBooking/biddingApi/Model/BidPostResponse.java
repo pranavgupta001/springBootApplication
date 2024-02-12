@@ -23,5 +23,6 @@ public @Data class BidPostResponse {
 	private Boolean transporterApproval;
 	private Boolean shipperApproval;
 	private String biddingDate;
+	private String companyName;
 
 }

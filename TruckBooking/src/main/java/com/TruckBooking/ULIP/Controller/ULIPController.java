@@ -14,10 +14,13 @@ import com.TruckBooking.ULIP.Entity.SarathiEntity;
 import com.TruckBooking.ULIP.Entity.VahanEntity;
 import com.TruckBooking.ULIP.Service.ULIPService;
 
+import io.swagger.annotations.Api;
+
 
 
 @CrossOrigin
 @RestController
+@Api(tags ="ULIP Service", description = "Everything about ULIP APIs")
 public class ULIPController {
 	
 	@Autowired

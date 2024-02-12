@@ -21,6 +21,7 @@ import com.TruckBooking.Booking.Model.BookingPutRequest;
 import com.TruckBooking.Booking.Model.BookingPutResponse;
 import com.TruckBooking.Booking.Service.BookingService;
 
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -28,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 @EnableTransactionManagement
+@Api(tags ="Booking Service", description = "Everything about Bookings")
 public class BookingController {
 
 	@Autowired

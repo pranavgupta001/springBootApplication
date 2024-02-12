@@ -55,6 +55,8 @@ public @Data class BiddingData {
 	private Boolean shipperApproval;
 
 	private String biddingDate;
+	
+	private String companyName;
 
 
 	@CreationTimestamp

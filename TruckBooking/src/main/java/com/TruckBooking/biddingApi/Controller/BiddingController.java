@@ -16,10 +16,13 @@ import com.TruckBooking.biddingApi.Model.BidPutRequest;
 import com.TruckBooking.biddingApi.Model.BidPutResponse;
 import com.TruckBooking.biddingApi.Service.BiddingService;
 import com.TruckBooking.biddingApi.Util.JwtUtil;
+
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 @CrossOrigin
 @RestController
 @Slf4j
+@Api(tags ="Bidding Service", description = "Everything about Bids")
 public class BiddingController {
 
 	@Autowired

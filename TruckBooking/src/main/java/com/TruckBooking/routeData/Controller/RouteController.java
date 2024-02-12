@@ -4,6 +4,8 @@ package com.TruckBooking.routeData.Controller;
 import com.TruckBooking.routeData.Entities.Route;
 import com.TruckBooking.routeData.Model.RouteDataRequest;
 import com.TruckBooking.routeData.Service.RouteDataServiceImpl;
+
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import java.util.List;
 @Slf4j
 @CrossOrigin
 @RestController
+@Api(tags ="Route Data Service", description = "Everything about Route Data")
 public class RouteController {
 
     @Autowired
