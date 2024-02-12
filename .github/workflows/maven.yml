@@ -23,6 +23,11 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: maven
+
+
+          # Step to upload a file from the host
+    - name: Upload file
+      run: cp /home/ubuntu/firebaseKey.json ./TruckBooking/src/main/resources     
         
     - run: sudo docker container stop loadContainer || true    
     - name: Build with Maven
