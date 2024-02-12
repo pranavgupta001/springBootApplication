@@ -205,7 +205,7 @@ public class BookingServiceImpl implements BookingService {
 		}
 
 		if (request.getLr() != null){
-			data.setLr(response.getLr());
+			data.setLr(request.getLr());
 		}
 
 		if (request.getRemarks() != null){
