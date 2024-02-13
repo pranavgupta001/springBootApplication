@@ -12,6 +12,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	public static final String[] PUBLIC_URLS = {
+		"/api/v1/auth/**",
+		"/v3/api-docs",
+		"/v2/api-docs",
+		"/swagger-resources/**",
+		"/swagger-ui/**",
+		"/webjars/**"
+	}
+		
 	@Bean
 	public FirebaseAuthenticationFilter firebaseAuthenticationFilter() {
 		return new FirebaseAuthenticationFilter();
@@ -23,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/public/**").permitAll() // Allow public APIs
+			        .antMatchers("PUBLIC_URLS").permitAll()
 				.anyRequest().authenticated();
 
 		// Add FirebaseAuthenticationFilter before UsernamePasswordAuthenticationFilter
