@@ -15,9 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public @Data class BidPutRequest {
 
-	@NotBlank(message = "Transporter Id can not be null")
 	private String transporterId;
-	@NotNull(message = "TransporterBid can not be null")
 	private Integer transporterBid;
 	private Integer shipperBid;
 	private Unit unitValue;
