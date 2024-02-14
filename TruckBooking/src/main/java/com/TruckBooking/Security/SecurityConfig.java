@@ -39,8 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// Add FirebaseAuthenticationFilter before UsernamePasswordAuthenticationFilter
 		http
-				.addFilterBefore(firebaseAuthenticationFilter(),
-				UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(firebaseAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 }
