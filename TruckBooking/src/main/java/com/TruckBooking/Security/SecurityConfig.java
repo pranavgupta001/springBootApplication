@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		"/swagger-resources/**",
 		"/swagger-ui/**",
 		"/webjars/**"
-	}
+	};
 		
 	@Bean
 	public FirebaseAuthenticationFilter firebaseAuthenticationFilter() {
